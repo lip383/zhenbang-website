@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于我们 | 广西振邦建设工程有限公司</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "微软雅黑","Microsoft YaHei","PingFang SC",sans-serif; color: #333; background: #fff; line-height: 1.6; }
+    :root {
+      --primary: #1a2744;
+      --primary-light: #233467;
+      --accent: #d4a020;
+      --accent-light: #e6b830;
+      --bg-light: #f5f6f8;
+      --text-gray: #666;
+      --border: #e0e4ea;
+    }
+
+    /* ===== 顶部导航 ===== */
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(26,39,68,0.97); backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--accent);
+    }
+    .nav-wrap {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between; height: 72px;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon {
+      width: 44px; height: 44px; background: var(--accent); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 900; color: var(--primary);
+    }
+    .logo-text { color: #fff; }
+    .logo-text .cn { font-size: 16px; font-weight: 700; }
+    .logo-text .en { font-size: 11px; opacity: 0.65; letter-spacing: 0.5px; }
+    nav { display: flex; gap: 4px; }
+    nav a {
+      color: rgba(255,255,255,0.8); text-decoration: none; padding: 8px 14px;
+      border-radius: 6px; font-size: 14px; transition: all 0.25s;
+    }
+    nav a:hover, nav a.active { color: var(--accent); background: rgba(212,160,32,0.12); }
+    .back-btn {
+      color: var(--accent); text-decoration: none; font-size: 14px;
+      border: 1px solid var(--accent); padding: 7px 18px; border-radius: 4px; transition: .3s;
+    }
+    .back-btn:hover { background: var(--accent); color: var(--primary); }
+
+    /* ===== Hero ===== */
+    .page-hero {
+      background: linear-gradient(135deg, #0d1832 0%, var(--primary) 40%, #1e3060 80%, #0d1832 100%);
+      padding: 130px 40px 80px; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23d4a020' fill-opacity='0.04'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-badge {
+      display: inline-block; background: rgba(212,160,32,0.2); border: 1px solid var(--accent);
+      color: var(--accent); padding: 6px 22px; border-radius: 20px; font-size: 13px; margin-bottom: 20px;
+      position: relative;
+    }
+    .page-hero h1 { color: #fff; font-size: 2.8em; font-weight: 900; margin-bottom: 18px; position: relative; }
+    .page-hero h1 span { color: var(--accent); }
+    .page-hero p { color: rgba(255,255,255,0.75); font-size: 1.1em; max-width: 680px; margin: 0 auto; line-height: 2; position: relative; }
+
+    /* ===== 通用容器 ===== */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 30px; }
+    section { padding: 80px 0; }
+    section.bg-light { background: var(--bg-light); }
+
+    .section-head { margin-bottom: 48px; }
+    .section-label {
+      display: inline-block; color: var(--accent); font-size: 13px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .section-title { font-size: 2em; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+    .section-title::after {
+      content: ''; display: block; width: 50px; height: 3px;
+      background: var(--accent); margin-top: 12px;
+    }
+    .section-sub { color: var(--text-gray); font-size: 1em; margin-top: 18px; line-height: 1.9; max-width: 700px; }
+
+    /* ===== 公司概况 ===== */
+    .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .overview-visual {
+      background: linear-gradient(135deg, var(--primary) 0%, #2d4080 100%);
+      border-radius: 16px; padding: 50px 40px; position: relative; overflow: hidden;
+    }
+    .overview-visual::before {
+      content: '振'; position: absolute; right: -20px; bottom: -30px;
+      font-size: 180px; font-weight: 900; color: rgba(212,160,32,0.08); line-height: 1;
+    }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .stat-box { text-align: center; padding: 24px 16px; background: rgba(255,255,255,0.07); border-radius: 10px; border: 1px solid rgba(212,160,32,0.2); }
+    .stat-num { font-size: 2.4em; font-weight: 900; color: var(--accent); line-height: 1; }
+    .stat-unit { font-size: 14px; color: var(--accent); opacity: 0.8; }
+    .stat-label { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 6px; }
+    .overview-content { }
+    .overview-content h3 { font-size: 1.5em; font-weight: 800; color: var(--primary); margin-bottom: 20px; }
+    .overview-content p { color: var(--text-gray); line-height: 2; margin-bottom: 16px; font-size: 15px; }
+    .overview-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .ov-tag {
+      background: rgba(26,39,68,0.07); color: var(--primary); border: 1px solid var(--border);
+      padding: 7px 18px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    }
+
+    /* ===== 发展历程 ===== */
+    .timeline { position: relative; padding: 10px 0; }
+    .timeline::before {
+      content: ''; position: absolute; left: 50%; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, transparent, var(--accent), var(--accent), transparent);
+      transform: translateX(-50%);
+    }
+    .tl-item { display: flex; justify-content: flex-end; padding-right: calc(50% + 40px); margin-bottom: 50px; position: relative; }
+    .tl-item:nth-child(even) { justify-content: flex-start; padding-right: 0; padding-left: calc(50% + 40px); }
+    .tl-dot {
+      position: absolute; left: 50%; top: 24px; width: 16px; height: 16px;
+      background: var(--accent); border-radius: 50%; border: 3px solid #fff;
+      box-shadow: 0 0 0 3px var(--accent); transform: translateX(-50%);
+    }
+    .tl-card {
+      background: #fff; border-radius: 12px; padding: 24px 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-left: 4px solid var(--accent);
+      max-width: 420px; transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .tl-item:nth-child(even) .tl-card { border-left: none; border-right: 4px solid var(--accent); }
+    .tl-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.14); }
+    .tl-year { font-size: 1.6em; font-weight: 900; color: var(--accent); margin-bottom: 6px; }
+    .tl-card h4 { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .tl-card p { font-size: 13px; color: var(--text-gray); line-height: 1.8; }
+
+    /* ===== 企业资质 ===== */
+    .quali-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .qcard {
+      background: #fff; border-radius: 12px; padding: 32px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border-top: 4px solid var(--accent);
+      transition: transform 0.3s;
+    }
+    .qcard:hover { transform: translateY(-6px); }
+    .qcard-icon { font-size: 36px; margin-bottom: 16px; }
+    .qcard h4 { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .qcard p { font-size: 13px; color: var(--text-gray); line-height: 1.8; }
+    .qcard .badge {
+      display: inline-block; background: rgba(212,160,32,0.12); color: #a07010;
+      border: 1px solid rgba(212,160,32,0.35); padding: 3px 12px; border-radius: 12px;
+      font-size: 12px; font-weight: 700; margin-top: 14px;
+    }
+
+    /* ===== 企业文化 ===== */
+    .culture-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .culture-card {
+      background: linear-gradient(135deg, var(--primary) 0%, #233467 100%);
+      border-radius: 14px; padding: 36px 32px; position: relative; overflow: hidden;
+    }
+    .culture-card::after {
+      content: attr(data-char); position: absolute; right: 20px; bottom: 10px;
+      font-size: 80px; font-weight: 900; color: rgba(212,160,32,0.1); line-height: 1;
+    }
+    .culture-card h3 { font-size: 1.3em; font-weight: 800; color: var(--accent); margin-bottom: 14px; }
+    .culture-card p { color: rgba(255,255,255,0.8); font-size: 14px; line-height: 1.9; position: relative; }
+    .culture-icon { font-size: 32px; margin-bottom: 14px; }
+
+    /* ===== 核心优势 ===== */
+    .advantage-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .adv-card {
+      background: #fff; border-radius: 10px; padding: 28px 20px; text-align: center;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.07); transition: all 0.3s;
+      border-bottom: 3px solid transparent;
+    }
+    .adv-card:hover { transform: translateY(-5px); border-bottom-color: var(--accent); }
+    .adv-icon { font-size: 36px; margin-bottom: 14px; }
+    .adv-card h4 { font-size: 15px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .adv-card p { font-size: 13px; color: var(--text-gray); line-height: 1.8; }
+
+    /* ===== 服务区域 ===== */
+    .region-wrap { background: linear-gradient(135deg, var(--primary) 0%, #1e3060 100%); border-radius: 16px; padding: 50px 48px; }
+    .region-wrap h3 { color: var(--accent); font-size: 1.5em; font-weight: 800; margin-bottom: 12px; }
+    .region-wrap > p { color: rgba(255,255,255,0.75); margin-bottom: 36px; font-size: 14px; }
+    .region-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .region-item { background: rgba(255,255,255,0.06); border-radius: 10px; padding: 20px; border: 1px solid rgba(212,160,32,0.2); }
+    .region-name { font-size: 16px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+    .region-desc { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+
+    /* ===== 联系模块 ===== */
+    .contact-band { background: var(--primary); padding: 60px 30px; text-align: center; }
+    .contact-band h2 { font-size: 2em; color: #fff; margin-bottom: 14px; }
+    .contact-band p { color: rgba(255,255,255,0.7); margin-bottom: 36px; font-size: 15px; }
+    .contact-items { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-bottom: 36px; }
+    .citem { display: flex; align-items: center; gap: 12px; }
+    .citem-icon { width: 44px; height: 44px; background: rgba(212,160,32,0.15); border: 1px solid var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .citem-text { text-align: left; }
+    .citem-text .label { font-size: 12px; color: rgba(255,255,255,0.5); }
+    .citem-text .val { font-size: 15px; color: #fff; font-weight: 600; }
+    .cta-btns { display: flex; justify-content: center; gap: 16px; }
+    .btn-gold { display: inline-block; background: var(--accent); color: var(--primary); padding: 14px 36px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 15px; transition: .3s; }
+    .btn-gold:hover { background: var(--accent-light); transform: translateY(-2px); }
+    .btn-outline { display: inline-block; border: 2px solid var(--accent); color: var(--accent); padding: 12px 34px; border-radius: 6px; font-weight: 700; text-decoration: none; font-size: 15px; transition: .3s; }
+    .btn-outline:hover { background: rgba(212,160,32,0.1); transform: translateY(-2px); }
+
+    /* ===== Footer ===== */
+    footer { background: #0d1020; color: rgba(255,255,255,0.5); text-align: center; padding: 26px; font-size: 13px; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 960px) {
+      .overview-grid { grid-template-columns: 1fr; }
+      .quali-row { grid-template-columns: 1fr 1fr; }
+      .timeline::before { left: 24px; }
+      .tl-item, .tl-item:nth-child(even) { padding-right: 0; padding-left: 60px; justify-content: flex-start; }
+      .tl-dot { left: 24px; }
+      .tl-item:nth-child(even) .tl-card { border-right: none; border-left: 4px solid var(--accent); }
+      .advantage-list { grid-template-columns: 1fr 1fr; }
+      .region-list { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .page-hero { padding: 110px 20px 60px; }
+      .page-hero h1 { font-size: 2em; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .quali-row { grid-template-columns: 1fr; }
+      .culture-grid { grid-template-columns: 1fr; }
+      .advantage-list { grid-template-columns: 1fr 1fr; }
+      .region-list { grid-template-columns: 1fr; }
+      .contact-items { flex-direction: column; align-items: center; }
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<header>
+  <div class="nav-wrap">
+    <a href="index.html" class="logo">
+      <div class="logo-icon">振</div>
+      <div class="logo-text">
+        <div class="cn">广西振邦建设工程有限公司</div>
+        <div class="en">GUANGXI ZHENBANG CONSTRUCTION ENGINEERING</div>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="about.html" class="active">关于我们</a>
+      <a href="index.html#business">业务范围</a>
+      <a href="qualifications.html">资质荣誉</a>
+      <a href="index.html#contact">联系我们</a>
+    </nav>
+    <a href="index.html" class="back-btn">← 返回首页</a>
+  </div>
+</header>
+
+<!-- Hero Banner -->
+<div class="page-hero">
+  <div class="hero-badge">成立于 2006 年</div>
+  <h1>关于<span>振邦</span></h1>
+  <p>广西振邦建设工程有限公司是一家深耕公路交通安全设施领域近二十年的专业工程企业，以匠心筑路、以品质立业，为西南地区的道路安全保驾护航。</p>
+</div>
+
+<!-- 公司概况 -->
+<section>
+  <div class="container">
+    <div class="overview-grid">
+      <div class="overview-visual">
+        <div class="stat-grid">
+          <div class="stat-box">
+            <div class="stat-num">18<span class="stat-unit">+</span></div>
+            <div class="stat-label">年行业深耕</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">1520<span class="stat-unit">万</span></div>
+            <div class="stat-label">注册资本</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">500<span class="stat-unit">+</span></div>
+            <div class="stat-label">已竣工项目（公里）</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">壹级</div>
+            <div class="stat-label">专业承包资质</div>
+          </div>
+        </div>
+      </div>
+      <div class="overview-content">
+        <h3>公司简介</h3>
+        <p>广西振邦建设工程有限公司（统一社会信用代码：91450000723527019R），成立于2006年，注册地位于广西壮族自治区北海市银海区福成镇，法定代表人为韦克记。</p>
+        <p>公司专业从事公路安全设施的设计、生产、施工与维护，主营业务涵盖公路护栏工程、交通标志标牌、路面标线施工、市政交通安全设施等四大领域，是广西区内规模较大、资质齐全的交通安全设施综合服务商之一。</p>
+        <p>多年来，公司秉承"安全第一、质量为本"的经营理念，先后参与了广西多条高速公路、国省干线及城市道路的交通安全设施建设，积累了丰富的施工经验与行业口碑。</p>
+        <div class="overview-tags">
+          <span class="ov-tag">公路安全设施专业承包一级</span>
+          <span class="ov-tag">高速公路合格供应商</span>
+          <span class="ov-tag">ISO质量体系认证</span>
+          <span class="ov-tag">广西壮族自治区注册</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 发展历程 -->
+<section class="bg-light">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">COMPANY HISTORY</div>
+      <div class="section-title">发展历程</div>
+      <p class="section-sub">近二十年深耕广西交通安全设施领域，从小到大，从弱到强，伴随着广西道路基础设施的高速发展而成长壮大。</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-year">2006</div>
+          <h4>公司创立</h4>
+          <p>广西振邦建设工程有限公司正式注册成立，注册地广西北海，开始承接区内公路交通设施施工业务，专注于护栏安装与标线施工。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-year">2010</div>
+          <h4>资质升级</h4>
+          <p>通过专业资质评审，获得公路安全设施专业承包资质，具备承接更大规模道路安全设施工程的能力，业务范围进一步扩大。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-year">2014</div>
+          <h4>高速公路领域突破</h4>
+          <p>首次承接广西高速公路路段交通安全设施施工项目，成功完成波形梁护栏、标志标牌全套工程，进入高速公路合格供应商体系。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-year">2017</div>
+          <h4>产能扩充与技术升级</h4>
+          <p>引进先进标线施工设备及热镀锌钢护栏生产线，扩充生产制造能力，具备年供应钢护栏数万吨及路面标线施工数百公里的综合产能。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-year">2020</div>
+          <h4>一级资质获批</h4>
+          <p>经主管部门审核通过，获得公路安全设施专业承包一级资质，跻身行业最高资质序列，可承接全国范围内各等级公路安全设施工程。</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-year">至今</div>
+          <h4>持续深耕·立足西南</h4>
+          <p>公司持续深化与广西各设计院、施工总包单位及各级交通主管部门的战略合作，业务覆盖广西全区，逐步辐射云、贵等西南省份，成为区内领先的交通安全设施综合服务商。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心资质 -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">QUALIFICATIONS</div>
+      <div class="section-title">核心资质</div>
+      <p class="section-sub">公司拥有完善的资质体系，具备独立承接各等级公路交通安全设施工程的全套能力。</p>
+    </div>
+    <div class="quali-row">
+      <div class="qcard">
+        <div class="qcard-icon">🏗️</div>
+        <h4>公路安全设施专业承包一级</h4>
+        <p>可承接各等级、各规模公路安全设施工程，包括高速公路、国道、省道、县乡道路全线安全设施施工。</p>
+        <span class="badge">最高级别资质</span>
+      </div>
+      <div class="qcard">
+        <div class="qcard-icon">📋</div>
+        <h4>安全生产许可证</h4>
+        <p>依法取得建筑施工企业安全生产许可证，建立了完善的安全生产管理体系，确保施工安全合规。</p>
+        <span class="badge">合法施工资格</span>
+      </div>
+      <div class="qcard">
+        <div class="qcard-icon">🏅</div>
+        <h4>ISO质量管理体系认证</h4>
+        <p>通过ISO 9001质量管理体系认证，生产与施工全程质控，从原材料采购到竣工验收有章可循。</p>
+        <span class="badge">ISO认证</span>
+      </div>
+      <div class="qcard">
+        <div class="qcard-icon">🛡️</div>
+        <h4>高速公路合格供应商</h4>
+        <p>列入广西高速公路合格供应商名录，具备参与高速公路交通安全设施招投标资格，信用等级优良。</p>
+        <span class="badge">名录内供应商</span>
+      </div>
+      <div class="qcard">
+        <div class="qcard-icon">⚙️</div>
+        <h4>特种作业操作证</h4>
+        <p>公司施工团队持有高处作业、电工、焊工等相关特种作业操作证，专业技术人员配置齐全。</p>
+        <span class="badge">持证施工</span>
+      </div>
+      <div class="qcard">
+        <div class="qcard-icon">📑</div>
+        <h4>纳税信用A级</h4>
+        <p>连续多年被税务主管部门评定为纳税信用A级企业，经营合规，财务管理规范，企业信用良好。</p>
+        <span class="badge">信用A级</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心优势 -->
+<section class="bg-light">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">OUR ADVANTAGES</div>
+      <div class="section-title">核心优势</div>
+      <p class="section-sub">近二十年积累形成的竞争壁垒，是我们为客户持续创造价值的根本所在。</p>
+    </div>
+    <div class="advantage-list">
+      <div class="adv-card">
+        <div class="adv-icon">🎯</div>
+        <h4>专业专注</h4>
+        <p>深耕公路交通安全设施近20年，专注单一赛道，持续积累行业经验与技术沉淀。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">🏆</div>
+        <h4>资质齐全</h4>
+        <p>持有专业承包一级最高资质，可独立承接全国各等级、各规模公路安全设施工程项目。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">🔧</div>
+        <h4>自有设备</h4>
+        <p>配备专业热熔标线车、护栏安装机械、标牌制作生产线等，不依赖外包，施工效率高。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">👷</div>
+        <h4>专业团队</h4>
+        <p>核心施工团队平均工龄超8年，项目经理均持有相关专业技术资格证书，执行力强。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">🌐</div>
+        <h4>本地资源</h4>
+        <p>深耕广西近20年，与广西各交通主管部门、设计院及施工单位建立了深厚的合作关系。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">⚡</div>
+        <h4>快速响应</h4>
+        <p>广西本地运营，物资调配灵活，可快速组织施工力量进场，满足紧急工期需求。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">📊</div>
+        <h4>品质管控</h4>
+        <p>建立全流程质量管控体系，原材料检测、施工过程巡检、竣工验收三道关卡严守品质。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">🤝</div>
+        <h4>售后保障</h4>
+        <p>提供完整的工程质保及后续维修服务，建立项目档案，响应业主后续运营需求。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 企业文化 -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">CORPORATE CULTURE</div>
+      <div class="section-title">企业文化</div>
+    </div>
+    <div class="culture-grid">
+      <div class="culture-card" data-char="使">
+        <div class="culture-icon">🧭</div>
+        <h3>企业使命</h3>
+        <p>以专业技术与匠心施工，守护每一条道路的通行安全；让每一位出行者都能安全回家，是振邦人始终如一的责任与追求。</p>
+      </div>
+      <div class="culture-card" data-char="景">
+        <div class="culture-icon">🌟</div>
+        <h3>企业愿景</h3>
+        <p>成为西南地区公路交通安全设施领域最受信赖的综合服务商，以优质产品和卓越服务，为区域道路安全基础设施建设持续贡献力量。</p>
+      </div>
+      <div class="culture-card" data-char="值">
+        <div class="culture-icon">⚖️</div>
+        <h3>核心价值观</h3>
+        <p>安全第一：把施工安全与产品安全放在首位，不偷工减料，不降低标准；诚信为本：对客户、对合作伙伴、对员工，言必信，行必果。</p>
+      </div>
+      <div class="culture-card" data-char="神">
+        <div class="culture-icon">🔥</div>
+        <h3>企业精神</h3>
+        <p>工匠精神——以精益求精的态度对待每一个施工细节；奋斗精神——在艰苦的野外施工环境中坚守岗位，用汗水浇筑品质工程。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务区域 -->
+<section class="bg-light">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-label">SERVICE AREA</div>
+      <div class="section-title">服务区域</div>
+    </div>
+    <div class="region-wrap">
+      <h3>立足广西，辐射西南</h3>
+      <p>公司总部位于广西北海，业务覆盖广西全区，并逐步向云南、贵州等西南省份延伸。</p>
+      <div class="region-list">
+        <div class="region-item">
+          <div class="region-name">广西全区（核心市场）</div>
+          <div class="region-desc">南宁、北海、柳州、桂林、玉林、贵港、钦州、梧州、百色、河池等14个设区市，高速、国省干线全覆盖。</div>
+        </div>
+        <div class="region-item">
+          <div class="region-name">云南省（拓展区域）</div>
+          <div class="region-desc">依托广西毗邻优势，承接云南境内部分高速公路及国道沿线交通安全设施工程。</div>
+        </div>
+        <div class="region-item">
+          <div class="region-name">贵州省（拓展区域）</div>
+          <div class="region-desc">积极开拓贵州市场，参与贵州高速公路网建设中的护栏、标志、标线配套工程。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系我们 -->
+<div class="contact-band">
+  <div class="container">
+    <h2>与我们携手合作</h2>
+    <p>如需了解更多公司信息，或希望就项目合作进行洽谈，欢迎通过以下方式联系我们。</p>
+    <div class="contact-items">
+      <div class="citem">
+        <div class="citem-icon">📍</div>
+        <div class="citem-text">
+          <div class="label">公司地址</div>
+          <div class="val">广西壮族自治区北海市银海区福成镇</div>
+        </div>
+      </div>
+      <div class="citem">
+        <div class="citem-icon">🏢</div>
+        <div class="citem-text">
+          <div class="label">统一社会信用代码</div>
+          <div class="val">91450000723527019R</div>
+        </div>
+      </div>
+      <div class="citem">
+        <div class="citem-icon">👤</div>
+        <div class="citem-text">
+          <div class="label">法定代表人</div>
+          <div class="val">韦克记</div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-btns">
+      <a href="index.html#contact" class="btn-gold">立即联系我们</a>
+      <a href="qualifications.html" class="btn-outline">查看资质证书</a>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2024 广西振邦建设工程有限公司 版权所有 &nbsp;|&nbsp; 桂ICP备XXXXXXXX号 &nbsp;|&nbsp; <a href="index.html">返回首页</a></p>
+</footer>
+
+</body>
+</html>

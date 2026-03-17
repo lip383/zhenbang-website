@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>广西振邦建设工程有限公司 | ZHENBANG CONSTRUCTION</title>
+  <style>
+    /* ======== 全局重置与基础样式 ======== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "微软雅黑", "Microsoft YaHei", "PingFang SC", sans-serif;
+      color: #333;
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    /* ======== 颜色变量 ======== */
+    :root {
+      --primary: #1a2744;       /* 深蓝 */
+      --primary-light: #233467;
+      --accent: #d4a020;        /* 金黄 */
+      --accent-light: #e6b830;
+      --text-dark: #1a1a2e;
+      --text-gray: #666;
+      --bg-light: #f5f6f8;
+      --border: #e0e4ea;
+    }
+
+    /* ======== 顶部导航 ======== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(26, 39, 68, 0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--accent);
+    }
+    .nav-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; font-weight: 900; color: var(--primary);
+      letter-spacing: -1px;
+    }
+    .logo-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .logo-text p {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      gap: 4px;
+    }
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.25s;
+    }
+    nav a:hover {
+      background: rgba(212, 160, 32, 0.18);
+      color: var(--accent);
+    }
+
+    /* ======== 英雄区 Hero ======== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0d1b35 0%, #1a2744 40%, #1e3a6e 70%, #0d1b35 100%);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(212,160,32,0.06) 0%, transparent 60%),
+        radial-gradient(circle at 80% 20%, rgba(35,52,103,0.5) 0%, transparent 50%);
+    }
+    /* 装饰线条 */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(to bottom left, rgba(212,160,32,0.04), transparent);
+      clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%);
+    }
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 24px 60px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(212,160,32,0.15);
+      border: 1px solid rgba(212,160,32,0.4);
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero h2 {
+      font-size: 52px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .hero h2 span { color: var(--accent); }
+    .hero-sub {
+      font-size: 20px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 3px;
+      margin-bottom: 30px;
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      max-width: 600px;
+      margin-bottom: 44px;
+      line-height: 1.9;
+    }
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 14px 36px;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.25s;
+      letter-spacing: 1px;
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,160,32,0.35);
+    }
+    .btn-outline {
+      border: 1.5px solid rgba(255,255,255,0.35);
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: 4px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.25s;
+      letter-spacing: 1px;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    /* 统计数字 */
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      text-align: left;
+    }
+    .stat-item .num {
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      display: block;
+    }
+    .stat-item .num span { font-size: 22px; }
+    .stat-item .label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 4px;
+      letter-spacing: 1px;
+    }
+
+    /* 右侧装饰图形 */
+    .hero-graphic {
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 380px;
+      height: 380px;
+      z-index: 1;
+    }
+    .hero-graphic .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px solid rgba(212,160,32,0.2);
+    }
+    .hero-graphic .ring-1 { width: 100%; height: 100%; top: 0; left: 0; }
+    .hero-graphic .ring-2 { width: 75%; height: 75%; top: 12.5%; left: 12.5%; border-color: rgba(212,160,32,0.15); }
+    .hero-graphic .ring-3 { width: 50%; height: 50%; top: 25%; left: 25%; border-color: rgba(212,160,32,0.25); }
+    .hero-graphic .center-badge {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 140px; height: 140px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: var(--primary);
+      font-weight: 900;
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.3;
+      letter-spacing: 1px;
+    }
+    .hero-graphic .center-badge .big { font-size: 26px; }
+
+    /* ======== 通用 Section 样式 ======== */
+    section {
+      padding: 88px 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-tag {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+    }
+    .section-line {
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      margin: 0 auto;
+    }
+
+    /* ======== 公司简介 ======== */
+    #about {
+      background: #fff;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-content h3 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      line-height: 1.3;
+    }
+    .about-content p {
+      font-size: 15px;
+      color: var(--text-gray);
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+    .about-highlights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .highlight-item {
+      background: var(--bg-light);
+      border-left: 3px solid var(--accent);
+      padding: 16px 18px;
+      border-radius: 0 6px 6px 0;
+    }
+    .highlight-item .h-label {
+      font-size: 12px;
+      color: var(--text-gray);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .highlight-item .h-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+    .about-img-area {
+      position: relative;
+    }
+    .about-img-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 12px;
+      padding: 48px 40px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-img-box::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      background: rgba(212,160,32,0.07);
+    }
+    .about-img-box .eng-text {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .about-img-box h4 {
+      font-size: 26px;
+      font-weight: 900;
+      margin-bottom: 28px;
+      line-height: 1.4;
+    }
+    .quali-list {
+      list-style: none;
+    }
+    .quali-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .quali-list li::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ======== 核心业务 ======== */
+    #business {
+      background: var(--bg-light);
+    }
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .biz-card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 36px 28px;
+      transition: all 0.3s;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+    .biz-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .biz-card:hover {
+      border-color: rgba(212,160,32,0.2);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(26,39,68,0.12);
+    }
+    .biz-card:hover::before { transform: scaleX(1); }
+    .biz-icon {
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+      font-size: 28px;
+    }
+    .biz-card h4 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+    }
+    .biz-card p {
+      font-size: 14px;
+      color: var(--text-gray);
+      line-height: 1.85;
+    }
+    .biz-card .biz-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 18px;
+    }
+    .biz-tag {
+      background: rgba(26,39,68,0.06);
+      color: var(--primary);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .biz-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 22px;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: all 0.25s;
+    }
+    .biz-more::after {
+      content: '→';
+      transition: transform 0.25s;
+    }
+    .biz-more:hover {
+      border-bottom-color: var(--accent);
+    }
+    .biz-more:hover::after {
+      transform: translateX(4px);
+    }
+
+    /* ======== 资质荣誉 ======== */
+    #qualification {
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+    #qualification::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(212,160,32,0.04);
+    }
+    #qualification .section-title { color: #fff; }
+    #qualification .section-tag { color: var(--accent); }
+    .quali-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .quali-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .quali-card:hover {
+      background: rgba(212,160,32,0.12);
+      border-color: rgba(212,160,32,0.3);
+      transform: translateY(-4px);
+    }
+    .quali-num {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .quali-num span { font-size: 22px; }
+    .quali-card h5 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .quali-card p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+    .quali-badge {
+      margin-top: 56px;
+      background: rgba(212,160,32,0.1);
+      border: 1px solid rgba(212,160,32,0.25);
+      border-radius: 12px;
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .badge-icon {
+      width: 70px; height: 70px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+    .badge-content h4 {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .badge-content p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
+    }
+
+    /* ======== 实景画廊 ======== */
+    #gallery {
+      background: var(--bg-light);
+    }
+    .gallery-intro {
+      max-width: 700px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+    .gallery-intro p {
+      font-size: 16px;
+      color: var(--text-gray);
+      line-height: 1.8;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto;
+      gap: 12px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .gallery-item.large {
+      grid-column: span 2;
+    }
+    .gallery-item.large img {
+      height: 310px;
+    }
+    .gallery-item .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(13,27,53,0.88) 0%, rgba(13,27,53,0.2) 70%, transparent 100%);
+      color: #fff;
+      font-size: 13px;
+      padding: 32px 14px 12px;
+      opacity: 0.85;
+      transition: opacity 0.3s, background 0.3s;
+    }
+    .gallery-item:hover .gallery-caption {
+      opacity: 1;
+      background: linear-gradient(to top, rgba(13,27,53,0.95) 0%, rgba(13,27,53,0.4) 70%, transparent 100%);
+    }
+    .gallery-item .gallery-caption span {
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-right: 8px;
+    }
+    .gallery-more {
+      text-align: center;
+      margin-top: 36px;
+    }
+    .gallery-more a {
+      display: inline-block;
+      border: 2px solid var(--primary);
+      color: var(--primary);
+      padding: 12px 34px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: .3s;
+    }
+    .gallery-more a:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* ======== 工程案例 ======== */
+    #cases {
+      background: #fff;
+    }
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .case-card {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(26,39,68,0.1);
+    }
+    .case-img {
+      height: 220px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+      background-size: cover !important;
+      background-position: center !important;
+      transition: background-size 0.5s ease;
+    }
+    .case-card:hover .case-img {
+      background-size: 110% !important;
+    }
+    .case-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,53,0.55) 0%, transparent 60%);
+    }
+    .case-img-1 { background: url('images/guardrail_01.jpg') center/cover no-repeat; }
+    .case-img-2 { background: url('images/sign_01.jpg') center/cover no-repeat; }
+    .case-img-3 { background: url('images/marking_01.jpg') center/cover no-repeat; }
+    .case-img-4 { background: url('images/municipal_01.jpg') center/cover no-repeat; }
+    .case-img-5 { background: url('images/guardrail_02.jpg') center/cover no-repeat; }
+    .case-img-6 { background: url('images/intelligent_signal.jpg') center/cover no-repeat; }
+    .case-img-7 { background: url('images/intelligent_monitor.jpg') center/cover no-repeat; }
+    .case-img-8 { background: url('images/intelligent_epol.jpg') center/cover no-repeat; }
+    .case-img-9 { background: url('images/intelligent_city.jpg') center/cover no-repeat; }
+    .case-img-icon {
+      display: none;
+    }
+    .case-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+      padding: 20px 16px 14px;
+      z-index: 1;
+    }
+    .case-cat {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+    .case-body {
+      padding: 20px;
+    }
+    .case-body h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .case-body p {
+      font-size: 13px;
+      color: var(--text-gray);
+      line-height: 1.7;
+    }
+    .case-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .case-meta span {
+      font-size: 12px;
+      color: #999;
+    }
+    .case-meta .case-link {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* ======== 服务流程 ======== */
+    #process {
+      background: var(--bg-light);
+    }
+    .process-row {
+      display: flex;
+      gap: 0;
+      position: relative;
+    }
+    .process-row::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 60px; right: 60px;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), transparent);
+      z-index: 0;
+    }
+    .process-item {
+      flex: 1;
+      text-align: center;
+      padding: 0 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .process-num {
+      width: 72px; height: 72px;
+      background: #fff;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+    .process-item h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .process-item p {
+      font-size: 13px;
+      color: var(--text-gray);
+      line-height: 1.7;
+    }
+
+    /* ======== 联系我们 ======== */
+    #contact {
+      background: #fff;
+    }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-info h3 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+    }
+    .contact-info > p {
+      font-size: 15px;
+      color: var(--text-gray);
+      line-height: 1.9;
+      margin-bottom: 36px;
+    }
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contact-item-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .contact-item-text h5 {
+      font-size: 13px;
+      color: var(--text-gray);
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+    .contact-item-text p {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.6;
+    }
+
+    /* 右侧信息卡 */
+    .contact-card {
+      background: var(--primary);
+      border-radius: 14px;
+      padding: 48px 40px;
+      color: #fff;
+    }
+    .contact-card .eng { font-size: 11px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; margin-bottom: 12px; }
+    .contact-card h4 { font-size: 22px; font-weight: 900; margin-bottom: 28px; }
+    .biz-info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .biz-info-list li {
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
+    .biz-info-list li .key {
+      color: rgba(255,255,255,0.6);
+    }
+    .biz-info-list li .val {
+      color: #fff;
+      font-weight: 600;
+      text-align: right;
+      max-width: 56%;
+    }
+    .biz-info-list li .val.highlight { color: var(--accent); }
+
+    /* ======== 底部 Footer ======== */
+    footer {
+      background: #0d1520;
+      color: rgba(255,255,255,0.6);
+      padding: 48px 0 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px;
+    }
+    .footer-brand .logo-text h1 { font-size: 16px; margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; line-height: 1.9; color: rgba(255,255,255,0.5); }
+    .footer-col h5 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+    .footer-col a, .footer-col p {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      line-height: 2;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--accent); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    .footer-bottom .icp { color: rgba(255,255,255,0.35); }
+
+    /* ======== 智能系统板块 ======== */
+    #intelligent {
+      background: #fff;
+    }
+    .intelligent-intro {
+      max-width: 780px;
+      margin: 0 auto 56px;
+      text-align: center;
+    }
+    .intelligent-intro p {
+      font-size: 16px;
+      color: var(--text-gray);
+      line-height: 1.9;
+    }
+    .intelligent-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+    .int-card {
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: all 0.35s;
+      position: relative;
+    }
+    .int-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 56px rgba(26,39,68,0.14);
+      border-color: rgba(212,160,32,0.3);
+    }
+    .int-img {
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+    .int-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .int-card:hover .int-img img {
+      transform: scale(1.08);
+    }
+    .int-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,53,0.7) 0%, transparent 60%);
+    }
+    .int-img-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+    .int-body {
+      padding: 22px 22px 20px;
+    }
+    .int-icon-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .int-icon {
+      width: 42px; height: 42px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .int-body h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+    .int-body p {
+      font-size: 13.5px;
+      color: var(--text-gray);
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+    .int-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .int-tag {
+      background: rgba(26,39,68,0.06);
+      color: var(--primary);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    /* 主打业务：路口信号灯 大卡片 */
+    .int-featured {
+      grid-column: span 3;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid rgba(212,160,32,0.3);
+      box-shadow: 0 8px 32px rgba(26,39,68,0.1);
+    }
+    .int-featured .int-img {
+      height: 320px;
+    }
+    .int-featured .int-body {
+      padding: 40px 36px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .int-featured .int-body h4 {
+      font-size: 26px;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+    .int-featured .int-body p {
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .int-featured .int-tag {
+      background: rgba(255,255,255,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(212,160,32,0.3);
+    }
+    .int-featured .int-label {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 5px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+    }
+    .int-more-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(212,160,32,0.4);
+      padding-bottom: 3px;
+      transition: all 0.25s;
+    }
+    .int-more-link:hover {
+      border-bottom-color: var(--accent);
+      letter-spacing: 1px;
+    }
+
+    /* ======== 响应式 ======== */
+    @media (max-width: 900px) {
+      .hero h2 { font-size: 34px; }
+      .hero-graphic { display: none; }
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .biz-grid { grid-template-columns: 1fr 1fr; }
+      .quali-grid { grid-template-columns: 1fr 1fr; }
+      .cases-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 28px; }
+      nav { display: none; }
+      .intelligent-grid { grid-template-columns: 1fr 1fr; }
+      .int-featured { grid-column: span 2; grid-template-columns: 1fr; }
+      .int-featured .int-img { height: 220px; }
+    }
+    @media (max-width: 600px) {
+      .biz-grid { grid-template-columns: 1fr; }
+      .cases-grid { grid-template-columns: 1fr; }
+      .quali-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 28px; }
+      .process-row { flex-direction: column; }
+      .process-row::before { display: none; }
+      .intelligent-grid { grid-template-columns: 1fr; }
+      .int-featured { grid-column: span 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- 导航 -->
+<header>
+  <div class="nav-wrap">
+    <div class="logo-area">
+      <div class="logo-icon">振邦</div>
+      <div class="logo-text">
+        <h1>广西振邦建设工程有限公司</h1>
+        <p>ZHENBANG CONSTRUCTION</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#about">公司简介</a>
+      <a href="about.html">关于我们</a>
+      <a href="#business">核心业务</a>
+      <a href="#intelligent">智能系统</a>
+      <a href="qualifications.html">资质荣誉</a>
+      <a href="#cases">工程案例</a>
+      <a href="#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero 首屏 -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-tag">公路交通安全设施 · 专业承包一级 · 智能交通系统</div>
+    <h2>专注公路<span>安全设施</span><br>智能交通系统</h2>
+    <p class="hero-sub">ZHENBANG CONSTRUCTION · INTELLIGENT TRAFFIC</p>
+    <p class="hero-desc">
+      广西振邦建设工程有限公司成立于2006年，深耕公路交通安全设施工程领域近20年，
+      持有公路交通工程（公路安全设施分项）专业承包<strong style="color:var(--accent)">一级资质</strong>，
+      专注护栏安装、标志标牌、交通标线及市政设施建设，同时承接智能交通、视频监控、人脸识别、
+      路口信号灯控制及园区智能管理系统，为广西乃至全国公路安全和智慧城市建设保驾护航。
+    </p>
+    <div class="hero-btns">
+      <a href="#business" class="btn-primary">了解我们的业务</a>
+      <a href="#contact" class="btn-outline">立即联系我们</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="num">18<span>+</span></span>
+        <span class="label">年行业经验</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">1500<span>万</span></span>
+        <span class="label">注册资本</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">8<span>大</span></span>
+        <span class="label">传统业务板块</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">10<span>+</span></span>
+        <span class="label">智能系统项目</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">A<span>级</span></span>
+        <span class="label">纳税信用企业</span>
+      </div>
+    </div>
+  </div>
+  <!-- 右侧装饰圆 -->
+  <div class="hero-graphic">
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="center-badge">
+      <span class="big">一级</span>
+      专业承包<br>资质
+    </div>
+  </div>
+</section>
+
+<!-- 公司简介 -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">About Us</div>
+      <h2 class="section-title">公司简介</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-content">
+        <h3>深耕公路安全设施<br>成就振邦品质匠心</h3>
+        <p>
+          广西振邦建设工程有限公司（曾用名：北海兴邦交通附属设施有限公司），
+          成立于2006年6月16日，法定代表人韦克记，注册资本1520万元人民币，
+          是广西地区专注公路交通安全设施的专业施工企业。
+        </p>
+        <p>
+          公司总部及办公地址位于广西北海市海城区，另在北海市银海区设有生产工厂。
+          历经近20年发展，公司已形成集产品制造、工程施工、维护管理于一体的综合服务体系，
+          是广西公路建设领域的重要力量。
+        </p>
+        <div class="about-highlights">
+          <div class="highlight-item">
+            <div class="h-label">成立时间</div>
+            <div class="h-value">2006年6月16日</div>
+          </div>
+          <div class="highlight-item">
+            <div class="h-label">注册资本</div>
+            <div class="h-value">1520万元人民币</div>
+          </div>
+          <div class="highlight-item">
+            <div class="h-label">法定代表人</div>
+            <div class="h-value">韦克记</div>
+          </div>
+          <div class="highlight-item">
+            <div class="h-label">经营状态</div>
+            <div class="h-value">正常经营（开业）</div>
+          </div>
+          <div class="highlight-item">
+            <div class="h-label">纳税信用</div>
+            <div class="h-value">A级（2024年）</div>
+          </div>
+          <div class="highlight-item">
+            <div class="h-label">信用代码</div>
+            <div class="h-value">91450500788435201J</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-img-area">
+        <div class="about-img-box">
+          <div class="eng-text">Core Qualifications</div>
+          <h4>核心资质</h4>
+          <ul class="quali-list">
+            <li>公路交通工程（公路安全设施分项）<br>专业承包 <strong style="color:var(--accent)">一级资质</strong></li>
+            <li>拥有公路工程专业注册人员</li>
+            <li>拥有市政公用工程专业注册人员</li>
+            <li>拥有建筑工程专业注册人员</li>
+            <li>A级纳税信用企业（2024年认定）</li>
+            <li>多次荣获广西优质工程奖项</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="about.html" style="display:inline-block;border:2px solid var(--primary);color:var(--primary);padding:12px 34px;border-radius:6px;font-weight:700;font-size:15px;text-decoration:none;transition:.3s;" onmouseover="this.style.background='var(--primary)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--primary)'">了解公司详情 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 核心业务 -->
+<section id="business">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Our Business</div>
+      <h2 class="section-title">核心业务</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="biz-grid">
+      <!-- 护栏 -->
+      <div class="biz-card">
+        <div class="biz-icon">🛡️</div>
+        <h4>公路护栏工程</h4>
+        <p>专业承接高速公路、国省道及城市道路的波形梁护栏、混凝土护栏、防撞墩等各类防护设施的设计、制造、安装和维护工程。</p>
+        <div class="biz-tags">
+          <span class="biz-tag">波形梁护栏</span>
+          <span class="biz-tag">混凝土护栏</span>
+          <span class="biz-tag">防撞墩</span>
+        </div>
+        <a href="business_guardrail.html" class="biz-more">查看详情</a>
+      </div>
+      <!-- 标志标牌 -->
+      <div class="biz-card">
+        <div class="biz-icon">🚦</div>
+        <h4>交通标志标牌</h4>
+        <p>专业生产各类交通标志牌、指路标志、警告标志、禁令标志及配套设施，提供从设计制作到安装维护的一站式服务。</p>
+        <div class="biz-tags">
+          <span class="biz-tag">指路标志</span>
+          <span class="biz-tag">警告标志</span>
+          <span class="biz-tag">禁令标志</span>
+        </div>
+        <a href="business_signs.html" class="biz-more">查看详情</a>
+      </div>
+      <!-- 标线 -->
+      <div class="biz-card">
+        <div class="biz-icon">🛣️</div>
+        <h4>交通标线施工</h4>
+        <p>承接高速公路、城市道路、停车场等各类交通标线施工，包括白色、黄色实线虚线、导向箭头、文字标线等全系列产品。</p>
+        <div class="biz-tags">
+          <span class="biz-tag">热熔标线</span>
+          <span class="biz-tag">冷涂标线</span>
+          <span class="biz-tag">反光标线</span>
+        </div>
+        <a href="business_marking.html" class="biz-more">查看详情</a>
+      </div>
+      <!-- 市政设施 -->
+      <div class="biz-card">
+        <div class="biz-icon">🏙️</div>
+        <h4>市政交通设施</h4>
+        <p>承接城市道路交通设施建设项目，包括红绿灯、交通监控、城市护栏、隔离墩、道路标识系统等市政公用工程。</p>
+        <div class="biz-tags">
+          <span class="biz-tag">信号灯系统</span>
+          <span class="biz-tag">隔离设施</span>
+          <span class="biz-tag">交通监控</span>
+        </div>
+        <a href="business_municipal.html" class="biz-more">查看详情</a>
+      </div>
+      <!-- 产品制造 -->
+      <div class="biz-card">
+        <div class="biz-icon">🏭</div>
+        <h4>产品制造与销售</h4>
+        <p>自有工厂，专业生产交通安全设施相关产品，包括金属标牌、电气信号设备、金属结构件、水泥制品、玻璃纤维制品等。</p>
+        <div class="biz-tags">
+          <span class="biz-tag">金属标牌</span>
+          <span class="biz-tag">水泥制品</span>
+          <span class="biz-tag">玻璃纤维</span>
+        </div>
+      </div>
+      <!-- 工程配套 -->
+      <div class="biz-card">
+        <div class="biz-icon">🔧</div>
+        <h4>工程配套服务</h4>
+        <p>提供建筑劳务分包、道路养护、工程监理咨询及施工设备租赁等配套服务，全程保障工程质量与进度。</p>
+        <div class="biz-tags">
+          <span class="biz-tag">道路养护</span>
+          <span class="biz-tag">设备租赁</span>
+          <span class="biz-tag">工程监理</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 智能系统业务 -->
+<section id="intelligent" style="background:var(--bg-light);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Intelligent Systems</div>
+      <h2 class="section-title">智能交通与安防系统</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="intelligent-intro">
+      <p>振邦公司近年来积极拓展智能化业务，凭借深厚的交通设施工程经验，
+        延伸至智能交通控制、视频安防监控、智慧园区管理等领域，
+        为政府机构、企事业单位提供从设备集成到系统运维的全方位智能化解决方案。</p>
+    </div>
+    <div class="intelligent-grid">
+
+      <!-- 主打业务：路口信号灯控制系统 -->
+      <div class="int-featured int-card">
+        <div class="int-img">
+          <img src="images/intelligent_signal.jpg" alt="路口交通信号灯控制系统">
+          <div class="int-img-overlay"></div>
+        </div>
+        <div class="int-body">
+          <div class="int-label">核心主营业务</div>
+          <h4>路口交通信号灯<br>控制系统</h4>
+          <p>公司主要业务之一。承接城市路口、园区及道路交叉口的交通信号灯设计、安装与控制系统集成，
+            涵盖单路口控制器、区域协调控制、绿波带设计及远程运维管理，
+            实现智能化交通疏导，有效缓解城市交通拥堵。</p>
+          <div class="int-tags">
+            <span class="int-tag">信号控制器</span>
+            <span class="int-tag">绿波协调</span>
+            <span class="int-tag">区域联网控制</span>
+            <span class="int-tag">远程运维</span>
+            <span class="int-tag">倒计时显示</span>
+          </div>
+          <a href="business_intelligent.html" class="int-more-link">查看详情 →</a>
+        </div>
+      </div>
+
+      <!-- 道路视频监控 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_monitor.jpg" alt="道路视频监控系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">安防监控</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">📹</div>
+            <h4>道路视频监控系统</h4>
+          </div>
+          <p>承接城市道路、高速公路及公共区域的视频监控系统建设，
+            涵盖高清摄像机、补光灯、视频存储及智能分析平台集成，实现全天候实时监控。</p>
+          <div class="int-tags">
+            <span class="int-tag">高清摄像</span>
+            <span class="int-tag">智能分析</span>
+            <span class="int-tag">云端存储</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 电子警察 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_epol.jpg" alt="电子警察系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">执法设备</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">🚔</div>
+            <h4>电子警察系统</h4>
+          </div>
+          <p>承建路口电子警察抓拍系统，集成闯红灯抓拍、违章停车识别、车速检测及车牌识别功能，
+            与交管部门平台对接，实现自动违法取证与处理。</p>
+          <div class="int-tags">
+            <span class="int-tag">闯红灯抓拍</span>
+            <span class="int-tag">车牌识别</span>
+            <span class="int-tag">超速检测</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 人脸识别 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_face.jpg" alt="人脸识别系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">AI识别</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">👤</div>
+            <h4>人脸识别系统</h4>
+          </div>
+          <p>部署AI人脸识别终端，应用于门禁、考勤、安检等场景，
+            支持大规模人员库比对、陌生人告警及访客管理，保障重点区域安全。</p>
+          <div class="int-tags">
+            <span class="int-tag">门禁管控</span>
+            <span class="int-tag">考勤管理</span>
+            <span class="int-tag">陌生人告警</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 机房服务器 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_server.jpg" alt="机房信号灯服务器存储系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">机房建设</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">🖥️</div>
+            <h4>机房服务器与存储系统</h4>
+          </div>
+          <p>承建信号灯控制中心机房，提供服务器机柜、网络交换设备、
+            视频存储阵列及UPS不间断电源的设计采购与集成部署，确保系统稳定运行。</p>
+          <div class="int-tags">
+            <span class="int-tag">信号灯服务器</span>
+            <span class="int-tag">存储阵列</span>
+            <span class="int-tag">机房集成</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 道闸系统 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_barrier.jpg" alt="道闸系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">出入管控</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">🚧</div>
+            <h4>道闸系统</h4>
+          </div>
+          <p>承建停车场及园区出入口道闸系统，集成车牌识别、无感支付、
+            远程抬杆及访客预约功能，实现智能化车辆出入管控。</p>
+          <div class="int-tags">
+            <span class="int-tag">车牌识别</span>
+            <span class="int-tag">无感支付</span>
+            <span class="int-tag">远程控制</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 园区车辆管理 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_parking.jpg" alt="园区车辆管理系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">园区管理</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">🚗</div>
+            <h4>园区车辆管理系统</h4>
+          </div>
+          <p>为政府机关、工业园区提供完整的车辆管理解决方案，
+            包括停车诱导、车位检测、数字化管理平台及移动端APP，提升园区管理效率。</p>
+          <div class="int-tags">
+            <span class="int-tag">停车诱导</span>
+            <span class="int-tag">车位检测</span>
+            <span class="int-tag">管理平台</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 楼宇管理系统 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_building.jpg" alt="楼宇智能管理系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">楼宇智能</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">🏢</div>
+            <h4>楼宇智能管理系统</h4>
+          </div>
+          <p>承建楼宇自动化管理系统，集成视频监控、门禁、
+            访客管理、消防报警联动及能耗管理，构建智能化安全楼宇环境。</p>
+          <div class="int-tags">
+            <span class="int-tag">楼控系统</span>
+            <span class="int-tag">访客管理</span>
+            <span class="int-tag">能耗监测</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 门禁系统 -->
+      <div class="int-card">
+        <div class="int-img">
+          <img src="images/intelligent_access.jpg" alt="智能门禁系统">
+          <div class="int-img-overlay"></div>
+          <div class="int-img-badge">安全防护</div>
+        </div>
+        <div class="int-body">
+          <div class="int-icon-row">
+            <div class="int-icon">🔐</div>
+            <h4>智能门禁系统</h4>
+          </div>
+          <p>提供多种身份验证方式的门禁控制系统，支持刷卡、指纹、人脸、
+            二维码及手机蓝牙开门，与考勤系统无缝对接，满足不同场所安全管控需求。</p>
+          <div class="int-tags">
+            <span class="int-tag">多模式验证</span>
+            <span class="int-tag">考勤联动</span>
+            <span class="int-tag">权限管理</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:8px;">
+      <a href="business_intelligent.html" style="display:inline-block;background:var(--primary);color:#fff;padding:13px 40px;border-radius:6px;font-weight:700;font-size:15px;text-decoration:none;transition:.3s;letter-spacing:1px;" onmouseover="this.style.background='var(--primary-light)'" onmouseout="this.style.background='var(--primary)'">查看智能系统业务详情 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 资质荣誉 -->
+<section id="qualification">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Qualification</div>
+      <h2 class="section-title">资质荣誉</h2>
+      <div class="section-line" style="background:#d4a020;"></div>
+    </div>
+    <div class="quali-grid">
+      <div class="quali-card">
+        <div class="quali-num">18<span>+</span></div>
+        <h5>年专业积累</h5>
+        <p>2006年成立以来，专注公路交通安全设施领域</p>
+      </div>
+      <div class="quali-card">
+        <div class="quali-num">一<span>级</span></div>
+        <h5>专业承包资质</h5>
+        <p>公路安全设施分项专业承包一级（2017年）</p>
+      </div>
+      <div class="quali-card">
+        <div class="quali-num">A<span>级</span></div>
+        <h5>纳税信用评级</h5>
+        <p>2024年度A级纳税信用企业认定</p>
+      </div>
+      <div class="quali-card">
+        <div class="quali-num">1520<span>万</span></div>
+        <h5>注册资本</h5>
+        <p>雄厚资本实力，保障工程顺利实施</p>
+      </div>
+    </div>
+    <div class="quali-badge">
+      <div class="badge-icon">🏆</div>
+      <div class="badge-content">
+        <h4>公路交通工程（公路安全设施分项）专业承包一级</h4>
+        <p>
+          该资质为公路交通安全设施工程领域最高级别的专业承包资质，代表企业具备承担大型、复杂公路安全设施项目的综合实力。
+          广西振邦建设工程有限公司于2017年12月1日取得此核心资质，是公司核心竞争力的重要体现。
+        </p>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px;">
+      <a href="qualifications.html" style="display:inline-block;background:var(--accent);color:var(--primary);padding:13px 36px;border-radius:6px;font-weight:700;font-size:15px;text-decoration:none;transition:.3s;" onmouseover="this.style.background='#e6b830'" onmouseout="this.style.background='var(--accent)'">查看完整资质证书详情 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 实景照片画廊 -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Photo Gallery</div>
+      <h2 class="section-title">工程实景</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="gallery-intro">
+      <p>精选公路交通安全设施典型工程图片，涵盖高速公路护栏、交通标志标牌、热熔道路标线及市政设施等各类工程实景，展示广西振邦建设工程有限公司的专业施工能力与技术水平。</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item large">
+        <img src="images/guardrail_01.jpg" alt="高速公路护栏工程">
+        <div class="gallery-caption"><span>护栏工程</span>高速公路弯道防撞波形梁护栏实景</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/sign_02.jpg" alt="公路交通标志工程">
+        <div class="gallery-caption"><span>标志工程</span>公路桥梁段交通标志系统</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/marking_01.jpg" alt="热熔标线施工现场">
+        <div class="gallery-caption"><span>标线工程</span>热熔标线机械施工作业现场</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/construction_01.jpg" alt="公路施工现场">
+        <div class="gallery-caption"><span>施工现场</span>公路安全设施综合施工项目</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/municipal_01.jpg" alt="市政道路交叉口工程">
+        <div class="gallery-caption"><span>市政工程</span>城市道路交叉口交通设施</div>
+      </div>
+      <div class="gallery-item large">
+        <img src="images/marking_02.jpg" alt="道路标线综合工程">
+        <div class="gallery-caption"><span>标线全景</span>新建道路白色标线综合工程</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/guardrail_02.jpg" alt="护栏端头安装工程">
+        <div class="gallery-caption"><span>护栏工程</span>波形梁护栏端头防护安装</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/sign_01.jpg" alt="高速公路标志标牌">
+        <div class="gallery-caption"><span>标志工程</span>高速公路指路标志系统</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/municipal_02.jpg" alt="市政道路设施施工">
+        <div class="gallery-caption"><span>市政工程</span>道路交通标线设施施工</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/construction_02.jpg" alt="慢行道标线施工">
+        <div class="gallery-caption"><span>施工案例</span>非机动车道彩色标线施工</div>
+      </div>
+    </div>
+    <div class="gallery-more">
+      <a href="qualifications.html">查看更多项目案例 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 工程案例 -->
+<section id="cases">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Project Cases</div>
+      <h2 class="section-title">工程案例</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="cases-grid">
+      <!-- 案例1：护栏 -->
+      <div class="case-card">
+        <div class="case-img case-img-1">
+          <div class="case-img-icon">🛡️</div>
+          <div class="case-overlay">
+            <span class="case-cat">护栏工程</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>高速公路护栏安装工程</h4>
+          <p>承接广西境内多条高速公路的波形梁护栏、混凝土护栏及防撞设施安装，全线施工标准严格执行国家规范。</p>
+          <div class="case-meta">
+            <span>广西 · 高速公路</span>
+            <span class="case-link">护栏系统工程</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例2：标志 -->
+      <div class="case-card">
+        <div class="case-img case-img-2">
+          <div class="case-img-icon">🚦</div>
+          <div class="case-overlay">
+            <span class="case-cat">标志标牌</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>国省道交通标志系统工程</h4>
+          <p>承接广西区内国省道改造项目的标志标牌设计、制造与安装，提升道路信息化水平，保障行车安全。</p>
+          <div class="case-meta">
+            <span>广西 · 国省道</span>
+            <span class="case-link">标志标牌系统</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例3：标线 -->
+      <div class="case-card">
+        <div class="case-img case-img-3">
+          <div class="case-img-icon">🛣️</div>
+          <div class="case-overlay">
+            <span class="case-cat">标线施工</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>城市道路交通标线工程</h4>
+          <p>承接北海市城区及周边道路的热熔标线、反光涂料标线施工，有效规范交通秩序，提升行车安全性。</p>
+          <div class="case-meta">
+            <span>北海市 · 城市道路</span>
+            <span class="case-link">标线系统工程</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例4：市政 -->
+      <div class="case-card">
+        <div class="case-img case-img-4">
+          <div class="case-img-icon">🏙️</div>
+          <div class="case-overlay">
+            <span class="case-cat">市政设施</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>市政道路交通设施综合工程</h4>
+          <p>承接北海市多个市政道路改造项目，涵盖信号灯、隔离护栏、交通标志等市政设施一体化安装。</p>
+          <div class="case-meta">
+            <span>北海市 · 市政工程</span>
+            <span class="case-link">市政综合设施</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例5：道路养护 -->
+      <div class="case-card">
+        <div class="case-img case-img-5">
+          <div class="case-img-icon">🔧</div>
+          <div class="case-overlay">
+            <span class="case-cat">道路养护</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>公路安全设施定期养护工程</h4>
+          <p>承接多条在役公路的安全设施年度养护维修项目，确保护栏、标志、标线等设施始终处于良好运行状态。</p>
+          <div class="case-meta">
+            <span>广西 · 多项公路</span>
+            <span class="case-link">维护管理服务</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例6：路口信号灯 -->
+      <div class="case-card">
+        <div class="case-img case-img-6">
+          <div class="case-img-icon">🚥</div>
+          <div class="case-overlay">
+            <span class="case-cat">信号灯系统</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>城市路口交通信号灯控制系统</h4>
+          <p>承接北海市多个城市路口信号灯控制系统的建设，涵盖信号机安装、绿波协调及远程监控平台搭建。</p>
+          <div class="case-meta">
+            <span>北海市 · 智能交通</span>
+            <span class="case-link">信号控制系统</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例7：视频监控 -->
+      <div class="case-card">
+        <div class="case-img case-img-7">
+          <div class="case-img-icon">📹</div>
+          <div class="case-overlay">
+            <span class="case-cat">视频监控</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>道路视频监控及电子警察系统</h4>
+          <p>承接城市道路、路口视频监控与电子警察一体化建设，实现违章抓拍、事件检测与数据上传联网。</p>
+          <div class="case-meta">
+            <span>广西 · 交管系统</span>
+            <span class="case-link">安防监控工程</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例8：电子警察 -->
+      <div class="case-card">
+        <div class="case-img case-img-8">
+          <div class="case-img-icon">🚔</div>
+          <div class="case-overlay">
+            <span class="case-cat">电子执法</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>路口电子警察抓拍系统工程</h4>
+          <p>建设路口多功能执法设备，集成闯红灯抓拍、违停识别、车牌自动识别及数据传输，提升城市执法效率。</p>
+          <div class="case-meta">
+            <span>广西 · 城市执法</span>
+            <span class="case-link">电子警察系统</span>
+          </div>
+        </div>
+      </div>
+      <!-- 案例9：园区智能管理 -->
+      <div class="case-card">
+        <div class="case-img case-img-9">
+          <div class="case-img-icon">🏙️</div>
+          <div class="case-overlay">
+            <span class="case-cat">智慧园区</span>
+          </div>
+        </div>
+        <div class="case-body">
+          <h4>智慧园区综合管理系统工程</h4>
+          <p>为政府机关及工业园区提供综合智能管理系统，包含门禁、道闸、车辆管理、人脸识别及楼宇监控一体化解决方案。</p>
+          <div class="case-meta">
+            <span>广西 · 园区建设</span>
+            <span class="case-link">智慧园区系统</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务流程 -->
+<section id="process">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Service Process</div>
+      <h2 class="section-title">服务流程</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="process-row">
+      <div class="process-item">
+        <div class="process-num">01</div>
+        <h4>项目咨询</h4>
+        <p>了解客户需求，提供初步方案评估与可行性建议</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">02</div>
+        <h4>勘测设计</h4>
+        <p>现场踏勘，出具专业施工设计方案与报价清单</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">03</div>
+        <h4>合同签订</h4>
+        <p>明确施工范围、工期、质量及验收标准</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">04</div>
+        <h4>施工建设</h4>
+        <p>严格按图纸施工，全程质量管控，确保工期</p>
+      </div>
+      <div class="process-item">
+        <div class="process-num">05</div>
+        <h4>验收交付</h4>
+        <p>竣工验收，提供完整竣工资料与质保服务</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 联系我们 -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Contact Us</div>
+      <h2 class="section-title">联系我们</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>与我们取得联系</h3>
+        <p>
+          我们在广西北海，随时欢迎您来访洽谈合作。
+          无论是工程承包、产品采购还是技术咨询，
+          振邦团队将以专业的态度为您提供优质服务。
+        </p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">🏢</div>
+            <div class="contact-item-text">
+              <h5>办公地址</h5>
+              <p>广西北海市海城区北部湾东路<br>花园村小区16栋</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🏭</div>
+            <div class="contact-item-text">
+              <h5>工厂地址</h5>
+              <p>广西北海市银海区北铁公路海陆村</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📋</div>
+            <div class="contact-item-text">
+              <h5>统一信用代码</h5>
+              <p>91450500788435201J</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="eng">Company Information</div>
+        <h4>公司基本信息</h4>
+        <ul class="biz-info-list">
+          <li>
+            <span class="key">企业全称</span>
+            <span class="val">广西振邦建设工程有限公司</span>
+          </li>
+          <li>
+            <span class="key">英文名称</span>
+            <span class="val">Guangxi Zhenbang Construction Engineering Co. LTD</span>
+          </li>
+          <li>
+            <span class="key">成立时间</span>
+            <span class="val">2006年6月16日</span>
+          </li>
+          <li>
+            <span class="key">注册资本</span>
+            <span class="val highlight">1520万元人民币</span>
+          </li>
+          <li>
+            <span class="key">核心资质</span>
+            <span class="val highlight">公路安全设施专业承包一级</span>
+          </li>
+          <li>
+            <span class="key">纳税信用</span>
+            <span class="val highlight">A级（2024年）</span>
+          </li>
+          <li>
+            <span class="key">法定代表人</span>
+            <span class="val">韦克记</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 底部 -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo-area" style="margin-bottom:14px;">
+          <div class="logo-icon" style="width:36px;height:36px;font-size:16px;">振邦</div>
+          <div class="logo-text">
+            <h1 style="color:#fff;">广西振邦建设工程有限公司</h1>
+          </div>
+        </div>
+        <p>
+          专注公路交通安全设施工程近20年，持有公路安全设施分项专业承包一级资质，
+          同时深耕智能交通、视频监控、路口信号灯及智慧园区等智能系统领域，
+          为广西及周边省份的公路建设与智慧城市提供专业可靠的服务。
+        </p>
+      </div>
+      <div class="footer-col">
+        <h5>快速导航</h5>
+        <a href="#home">首页</a>
+        <a href="#about">公司简介</a>
+        <a href="#business">核心业务</a>
+        <a href="#intelligent">智能系统</a>
+        <a href="#qualification">资质荣誉</a>
+        <a href="#cases">工程案例</a>
+        <a href="#contact">联系我们</a>
+      </div>
+      <div class="footer-col">
+        <h5>联系信息</h5>
+        <p>📍 广西北海市海城区</p>
+        <p>北部湾东路花园村小区16栋</p>
+        <p style="margin-top:10px;">🏭 广西北海市银海区</p>
+        <p>北铁公路海陆村（工厂）</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 广西振邦建设工程有限公司 版权所有</span>
+      <span class="icp">ZHENBANG CONSTRUCTION · 专注公路安全设施</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // 导航滚动高亮
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 100;
+      if (window.scrollY >= sectionTop) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.style.color = '';
+      link.style.background = '';
+      if (link.getAttribute('href') === '#' + current) {
+        link.style.color = '#d4a020';
+        link.style.background = 'rgba(212,160,32,0.12)';
+      }
+    });
+  });
+
+  // 数字动画
+  function animateCounter(el, target, suffix) {
+    let start = 0;
+    const duration = 1500;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const val = Math.floor(progress * target);
+      el.textContent = val + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // 数字动画触发
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animated');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.quali-card, .biz-card, .case-card').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

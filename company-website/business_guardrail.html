@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>公路护栏工程 | 广西振邦建设工程有限公司</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "微软雅黑","Microsoft YaHei","PingFang SC",sans-serif; color:#333; background:#fff; line-height:1.6; }
+    :root {
+      --primary: #1a2744;
+      --primary-light: #233467;
+      --accent: #d4a020;
+      --bg-light: #f5f6f8;
+      --text-gray: #666;
+      --border: #e0e4ea;
+    }
+
+    /* ===== 顶部导航 ===== */
+    header {
+      position: fixed; top:0; left:0; right:0; z-index:999;
+      background: var(--primary);
+      padding: 0 40px;
+      height: 68px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .logo-wrap { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .logo-icon {
+      width:40px; height:40px; background:var(--accent);
+      border-radius:8px; display:flex; align-items:center; justify-content:center;
+      font-size:20px; font-weight:900; color:var(--primary);
+    }
+    .logo-text { color:#fff; }
+    .logo-text strong { display:block; font-size:15px; font-weight:800; }
+    .logo-text span { font-size:10px; letter-spacing:2px; color:rgba(255,255,255,0.55); }
+    .back-btn {
+      display:inline-flex; align-items:center; gap:8px;
+      color:#fff; text-decoration:none; font-size:14px;
+      padding: 8px 20px; border:1px solid rgba(255,255,255,0.3);
+      border-radius:24px; transition:all 0.3s;
+    }
+    .back-btn:hover { background:var(--accent); border-color:var(--accent); color:var(--primary); }
+    .back-btn svg { width:16px; height:16px; }
+
+    /* ===== Hero 区域 ===== */
+    .page-hero {
+      margin-top: 68px;
+      background: linear-gradient(135deg, var(--primary) 0%, #0f1a35 100%);
+      padding: 80px 40px 60px;
+      position: relative; overflow:hidden;
+    }
+    .page-hero::before {
+      content:'';
+      position:absolute; top:-100px; right:-100px;
+      width:500px; height:500px;
+      border-radius:50%; border:2px solid rgba(212,160,32,0.12);
+    }
+    .page-hero::after {
+      content:'';
+      position:absolute; top:40px; right:60px;
+      width:300px; height:300px;
+      border-radius:50%; border:1px solid rgba(212,160,32,0.08);
+    }
+    .hero-container { max-width:1140px; margin:0 auto; position:relative; z-index:1; }
+    .breadcrumb { font-size:13px; color:rgba(255,255,255,0.5); margin-bottom:20px; }
+    .breadcrumb a { color:var(--accent); text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .page-hero h1 { font-size:42px; font-weight:900; color:#fff; margin-bottom:16px; letter-spacing:1px; }
+    .page-hero h1 span { color:var(--accent); }
+    .page-hero .subtitle { font-size:16px; color:rgba(255,255,255,0.7); max-width:600px; line-height:1.8; }
+    .hero-tags { display:flex; gap:10px; flex-wrap:wrap; margin-top:28px; }
+    .hero-tag {
+      background:rgba(212,160,32,0.15); color:var(--accent);
+      border:1px solid rgba(212,160,32,0.3);
+      padding:5px 16px; border-radius:20px; font-size:13px;
+    }
+
+    /* ===== 通用容器 ===== */
+    .container { max-width:1140px; margin:0 auto; padding:0 40px; }
+    section { padding:80px 0; }
+    .section-tag { font-size:11px; letter-spacing:4px; color:var(--accent); text-transform:uppercase; margin-bottom:10px; }
+    .section-title { font-size:30px; font-weight:900; color:var(--primary); margin-bottom:12px; }
+    .section-line { width:48px; height:3px; background:var(--accent); border-radius:2px; margin-bottom:40px; }
+
+    /* ===== 业务概述 ===== */
+    .overview-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+    .overview-text p { font-size:15px; color:var(--text-gray); line-height:2; margin-bottom:16px; }
+    .overview-img {
+      border-radius:14px; overflow:hidden;
+      box-shadow: 0 20px 60px rgba(26,39,68,0.15);
+      background: linear-gradient(135deg, #e8edf5 0%, #d0d8e8 100%);
+      aspect-ratio: 4/3;
+      display:flex; align-items:center; justify-content:center;
+      position:relative;
+    }
+    .img-placeholder {
+      text-align:center; color:var(--primary); opacity:0.4;
+    }
+    .img-placeholder svg { width:80px; height:80px; margin-bottom:12px; display:block; margin:0 auto 12px; }
+    .img-placeholder p { font-size:14px; }
+
+    /* 真实图片样式 */
+    .overview-img img {
+      width:100%; height:100%; object-fit:cover; display:block;
+    }
+
+    /* ===== 产品系列 ===== */
+    #products { background: var(--bg-light); }
+    .products-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+    .product-card {
+      background:#fff; border-radius:12px; overflow:hidden;
+      box-shadow:0 4px 20px rgba(26,39,68,0.07);
+      transition:all 0.3s;
+    }
+    .product-card:hover { transform:translateY(-6px); box-shadow:0 16px 48px rgba(26,39,68,0.14); }
+    .product-img {
+      height:200px; background:linear-gradient(135deg, #c8d4e8 0%, #a8b8d0 100%);
+      display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+    }
+    .product-img img { width:100%; height:100%; object-fit:cover; display:block; }
+    .product-img-placeholder { text-align:center; color:#7a8aaa; }
+    .product-img-placeholder .icon { font-size:48px; display:block; margin-bottom:8px; }
+    .product-img-placeholder p { font-size:12px; }
+    .product-label {
+      position:absolute; bottom:10px; left:10px;
+      background:var(--primary); color:#fff;
+      font-size:11px; padding:3px 10px; border-radius:10px;
+    }
+    .product-info { padding:20px; }
+    .product-info h4 { font-size:16px; font-weight:800; color:var(--primary); margin-bottom:8px; }
+    .product-info p { font-size:13px; color:var(--text-gray); line-height:1.8; }
+    .product-specs { margin-top:12px; display:flex; flex-wrap:wrap; gap:6px; }
+    .spec-tag { background:rgba(26,39,68,0.06); color:var(--primary); font-size:11px; padding:2px 10px; border-radius:12px; }
+
+    /* ===== 施工工艺 ===== */
+    .process-steps { display:grid; grid-template-columns:repeat(5,1fr); gap:0; position:relative; }
+    .process-steps::before {
+      content:''; position:absolute;
+      top:36px; left:10%; right:10%; height:2px;
+      background:linear-gradient(to right, var(--accent), var(--primary));
+      z-index:0;
+    }
+    .step-item { text-align:center; position:relative; z-index:1; padding:0 10px; }
+    .step-num {
+      width:72px; height:72px; border-radius:50%;
+      background:var(--primary); color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:24px; font-weight:900; margin:0 auto 16px;
+      border:4px solid #fff;
+      box-shadow:0 4px 16px rgba(26,39,68,0.2);
+    }
+    .step-item:nth-child(odd) .step-num { background:var(--accent); color:var(--primary); }
+    .step-title { font-size:13px; font-weight:700; color:var(--primary); margin-bottom:6px; }
+    .step-desc { font-size:12px; color:var(--text-gray); line-height:1.6; }
+
+    /* ===== 应用场景 ===== */
+    #scenarios { background: var(--bg-light); }
+    .scenario-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:24px; }
+    .scenario-card {
+      border-radius:12px; overflow:hidden;
+      background:#fff; display:flex;
+      box-shadow:0 4px 16px rgba(26,39,68,0.07);
+    }
+    .scenario-icon-area {
+      width:100px; min-height:120px;
+      background:linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      display:flex; align-items:center; justify-content:center;
+      font-size:36px; flex-shrink:0;
+    }
+    .scenario-content { padding:20px 24px; }
+    .scenario-content h5 { font-size:16px; font-weight:800; color:var(--primary); margin-bottom:8px; }
+    .scenario-content p { font-size:13px; color:var(--text-gray); line-height:1.8; }
+
+    /* ===== 服务承诺 ===== */
+    .promise-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+    .promise-item { text-align:center; padding:36px 20px; border-radius:12px; background:var(--bg-light); transition:all 0.3s; }
+    .promise-item:hover { background:var(--primary); }
+    .promise-item:hover .promise-title, .promise-item:hover .promise-desc { color:#fff; }
+    .promise-icon { font-size:36px; margin-bottom:16px; }
+    .promise-title { font-size:15px; font-weight:800; color:var(--primary); margin-bottom:8px; }
+    .promise-desc { font-size:13px; color:var(--text-gray); line-height:1.7; }
+
+    /* ===== CTA 底部 ===== */
+    .cta-section {
+      background:linear-gradient(135deg, var(--primary) 0%, #0f1a35 100%);
+      padding:70px 40px; text-align:center;
+    }
+    .cta-section h3 { font-size:30px; font-weight:900; color:#fff; margin-bottom:14px; }
+    .cta-section p { font-size:15px; color:rgba(255,255,255,0.7); margin-bottom:36px; }
+    .cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .btn-gold {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--accent); color:var(--primary);
+      padding:14px 36px; border-radius:6px;
+      font-size:15px; font-weight:800; text-decoration:none;
+      transition:all 0.3s;
+    }
+    .btn-gold:hover { background:#e6b830; transform:translateY(-2px); box-shadow:0 8px 24px rgba(212,160,32,0.4); }
+    .btn-outline-white {
+      display:inline-flex; align-items:center; gap:8px;
+      border:2px solid rgba(255,255,255,0.4); color:#fff;
+      padding:13px 36px; border-radius:6px;
+      font-size:15px; font-weight:600; text-decoration:none;
+      transition:all 0.3s;
+    }
+    .btn-outline-white:hover { border-color:#fff; background:rgba(255,255,255,0.1); }
+
+    /* ===== Footer ===== */
+    footer {
+      background:#0d1520; color:rgba(255,255,255,0.5);
+      padding:24px 40px; text-align:center; font-size:13px;
+    }
+    footer a { color:var(--accent); text-decoration:none; }
+
+    /* ===== 响应式 ===== */
+    @media(max-width:900px){
+      .overview-grid { grid-template-columns:1fr; }
+      .products-grid { grid-template-columns:1fr 1fr; }
+      .promise-grid { grid-template-columns:1fr 1fr; }
+      .process-steps { grid-template-columns:1fr; }
+      .process-steps::before { display:none; }
+      .page-hero h1 { font-size:28px; }
+    }
+    @media(max-width:600px){
+      .products-grid { grid-template-columns:1fr; }
+      .scenario-grid { grid-template-columns:1fr; }
+      .promise-grid { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 顶部导航 -->
+<header>
+  <a href="index.html" class="logo-wrap">
+    <div class="logo-icon">振</div>
+    <div class="logo-text">
+      <strong>广西振邦建设工程有限公司</strong>
+      <span>ZHENBANG CONSTRUCTION</span>
+    </div>
+  </a>
+  <a href="index.html#business" class="back-btn">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    返回核心业务
+  </a>
+</header>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="hero-container">
+    <div class="breadcrumb">
+      <a href="index.html">首页</a> &nbsp;/&nbsp;
+      <a href="index.html#business">核心业务</a> &nbsp;/&nbsp;
+      公路护栏工程
+    </div>
+    <h1>公路<span>护栏</span>工程</h1>
+    <p class="subtitle">
+      专业承接高速公路、国省道及城市道路的各类防护设施工程，
+      从设计制造到安装维护，全程保障道路行车安全。
+    </p>
+    <div class="hero-tags">
+      <span class="hero-tag">波形梁护栏</span>
+      <span class="hero-tag">混凝土护栏</span>
+      <span class="hero-tag">防撞墩</span>
+      <span class="hero-tag">缆索护栏</span>
+      <span class="hero-tag">端头处理</span>
+      <span class="hero-tag">安装维护</span>
+    </div>
+  </div>
+</div>
+
+<!-- 业务概述 -->
+<section id="overview">
+  <div class="container">
+    <div class="overview-grid">
+      <div class="overview-text">
+        <div class="section-tag">Business Overview</div>
+        <h2 class="section-title">业务概述</h2>
+        <div class="section-line"></div>
+        <p>
+          广西振邦建设工程有限公司在公路护栏工程领域深耕近20年，是广西地区专业承接公路护栏工程的一级资质企业。
+          公司拥有一支经验丰富的专业施工团队，配备先进的施工机械设备，能够承接各类规模的护栏安装及维修工程。
+        </p>
+        <p>
+          公司承接工程范围涵盖高速公路、国道、省道及城市快速路的新建、改扩建及维修养护工程，
+          产品符合国家交通运输部相关标准规范，施工质量稳定可靠，深受业主单位认可与信赖。
+        </p>
+        <p>
+          凭借专业承包一级资质，公司可独立承接全类型公路护栏工程，
+          为广西、广东、贵州等多省区的高速公路建设提供了优质保障。
+        </p>
+      </div>
+      <div class="overview-img">
+        <!-- 如有实际图片，替换为：<img src="images/guardrail_overview.jpg" alt="公路护栏工程"> -->
+        <div class="img-placeholder">
+          <svg viewBox="0 0 80 80" fill="none" stroke="#1a2744" stroke-width="2">
+            <rect x="5" y="30" width="70" height="10" rx="3"/>
+            <line x1="15" y1="30" x2="15" y2="55"/>
+            <line x1="30" y1="30" x2="30" y2="55"/>
+            <line x1="45" y1="30" x2="45" y2="55"/>
+            <line x1="60" y1="30" x2="60" y2="55"/>
+            <line x1="5" y1="55" x2="75" y2="55"/>
+          </svg>
+          <p>公路护栏施工现场</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 产品系列 -->
+<section id="products">
+  <div class="container">
+    <div class="section-tag">Product Series</div>
+    <h2 class="section-title">产品系列</h2>
+    <div class="section-line"></div>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <div class="product-img">
+          <!-- <img src="images/wave_beam.jpg" alt="波形梁护栏"> -->
+          <div class="product-img-placeholder">
+            <span class="icon">🛡️</span>
+            <p>波形梁护栏</p>
+          </div>
+          <span class="product-label">主力产品</span>
+        </div>
+        <div class="product-info">
+          <h4>波形梁护栏</h4>
+          <p>采用热轧钢板冷弯成型，具有良好的吸能缓冲性能，广泛应用于高速公路路侧及中央分隔带防护。</p>
+          <div class="product-specs">
+            <span class="spec-tag">A级</span>
+            <span class="spec-tag">SB级</span>
+            <span class="spec-tag">SS级</span>
+            <span class="spec-tag">热镀锌处理</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <!-- <img src="images/concrete_barrier.jpg" alt="混凝土护栏"> -->
+          <div class="product-img-placeholder">
+            <span class="icon">🧱</span>
+            <p>混凝土护栏</p>
+          </div>
+          <span class="product-label">高强防护</span>
+        </div>
+        <div class="product-info">
+          <h4>混凝土护栏</h4>
+          <p>预制或现浇混凝土护栏，防护等级高，耐久性强，适用于高速公路中央分隔带及桥梁防撞。</p>
+          <div class="product-specs">
+            <span class="spec-tag">预制安装</span>
+            <span class="spec-tag">现浇施工</span>
+            <span class="spec-tag">F型/New Jersey型</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <!-- <img src="images/anti_collision.jpg" alt="防撞墩"> -->
+          <div class="product-img-placeholder">
+            <span class="icon">🔶</span>
+            <p>防撞墩及端头</p>
+          </div>
+          <span class="product-label">配套产品</span>
+        </div>
+        <div class="product-info">
+          <h4>防撞墩及端头处理</h4>
+          <p>护栏端头防撞缓冲设施，有效减少车辆碰撞端头时的伤害，包括各类防撞桶、缓冲端头等。</p>
+          <div class="product-specs">
+            <span class="spec-tag">防撞桶</span>
+            <span class="spec-tag">缓冲端头</span>
+            <span class="spec-tag">过渡段</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <!-- <img src="images/cable_barrier.jpg" alt="缆索护栏"> -->
+          <div class="product-img-placeholder">
+            <span class="icon">〰️</span>
+            <p>缆索护栏</p>
+          </div>
+          <span class="product-label">柔性防护</span>
+        </div>
+        <div class="product-info">
+          <h4>缆索护栏</h4>
+          <p>柔性钢缆护栏系统，重量轻、透视性好、视觉影响小，适用于山区高速公路及景区道路。</p>
+          <div class="product-specs">
+            <span class="spec-tag">三索系统</span>
+            <span class="spec-tag">四索系统</span>
+            <span class="spec-tag">柔性端头</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <!-- <img src="images/bridge_railing.jpg" alt="桥梁护栏"> -->
+          <div class="product-img-placeholder">
+            <span class="icon">🌉</span>
+            <p>桥梁护栏</p>
+          </div>
+          <span class="product-label">特种工程</span>
+        </div>
+        <div class="product-info">
+          <h4>桥梁护栏</h4>
+          <p>专为桥梁设计的金属护栏或混凝土护栏，满足桥梁荷载及抗冲击要求，兼顾美观与功能。</p>
+          <div class="product-specs">
+            <span class="spec-tag">金属护栏</span>
+            <span class="spec-tag">混凝土栏</span>
+            <span class="spec-tag">组合式</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img">
+          <!-- <img src="images/maintenance.jpg" alt="维修养护"> -->
+          <div class="product-img-placeholder">
+            <span class="icon">🔧</span>
+            <p>维修养护服务</p>
+          </div>
+          <span class="product-label">售后服务</span>
+        </div>
+        <div class="product-info">
+          <h4>维修养护服务</h4>
+          <p>提供已建护栏的定期检查、局部更换、整体维修及防锈处理等全周期养护服务。</p>
+          <div class="product-specs">
+            <span class="spec-tag">应急维修</span>
+            <span class="spec-tag">防锈处理</span>
+            <span class="spec-tag">定期巡检</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 施工工艺 -->
+<section id="process">
+  <div class="container">
+    <div class="section-tag">Construction Process</div>
+    <h2 class="section-title">施工工艺流程</h2>
+    <div class="section-line"></div>
+    <div class="process-steps">
+      <div class="step-item">
+        <div class="step-num">01</div>
+        <div class="step-title">现场勘测</div>
+        <div class="step-desc">地形测量、地质勘察，确定护栏类型与安装方案</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">02</div>
+        <div class="step-title">放线定位</div>
+        <div class="step-desc">按设计图纸精准放线，标注立柱位置</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">03</div>
+        <div class="step-title">立柱安装</div>
+        <div class="step-desc">机械打孔或爆破开槽，立柱定位校正</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">04</div>
+        <div class="step-title">横梁安装</div>
+        <div class="step-desc">逐段安装波形梁，螺栓紧固连接</div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">05</div>
+        <div class="step-title">验收交付</div>
+        <div class="step-desc">质量检测、指标验收，签署竣工文件</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 应用场景 -->
+<section id="scenarios">
+  <div class="container">
+    <div class="section-tag">Application Scenarios</div>
+    <h2 class="section-title">适用场景</h2>
+    <div class="section-line"></div>
+    <div class="scenario-grid">
+      <div class="scenario-card">
+        <div class="scenario-icon-area">🛣️</div>
+        <div class="scenario-content">
+          <h5>高速公路</h5>
+          <p>路侧防护栏、中央分隔带护栏、互通匝道防护，满足高速公路高防护等级要求，确保高速行驶安全。</p>
+        </div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon-area">🏔️</div>
+        <div class="scenario-content">
+          <h5>山区公路</h5>
+          <p>针对山区弯道多、坡度大的特点，采用加强型护栏及缆索护栏，有效防止车辆冲出路外。</p>
+        </div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon-area">🌉</div>
+        <div class="scenario-content">
+          <h5>桥梁及高架</h5>
+          <p>满足桥梁结构荷载要求，安装防撞护栏及人行护栏，同时兼顾桥梁整体美观效果。</p>
+        </div>
+      </div>
+      <div class="scenario-card">
+        <div class="scenario-icon-area">🏙️</div>
+        <div class="scenario-content">
+          <h5>城市道路</h5>
+          <p>城市主干道、快速路的中央隔离护栏、人行道护栏，采用美观耐用的城市型护栏产品。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 服务承诺 -->
+<section id="promise">
+  <div class="container">
+    <div class="section-tag">Our Commitment</div>
+    <h2 class="section-title">服务承诺</h2>
+    <div class="section-line"></div>
+    <div class="promise-grid">
+      <div class="promise-item">
+        <div class="promise-icon">🏆</div>
+        <div class="promise-title">质量保证</div>
+        <div class="promise-desc">所有产品符合国家交通运输部颁布的相关行业标准，出厂前严格检测</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">⚡</div>
+        <div class="promise-title">快速响应</div>
+        <div class="promise-desc">接到维修需求48小时内响应，紧急工程可24小时到场处置</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">🔍</div>
+        <div class="promise-title">专业施工</div>
+        <div class="promise-desc">持证专业施工人员，配备专用机械设备，工艺流程规范标准</div>
+      </div>
+      <div class="promise-item">
+        <div class="promise-icon">📋</div>
+        <div class="promise-title">完整档案</div>
+        <div class="promise-desc">提供完整的施工记录、质检报告及竣工资料，便于后期维护管理</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+
+<!-- 工程实景照片 -->
+<section id="gallery" style="background:#f5f6f8; padding:80px 0;">
+  <div style="max-width:1200px; margin:0 auto; padding:0 40px;">
+    <div style="margin-bottom:48px;">
+      <div style="font-size:11px;letter-spacing:4px;color:#d4a020;text-transform:uppercase;margin-bottom:12px;">Photo Gallery</div>
+      <h2 style="font-size:30px;font-weight:900;color:#1a2744;margin-bottom:12px;">工程实景</h2>
+      <div style="width:48px;height:3px;background:#d4a020;border-radius:2px;margin-bottom:20px;"></div>
+      <p style="color:#666;font-size:15px;max-width:600px;">以下精选公路护栏工程典型图片，展示波形梁护栏、防撞设施等专业施工场景，体现广西振邦建设工程有限公司的施工水准。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div style="grid-column:span 2;border-radius:10px;overflow:hidden;position:relative;height:300px;">
+        <img src="images/guardrail_01.jpg" alt="高速公路防撞护栏弯道实景" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">护栏工程</span>
+          高速公路弯道防撞波形梁护栏
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:300px;">
+        <img src="images/guardrail_03.jpg" alt="公路护栏工程实景" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">护栏工程</span>
+          公路路侧护栏连续安装
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:240px;">
+        <img src="images/construction_01.jpg" alt="公路施工现场" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">施工现场</span>
+          公路安全设施综合施工
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:240px;">
+        <img src="images/guardrail_02.jpg" alt="波形梁护栏端头安装" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">端头防护</span>
+          波形梁护栏端头防撞安装
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:240px;">
+        <img src="images/sign_02.jpg" alt="公路桥梁标志工程" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">配套工程</span>
+          公路桥梁段护栏与标志配套
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="container">
+    <h3>需要护栏工程服务？</h3>
+    <p>欢迎联系我们，获取专业的工程方案与报价</p>
+    <div class="cta-btns">
+      <a href="index.html#contact" class="btn-gold">立即咨询报价</a>
+      <a href="index.html#business" class="btn-outline-white">查看其他业务</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>© 2024 广西振邦建设工程有限公司 &nbsp;|&nbsp; 地址：广西壮族自治区北海市银海区福成镇 &nbsp;|&nbsp; <a href="index.html">返回首页</a></p>
+</footer>
+
+</body>
+</html>
