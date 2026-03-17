@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>员工评选 · 振邦20周年</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-logo">振邦</span>
+    <span class="brand-text">20周年庆典</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="history.html">发展历程</a></li>
+    <li><a href="vote.html" class="active">评选投票</a></li>
+    <li><a href="lucky.html">幸运抽奖</a></li>
+    <li><a href="message.html">员工寄语</a></li>
+    <li><a href="stats.html">📊 投票统计</a></li>
+  </ul>
+  <div class="nav-toggle" onclick="toggleNav()">☰</div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag">🏅 荣誉评选</div>
+  <h1>20周年员工评选</h1>
+  <p>致敬每一位振邦人，用你的一票选出心中的榜样</p>
+</div>
+
+<section class="vote-section">
+  <div class="container">
+
+    <!-- 实名投票选人 -->
+    <div style="max-width:700px;margin:0 auto 32px;padding:24px 28px;border-radius:16px;background:rgba(200,162,0,0.08);border:1px solid rgba(200,162,0,0.4);">
+      <h3 style="color:var(--gold);margin-bottom:14px;font-size:16px;">👤 实名投票 — 请先选择您的姓名</h3>
+      <select id="voter-name" style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(10,20,40,0.9);border:1px solid rgba(200,162,0,0.4);color:#f0f4f8;font-size:15px;outline:none;cursor:pointer;margin-bottom:14px;">
+        <option value="">— 请从名单中选择您的姓名 —</option>
+      </select>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.8;margin:0;">
+        每个类别限投1票 · 已投票的候选人用金色标记 · 刷新后系统会记住已投票身份
+      </p>
+    </div>
+
+    <!-- 最佳员工 -->
+    <div class="vote-category">
+      <div class="vote-category-title">
+        <span>🌟</span> 最佳员工奖
+        <span style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:auto">选出你心目中最优秀的振邦人</span>
+      </div>
+      <div class="vote-grid" id="best-employee">
+        <!-- 动态生成 -->
+      </div>
+    </div>
+
+    <!-- 最佳团队 -->
+    <div class="vote-category">
+      <div class="vote-category-title">
+        <span>👥</span> 优秀团队奖
+        <span style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:auto">凝聚力最强的施工班组</span>
+      </div>
+      <div class="vote-grid" id="best-team">
+      </div>
+    </div>
+
+    <!-- 提交按钮 -->
+    <div class="vote-submit">
+      <button class="btn-vote" onclick="submitVotes()">✨ 提交我的投票</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- 成功弹窗 -->
+<div class="modal-overlay" id="vote-modal">
+  <div class="modal">
+    <div style="font-size:56px;margin-bottom:12px">🎉</div>
+    <h3>投票成功！</h3>
+    <p style="color:var(--text-muted);margin:12px 0 24px;font-size:14px;">感谢你参与20周年评选，结果将在庆典现场揭晓！</p>
+    <button class="btn-modal" onclick="closeModal('vote-modal')">好的，期待结果！</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 广西振邦建设工程有限公司 · 成立二十周年庆典</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+// ── 员工数据（直接内嵌，无需fetch）────────────────────
+const ALL_EMPLOYEES = [
+  {name:"郭嗣龙",role:"安装工",gender:"男"},
+  {name:"牛勇建",role:"安装工",gender:"男"},
+  {name:"刘兴国",role:"安装工",gender:"男"},
+  {name:"卢光辉",role:"安装工",gender:"男"},
+  {name:"张阳鹏",role:"安装工",gender:"男"},
+  {name:"庞郁",role:"安装工",gender:"男"},
+  {name:"范华",role:"安装工",gender:"男"},
+  {name:"王江",role:"安装工",gender:"男"},
+  {name:"李强",role:"安装工",gender:"男"},
+  {name:"李其胜",role:"安装工",gender:"男"},
+  {name:"陈密集",role:"安装工",gender:"男"},
+  {name:"莫羡革",role:"安装工",gender:"男"},
+  {name:"姚源超",role:"安装工",gender:"男"},
+  {name:"苏积汉",role:"安装工",gender:"男"},
+  {name:"廖伯长",role:"安装工",gender:"男"},
+  {name:"黄泽华",role:"安装工",gender:"男"},
+  {name:"张鉴庆",role:"安装工",gender:"男"},
+  {name:"张鉴业",role:"安装工",gender:"男"},
+  {name:"詹德波",role:"安装工",gender:"男"},
+  {name:"韦朗",role:"安装工",gender:"男"},
+  {name:"韦淦",role:"安装工",gender:"男"},
+  {name:"房中南",role:"安装工",gender:"男"},
+  {name:"李志和",role:"安装工",gender:"男"},
+  {name:"李佰星",role:"安装工",gender:"男"},
+  {name:"林满兴",role:"安装工",gender:"男"},
+  {name:"张销柱",role:"安装工",gender:"男"},
+  {name:"谭鑫",role:"安装工",gender:"男"},
+  {name:"刘祖豪",role:"安装工",gender:"男"},
+  {name:"曹凯勋",role:"安装工",gender:"男"},
+  {name:"刘佳",role:"安装工",gender:"男"},
+  {name:"张海洋",role:"安装工",gender:"男"},
+  {name:"杜应明",role:"安装工",gender:"男"},
+  {name:"韦艳妹",role:"安装工",gender:"女"},
+  {name:"刘南锋",role:"安装工",gender:"男"},
+  {name:"覃结平",role:"安装工",gender:"男"},
+  {name:"韦相涛",role:"安装工",gender:"男"},
+  {name:"韦海平",role:"安装工",gender:"男"},
+  {name:"韦克根",role:"安装工",gender:"男"},
+  {name:"韩秀娟",role:"安装工",gender:"女"},
+  {name:"林萍",role:"安装工",gender:"女"},
+  {name:"李夏龙",role:"安装工",gender:"男"},
+  {name:"庞可珺",role:"安装工",gender:"女"},
+  {name:"劳连娜",role:"安装工",gender:"女"},
+  {name:"陆壮",role:"安装工",gender:"男"},
+  {name:"莫文红",role:"安装工",gender:"女"},
+  {name:"韦伦",role:"安装工",gender:"男"},
+  {name:"韦飞鸽",role:"安装工",gender:"女"},
+  {name:"覃惠喜",role:"安装工",gender:"女"},
+  {name:"韦丽艳",role:"安装工",gender:"女"},
+  {name:"苏贤",role:"安装工",gender:"女"},
+  {name:"谢丹",role:"安装工",gender:"女"},
+  {name:"裴晓昌",role:"安装工",gender:"女"},
+  {name:"卓全爱",role:"安装工",gender:"女"},
+  {name:"潘华华",role:"安装工",gender:"男"},
+  {name:"韦克团",role:"安装工",gender:"男"},
+  {name:"何向成",role:"安装工",gender:"男"},
+  {name:"陆初兰",role:"安装工",gender:"女"},
+  {name:"林广为",role:"安装工",gender:"男"},
+  {name:"黄培",role:"安装工",gender:"男"},
+  {name:"韦凤寒",role:"安装工",gender:"女"},
+  {name:"蓝天任",role:"安装工",gender:"男"},
+  {name:"陆华金",role:"安装工",gender:"男"}
+];
+
+// ── 工具函数 ──────────────────────────────────────────
+function genderEmoji(g) { return g === '女' ? '\u{1F469}' : '\u{1F468}'; }
+
+// ── 状态 ─────────────────────────────────────────────
+const myVotes = {};
+
+// ── 候选数据（直接构建）──────────────────────────────
+const CANDIDATES = {
+  'best-employee': ALL_EMPLOYEES.map(e => ({
+    name: e.name,
+    role: e.role,
+    emoji: genderEmoji(e.gender)
+  })),
+  'best-team': [
+    {name:'护栏一队',role:'钢板护栏专项班组',emoji:'\u{1F528}'},
+    {name:'标志二队',role:'标志标牌制作安装',emoji:'\u{1F527}'},
+    {name:'标线三队',role:'道路标线施工班组',emoji:'\u{1F3A8}'},
+    {name:'市政四队',role:'市政设施综合班组',emoji:'\u{1F3D7}'},
+  ]
+};
+
+// ── 页面初始化 ────────────────────────────────────────
+function init() {
+  // 填充投票人下拉框
+  const sel = document.getElementById('voter-name');
+  ALL_EMPLOYEES.forEach(e => {
+    const opt = document.createElement('option');
+    opt.value = e.name;
+    opt.textContent = e.name;
+    sel.appendChild(opt);
+  });
+  renderVotes();
+  
+  // 页面加载时检查是否已投票
+  checkAndUpdateUI();
+}
+
+// ── 检查用户投票状态 ────────────────────────────────────
+async function checkAndUpdateUI() {
+  const sel = document.getElementById('voter-name');
+  if (!sel.value) return;
+  
+  try {
+    const response = await fetch(`http://localhost:8900/api/check-voter/${encodeURIComponent(sel.value)}`);
+    const result = await response.json();
+    if (result.voted) {
+      disableVoteUI('该人已投票过');
+    }
+  } catch (error) {
+    console.log('提示: 后端服务未启动，本地投票功能正常');
+  }
+}
+
+// ── 禁用投票界面 ────────────────────────────────────────
+function disableVoteUI(msg) {
+  document.querySelectorAll('.vote-card').forEach(card => {
+    card.onclick = null;
+    card.style.opacity = '0.5';
+    card.style.cursor = 'not-allowed';
+  });
+  const btn = document.querySelector('.btn-vote');
+  btn.disabled = true;
+  btn.textContent = '❌ ' + msg;
+  btn.style.opacity = '0.5';
+}
+
+// ── 启用投票界面 ────────────────────────────────────────
+function enableVoteUI() {
+  document.querySelectorAll('.vote-card').forEach((card, idx) => {
+    const cat = card.parentElement.id;
+    card.style.opacity = '1';
+    card.style.cursor = 'pointer';
+    card.onclick = () => vote(cat, idx);
+  });
+  const btn = document.querySelector('.btn-vote');
+  btn.disabled = false;
+  btn.textContent = '✨ 提交我的投票';
+  btn.style.opacity = '1';
+}
+
+// ── 渲染投票卡片 ──────────────────────────────────────
+function renderVotes() {
+  Object.keys(CANDIDATES).forEach(cat => {
+    const container = document.getElementById(cat);
+    container.innerHTML = '';
+    CANDIDATES[cat].forEach((c, idx) => {
+      const voted = myVotes[cat] === idx;
+      const card = document.createElement('div');
+      card.className = 'vote-card' + (voted ? ' voted' : '');
+      card.onclick = () => vote(cat, idx);
+      card.innerHTML =
+        '<div class="vote-avatar">' + c.emoji + '</div>' +
+        '<div class="vote-name">' + c.name + '</div>' +
+        '<div class="vote-role">' + c.role + '</div>' +
+        '<div class="vote-count" style="font-size:12px;color:' + (voted ? 'var(--gold)' : 'var(--text-muted)') + '">' +
+        (voted ? '&#10003; 已选' : '点击选择') + '</div>';
+      container.appendChild(card);
+    });
+  });
+}
+
+// ── 点击投票 ──────────────────────────────────────────
+function vote(cat, idx) {
+  const voterName = document.getElementById('voter-name').value;
+  if (!voterName) {
+    alert('请先在顶部选择您的姓名，再进行投票！');
+    document.getElementById('voter-name').focus();
+    return;
+  }
+  // 如果已经投过这个类别，不允许重复投票
+  if (myVotes[cat] !== undefined) {
+    alert('您已经投过该类别，每个类别只能投票一次！');
+    return;
+  }
+  myVotes[cat] = idx;
+  renderVotes();
+}
+
+// ── 提交投票 ──────────────────────────────────────────
+async function submitVotes() {
+  const voterName = document.getElementById('voter-name').value;
+  if (!voterName) {
+    alert('请先选择您的姓名！');
+    document.getElementById('voter-name').focus();
+    return;
+  }
+  if (Object.keys(myVotes).length === 0) {
+    alert('请至少投一票再提交！');
+    return;
+  }
+  
+  // 构建投票数据
+  const voteData = {
+    voter: voterName,
+    best_employee: myVotes['best-employee'] !== undefined ? CANDIDATES['best-employee'][myVotes['best-employee']].name : null,
+    best_team: myVotes['best-team'] !== undefined ? CANDIDATES['best-team'][myVotes['best-team']].name : null
+  };
+  
+  // 提交到后端
+  try {
+    const response = await fetch('http://localhost:8900/api/vote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(voteData)
+    });
+    const result = await response.json();
+    
+    if (response.ok) {
+      // 投票成功
+      const catNames = {'best-employee':'最佳员工','best-team':'优秀团队'};
+      const summary = Object.entries(myVotes)
+        .map(([cat, idx]) => catNames[cat] + '：' + CANDIDATES[cat][idx].name)
+        .join('<br>');
+      const modal = document.getElementById('vote-modal');
+      modal.querySelector('p').innerHTML =
+        '<strong style="color:var(--gold); font-size: 16px;">✅ 投票成功！</strong><br><br>' +
+        '<strong style="color:var(--gold)">' + voterName + '</strong> 的投票已提交<br><br>' +
+        summary.split('<br>').map(s => '<span style="font-size:13px">&#10003; ' + s + '</span>').join('<br>') +
+        '<br><br><span style="font-size:12px;color:var(--text-muted)">您已完成投票，刷新后无法重复投票<br><a href="stats.html" style="color:var(--gold);">📊 查看实时统计</a></span>';
+      modal.classList.add('show');
+      
+      // 禁用投票界面
+      disableVoteUI('已提交，感谢投票');
+    } else {
+      alert('❌ ' + result.error);
+      if (result.voted) {
+        disableVoteUI('该人已投票过');
+      }
+    }
+  } catch (error) {
+    console.error('提交投票失败:', error);
+    alert('❌ 无法连接到投票服务器，请确保后端服务已启动！\n\n启动命令：npm install && node server.js');
+  }
+}
+
+// ── 下拉框变化监听 ────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const sel = document.getElementById('voter-name');
+  sel.addEventListener('change', async () => {
+    myVotes['best-employee'] = undefined;
+    myVotes['best-team'] = undefined;
+    renderVotes();
+    
+    if (!sel.value) return;
+    
+    try {
+      const response = await fetch(`http://localhost:8900/api/check-voter/${encodeURIComponent(sel.value)}`);
+      const result = await response.json();
+      if (result.voted) {
+        disableVoteUI('该人已投票过');
+      } else {
+        enableVoteUI();
+      }
+    } catch (error) {
+      console.log('提示: 后端服务未启动，本地投票功能正常');
+      enableVoteUI();
+    }
+  });
+});
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+init();
+</script>
+</body>
+</html>

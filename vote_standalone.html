@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>员工评选 · 振邦20周年</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-logo">振邦</span>
+    <span class="brand-text">20周年庆典</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="history.html">发展历程</a></li>
+    <li><a href="vote_standalone.html" class="active">评选投票</a></li>
+    <li><a href="lucky.html">幸运抽奖</a></li>
+    <li><a href="message.html">员工寄语</a></li>
+    <li><a href="stats_standalone.html">📊 投票统计</a></li>
+  </ul>
+  <div class="nav-toggle" onclick="toggleNav()">☰</div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag">🏅 荣誉评选</div>
+  <h1>20周年员工评选</h1>
+  <p>致敬每一位振邦人，用你的一票选出心中的榜样</p>
+</div>
+
+<section class="vote-section">
+  <div class="container">
+
+    <!-- 实名投票选人 -->
+    <div style="max-width:700px;margin:0 auto 32px;padding:24px 28px;border-radius:16px;background:rgba(200,162,0,0.08);border:1px solid rgba(200,162,0,0.4);">
+      <h3 style="color:var(--gold);margin-bottom:14px;font-size:16px;">👤 实名投票 — 请先选择您的姓名</h3>
+      <select id="voter-name" style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(10,20,40,0.9);border:1px solid rgba(200,162,0,0.4);color:#f0f4f8;font-size:15px;outline:none;cursor:pointer;margin-bottom:14px;">
+        <option value="">— 请从名单中选择您的姓名 —</option>
+      </select>
+      <p style="font-size:13px;color:var(--text-muted);line-height:1.8;margin:0;">
+        每个类别限投1票 · 已投票的候选人用金色标记 · 刷新后系统会记住已投票身份
+      </p>
+    </div>
+
+    <!-- 最佳员工 -->
+    <div class="vote-category">
+      <div class="vote-category-title">
+        <span>🌟</span> 最佳员工奖
+        <span style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:auto">选出你心目中最优秀的振邦人</span>
+      </div>
+      <div id="best-employee" class="vote-cards"></div>
+    </div>
+
+    <!-- 优秀团队 -->
+    <div class="vote-category">
+      <div class="vote-category-title">
+        <span>👥</span> 优秀团队奖
+        <span style="font-size:13px;color:var(--text-muted);font-weight:400;margin-left:auto">选出最有凝聚力的团队</span>
+      </div>
+      <div id="best-team" class="vote-cards"></div>
+    </div>
+
+    <!-- 提交按钮 -->
+    <div style="margin-top:48px;text-align:center">
+      <button class="btn-vote" onclick="submitVotes()" style="margin:0 auto">
+        ✨ 提交我的投票
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- 投票结果模态框 -->
+<div id="vote-modal" class="modal">
+  <div class="modal-content">
+    <div class="modal-close" onclick="closeModal('vote-modal')">×</div>
+    <p></p>
+    <button onclick="closeModal('vote-modal')" style="margin-top:20px;width:100%;padding:12px;border-radius:8px;background:var(--gold);color:#0a1428;border:none;cursor:pointer;font-weight:600">确定</button>
+  </div>
+</div>
+
+<script>
+// ────────────────────────────────────────────────
+// 员工数据（完整列表）
+// ────────────────────────────────────────────────
+const ALL_EMPLOYEES = [
+  {name:"郭嗣龙",role:"安装工",gender:"男"},
+  {name:"牛勇建",role:"安装工",gender:"男"},
+  {name:"刘兴国",role:"安装工",gender:"男"},
+  {name:"卢光辉",role:"安装工",gender:"男"},
+  {name:"张阳鹏",role:"安装工",gender:"男"},
+  {name:"庞郁",role:"安装工",gender:"男"},
+  {name:"范华",role:"安装工",gender:"男"},
+  {name:"王江",role:"安装工",gender:"男"},
+  {name:"李强",role:"安装工",gender:"男"},
+  {name:"李其胜",role:"安装工",gender:"男"},
+  {name:"陈密集",role:"安装工",gender:"男"},
+  {name:"莫羡革",role:"安装工",gender:"男"},
+  {name:"姚源超",role:"安装工",gender:"男"},
+  {name:"苏积汉",role:"安装工",gender:"男"},
+  {name:"廖伯长",role:"安装工",gender:"男"},
+  {name:"黄泽华",role:"安装工",gender:"男"},
+  {name:"张鉴庆",role:"安装工",gender:"男"},
+  {name:"张鉴业",role:"安装工",gender:"男"},
+  {name:"詹德波",role:"安装工",gender:"男"},
+  {name:"韦朗",role:"安装工",gender:"男"},
+  {name:"韦淦",role:"安装工",gender:"男"},
+  {name:"房中南",role:"安装工",gender:"男"},
+  {name:"李志和",role:"安装工",gender:"男"},
+  {name:"李佰星",role:"安装工",gender:"男"},
+  {name:"林满兴",role:"安装工",gender:"男"},
+  {name:"张销柱",role:"安装工",gender:"男"},
+  {name:"谭鑫",role:"安装工",gender:"男"},
+  {name:"刘祖豪",role:"安装工",gender:"男"},
+  {name:"曹凯勋",role:"安装工",gender:"男"},
+  {name:"刘佳",role:"安装工",gender:"男"},
+  {name:"张海洋",role:"安装工",gender:"男"},
+  {name:"杜应明",role:"安装工",gender:"男"},
+  {name:"韦艳妹",role:"安装工",gender:"女"},
+  {name:"刘南锋",role:"安装工",gender:"男"},
+  {name:"覃结平",role:"安装工",gender:"男"},
+  {name:"韦相涛",role:"安装工",gender:"男"},
+  {name:"韦海平",role:"安装工",gender:"男"},
+  {name:"韦克根",role:"安装工",gender:"男"},
+  {name:"韩秀娟",role:"安装工",gender:"女"},
+  {name:"林萍",role:"安装工",gender:"女"},
+  {name:"李夏龙",role:"安装工",gender:"男"},
+  {name:"庞可珺",role:"安装工",gender:"女"},
+  {name:"劳连娜",role:"安装工",gender:"女"},
+  {name:"陆壮",role:"安装工",gender:"男"},
+  {name:"莫文红",role:"安装工",gender:"女"},
+  {name:"韦伦",role:"安装工",gender:"男"},
+  {name:"韦飞鸽",role:"安装工",gender:"女"},
+  {name:"覃惠喜",role:"安装工",gender:"女"},
+  {name:"韦丽艳",role:"安装工",gender:"女"},
+  {name:"苏贤",role:"安装工",gender:"女"},
+  {name:"谢丹",role:"安装工",gender:"女"},
+  {name:"裴晓昌",role:"安装工",gender:"女"},
+  {name:"卓全爱",role:"安装工",gender:"女"},
+  {name:"潘华华",role:"安装工",gender:"男"},
+  {name:"韦克团",role:"安装工",gender:"男"},
+  {name:"何向成",role:"安装工",gender:"男"},
+  {name:"陆初兰",role:"安装工",gender:"女"},
+  {name:"林广为",role:"安装工",gender:"男"},
+  {name:"黄培",role:"安装工",gender:"男"},
+  {name:"韦凤寒",role:"安装工",gender:"女"},
+  {name:"蓝天任",role:"安装工",gender:"男"},
+  {name:"陆华金",role:"安装工",gender:"男"}
+];
+
+// ────────────────────────────────────────────────
+// 配置数据
+// ────────────────────────────────────────────────
+const CANDIDATES = {
+  'best-employee': ALL_EMPLOYEES.map(e => ({name: e.name})),
+  'best-team': [
+    { name: '护栏一队' },
+    { name: '标志二队' },
+    { name: '标线三队' },
+    { name: '市政四队' }
+  ]
+};
+
+// 投票结果存储 (localStorage)
+const VOTES_KEY = 'anniversary_votes';
+const VOTED_USERS_KEY = 'anniversary_voted_users';
+
+// 用户选择
+let myVotes = {};
+
+// ────────────────────────────────────────────────
+// 本地存储函数
+// ────────────────────────────────────────────────
+function getVotedUsers() {
+  const data = localStorage.getItem(VOTED_USERS_KEY);
+  return data ? JSON.parse(data) : {};
+}
+
+function setVotedUser(voter, voteData) {
+  const voted = getVotedUsers();
+  voted[voter] = voteData;
+  localStorage.setItem(VOTED_USERS_KEY, JSON.stringify(voted));
+}
+
+function hasVoted(voter) {
+  return voter && voter in getVotedUsers();
+}
+
+function getAllVotes() {
+  const data = localStorage.getItem(VOTES_KEY);
+  return data ? JSON.parse(data) : [];
+}
+
+function addVote(vote) {
+  const votes = getAllVotes();
+  votes.push(vote);
+  localStorage.setItem(VOTES_KEY, JSON.stringify(votes));
+}
+
+// ────────────────────────────────────────────────
+// 投票逻辑
+// ────────────────────────────────────────────────
+function init() {
+  const sel = document.getElementById('voter-name');
+  
+  // 填充名单（使用员工列表）
+  ALL_EMPLOYEES.forEach(emp => {
+    const opt = document.createElement('option');
+    opt.value = emp.name;
+    opt.textContent = emp.name;
+    sel.appendChild(opt);
+  });
+
+  // 渲染候选人卡片
+  renderCandidates();
+
+  // 监听下拉框变化
+  sel.addEventListener('change', onVoterChange);
+
+  // 页面加载时检查是否已投票
+  if (sel.value) {
+    onVoterChange();
+  }
+}
+
+function renderCandidates() {
+  ['best-employee', 'best-team'].forEach(cat => {
+    const container = document.getElementById(cat);
+    container.innerHTML = CANDIDATES[cat].map((cand, idx) => `
+      <div class="vote-card" onclick="vote('${cat}', ${idx})">
+        <div class="vote-card-indicator">
+          <div class="vote-card-check"></div>
+        </div>
+        <div class="vote-card-name">${cand.name}</div>
+      </div>
+    `).join('');
+  });
+}
+
+function vote(cat, idx) {
+  const sel = document.getElementById('voter-name');
+  if (!sel.value) {
+    alert('请先选择您的姓名');
+    return;
+  }
+
+  if (hasVoted(sel.value)) {
+    alert('您已投过票，无法修改投票');
+    return;
+  }
+
+  myVotes[cat] = idx;
+  renderVotes();
+}
+
+function renderVotes() {
+  ['best-employee', 'best-team'].forEach(cat => {
+    const cards = document.querySelectorAll(`#${cat} .vote-card`);
+    cards.forEach((card, idx) => {
+      if (myVotes[cat] === idx) {
+        card.classList.add('selected');
+      } else {
+        card.classList.remove('selected');
+      }
+    });
+  });
+}
+
+function onVoterChange() {
+  const sel = document.getElementById('voter-name');
+  if (!sel.value) {
+    enableVoteUI();
+    myVotes = {};
+    renderVotes();
+    return;
+  }
+
+  if (hasVoted(sel.value)) {
+    disableVoteUI();
+  } else {
+    enableVoteUI();
+    myVotes = {};
+    renderVotes();
+  }
+}
+
+function enableVoteUI() {
+  document.querySelectorAll('.vote-card').forEach(card => {
+    card.style.opacity = '1';
+    card.style.cursor = 'pointer';
+  });
+  const btn = document.querySelector('.btn-vote');
+  btn.disabled = false;
+  btn.textContent = '✨ 提交我的投票';
+  btn.style.opacity = '1';
+}
+
+function disableVoteUI() {
+  document.querySelectorAll('.vote-card').forEach(card => {
+    card.style.opacity = '0.5';
+    card.style.cursor = 'not-allowed';
+  });
+  const btn = document.querySelector('.btn-vote');
+  btn.disabled = true;
+  btn.textContent = '❌ 您已投票过，无法重复投票';
+  btn.style.opacity = '0.5';
+}
+
+// ────────────────────────────────────────────────
+// 提交投票
+// ────────────────────────────────────────────────
+function submitVotes() {
+  const voterName = document.getElementById('voter-name').value;
+  if (!voterName) {
+    alert('请先选择您的姓名');
+    return;
+  }
+
+  if (Object.keys(myVotes).length === 0) {
+    alert('请至少投一票再提交');
+    return;
+  }
+
+  if (hasVoted(voterName)) {
+    alert('您已投过票，无法重复投票');
+    return;
+  }
+
+  // 保存投票
+  const voteData = {
+    best_employee: myVotes['best-employee'] !== undefined ? CANDIDATES['best-employee'][myVotes['best-employee']].name : null,
+    best_team: myVotes['best-team'] !== undefined ? CANDIDATES['best-team'][myVotes['best-team']].name : null
+  };
+
+  addVote({
+    voter: voterName,
+    ...voteData,
+    timestamp: new Date().toISOString()
+  });
+
+  setVotedUser(voterName, voteData);
+
+  // 显示成功提示
+  const catNames = {'best-employee':'最佳员工','best-team':'优秀团队'};
+  const summary = Object.entries(myVotes)
+    .map(([cat, idx]) => catNames[cat] + '：' + CANDIDATES[cat][idx].name)
+    .join('<br>');
+
+  const modal = document.getElementById('vote-modal');
+  modal.querySelector('p').innerHTML =
+    '<strong style="color:var(--gold); font-size: 16px;">✅ 投票成功！</strong><br><br>' +
+    '<strong style="color:var(--gold)">' + voterName + '</strong> 的投票已提交<br><br>' +
+    summary.split('<br>').map(s => '<span style="font-size:13px">✓ ' + s + '</span>').join('<br>') +
+    '<br><br><span style="font-size:12px;color:var(--text-muted)">您已完成投票，刷新后无法重复投票<br><a href="stats_standalone.html" style="color:var(--gold);">📊 查看实时统计</a></span>';
+
+  modal.classList.add('show');
+
+  // 禁用投票界面
+  disableVoteUI();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// ────────────────────────────────────────────────
+// 页面加载
+// ────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', init);
+
+// 简单的导航切换
+function toggleNav() {
+  // 这里可以实现移动端导航切换
+}
+</script>
+
+<style>
+:root {
+  --gold: #c8a200;
+  --text-muted: #8a9aaa;
+  --card-bg: rgba(20, 40, 70, 0.8);
+}
+
+.vote-section {
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.vote-category {
+  margin-bottom: 48px;
+}
+
+.vote-category-title {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f0f4f8;
+  margin-bottom: 24px;
+}
+
+.vote-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.vote-card {
+  position: relative;
+  padding: 24px 16px;
+  border-radius: 12px;
+  background: var(--card-bg);
+  border: 2px solid rgba(200, 162, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.vote-card:hover {
+  border-color: var(--gold);
+  background: rgba(20, 40, 70, 1);
+  transform: translateY(-2px);
+}
+
+.vote-card.selected {
+  border-color: var(--gold);
+  background: rgba(200, 162, 0, 0.15);
+}
+
+.vote-card-indicator {
+  width: 24px;
+  height: 24px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(200, 162, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.vote-card.selected .vote-card-indicator {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+
+.vote-card-check {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.vote-card.selected .vote-card-check {
+  width: 6px;
+  height: 10px;
+  border-right: 2px solid #0a1428;
+  border-bottom: 2px solid #0a1428;
+  transform: rotate(45deg);
+  opacity: 1;
+}
+
+.vote-card-name {
+  font-size: 14px;
+  color: #f0f4f8;
+  font-weight: 500;
+}
+
+.btn-vote {
+  padding: 14px 40px;
+  border-radius: 8px;
+  background: var(--gold);
+  color: #0a1428;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-vote:hover:not(:disabled) {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(200, 162, 0, 0.3);
+}
+
+.btn-vote:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: #0a1428;
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 400px;
+  position: relative;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.modal-close:hover {
+  color: var(--gold);
+}
+
+.modal p {
+  color: #f0f4f8;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+}
+</style>
+
+</body>
+</html>

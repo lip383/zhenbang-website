@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>投票统计 · 振邦20周年</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .stats-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(240,200,0,0.1), rgba(200,162,0,0.1));
+    border-radius: 12px;
+    border: 1px solid rgba(200,162,0,0.3);
+  }
+  
+  .stats-total {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--gold);
+  }
+  
+  .stats-label {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  
+  .stats-category {
+    margin-bottom: 40px;
+  }
+  
+  .stats-category-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .stats-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 12px 16px;
+    background: rgba(200,162,0,0.05);
+    border-radius: 8px;
+    border-left: 3px solid var(--gold);
+  }
+  
+  .stats-rank {
+    font-weight: bold;
+    color: var(--gold);
+    width: 30px;
+    text-align: center;
+  }
+  
+  .stats-name {
+    flex: 1;
+    margin-left: 16px;
+    color: var(--text-primary);
+  }
+  
+  .stats-bar {
+    flex: 0 1 300px;
+    height: 24px;
+    background: rgba(200,162,0,0.15);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-right: 12px;
+  }
+  
+  .stats-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), rgba(240,200,0,0.8));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0a1428;
+    font-size: 12px;
+    font-weight: bold;
+  }
+  
+  .stats-count {
+    width: 50px;
+    text-align: right;
+    color: var(--gold);
+    font-weight: bold;
+  }
+  
+  .stats-empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--text-muted);
+    background: rgba(200,162,0,0.05);
+    border-radius: 8px;
+  }
+  
+  .stats-refresh {
+    text-align: center;
+    margin-top: 32px;
+  }
+  
+  .refresh-btn {
+    padding: 10px 24px;
+    background: var(--gold);
+    color: #0a1428;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .refresh-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(240,200,0,0.3);
+  }
+  
+  .last-update {
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 16px;
+  }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-logo">振邦</span>
+    <span class="brand-text">20周年庆典</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="history.html">发展历程</a></li>
+    <li><a href="vote.html">评选投票</a></li>
+    <li><a href="lucky.html">幸运抽奖</a></li>
+    <li><a href="message.html">员工寄语</a></li>
+    <li><a href="stats.html" class="active">📊 投票统计</a></li>
+  </ul>
+  <div class="nav-toggle" onclick="toggleNav()">☰</div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag">📊 实时统计</div>
+  <h1>投票结果统计</h1>
+  <p>这里显示最新的投票统计数据</p>
+</div>
+
+<section class="vote-section">
+  <div class="stats-container">
+    
+    <div class="stats-header">
+      <div>
+        <div class="stats-total" id="total-votes">0</div>
+        <div class="stats-label">总投票数</div>
+      </div>
+      <div style="text-align: right;">
+        <div style="font-size: 13px; color: var(--text-muted);">最后更新</div>
+        <div id="last-update-time" style="font-size: 14px; color: var(--gold); font-weight: bold;">--:-- --</div>
+      </div>
+    </div>
+    
+    <!-- 最佳员工投票统计 -->
+    <div class="stats-category">
+      <div class="stats-category-title">
+        <span>🌟</span> 最佳员工奖投票排行
+      </div>
+      <div id="best-employee-stats"></div>
+    </div>
+    
+    <!-- 最佳团队投票统计 -->
+    <div class="stats-category">
+      <div class="stats-category-title">
+        <span>👥</span> 优秀团队奖投票排行
+      </div>
+      <div id="best-team-stats"></div>
+    </div>
+    
+    <div class="stats-refresh">
+      <button class="refresh-btn" onclick="loadStats()">🔄 刷新数据</button>
+      <div class="last-update">
+        <p>数据每5秒自动更新一次</p>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<script>
+// 加载投票统计数据
+async function loadStats() {
+  try {
+    const response = await fetch('http://localhost:8900/api/stats');
+    const data = await response.json();
+    
+    // 更新总投票数
+    document.getElementById('total-votes').textContent = data.total_votes;
+    document.getElementById('last-update-time').textContent = 
+      new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    
+    // 渲染最佳员工统计
+    renderStats('best-employee', data.stats.best_employee);
+    
+    // 渲染最佳团队统计
+    renderStats('best-team', data.stats.best_team);
+    
+  } catch (error) {
+    console.error('加载统计数据失败:', error);
+    document.getElementById('best-employee-stats').innerHTML = 
+      '<div class="stats-empty">❌ 无法连接到投票服务器，请确保后端服务已启动</div>';
+  }
+}
+
+// 渲染统计数据
+function renderStats(category, stats) {
+  const container = document.getElementById(category + '-stats');
+  
+  if (Object.keys(stats).length === 0) {
+    container.innerHTML = '<div class="stats-empty">📭 暂无投票数据</div>';
+    return;
+  }
+  
+  // 按票数倒序排列
+  const sorted = Object.entries(stats)
+    .sort((a, b) => b[1] - a[1]);
+  
+  const maxVotes = sorted[0][1];
+  let rank = 1;
+  
+  const html = sorted.map(([name, count], idx) => {
+    const percentage = Math.round((count / maxVotes) * 100);
+    return `
+      <div class="stats-item" style="animation: slideIn 0.5s ease-out ${idx * 0.1}s both;">
+        <div class="stats-rank">${rank++}${getSuffix(idx)}</div>
+        <div class="stats-name">${name}</div>
+        <div class="stats-bar">
+          <div class="stats-bar-fill" style="width: ${percentage}%">
+            ${percentage > 20 ? percentage + '%' : ''}
+          </div>
+        </div>
+        <div class="stats-count">${count}票</div>
+      </div>
+    `;
+  }).join('');
+  
+  container.innerHTML = html;
+}
+
+// 获取排名后缀
+function getSuffix(idx) {
+  return ['🥇', '🥈', '🥉'][idx] || '';
+}
+
+// 页面加载时获取数据
+loadStats();
+
+// 每5秒自动刷新数据
+setInterval(loadStats, 5000);
+
+// 导航切换
+function toggleNav() {
+  document.querySelector('.nav-links').classList.toggle('active');
+}
+
+// 添加动画
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
