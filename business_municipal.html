@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>市政交通设施 - 广西振邦建设工程有限公司</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{--primary:#1a2744;--accent:#d4a020;--bg-light:#f5f6f8}
+    body{font-family:'Microsoft YaHei',sans-serif;color:#333;background:#fff}
+
+    header{background:var(--primary);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.4)}
+    .logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .logo-icon{width:40px;height:40px;background:var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:var(--primary)}
+    .logo-text{color:#fff;font-size:16px;font-weight:700;line-height:1.3}
+    .logo-text span{display:block;font-size:11px;opacity:.7;font-weight:400}
+    .back-btn{color:var(--accent);text-decoration:none;font-size:14px;border:1px solid var(--accent);padding:7px 18px;border-radius:4px;transition:.3s}
+    .back-btn:hover{background:var(--accent);color:var(--primary)}
+
+    .page-hero{background:linear-gradient(135deg,#0f1f3d 0%,var(--primary) 50%,#223366 100%);padding:80px 40px 60px;text-align:center;position:relative;overflow:hidden}
+    .page-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a020' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+    .page-hero h1{color:#fff;font-size:2.4em;font-weight:900;margin-bottom:14px;position:relative}
+    .page-hero h1 span{color:var(--accent)}
+    .page-hero p{color:rgba(255,255,255,.75);font-size:1.1em;max-width:620px;margin:0 auto;line-height:1.8;position:relative}
+    .hero-badge{display:inline-block;background:rgba(212,160,32,.2);border:1px solid var(--accent);color:var(--accent);padding:6px 20px;border-radius:20px;font-size:13px;margin-bottom:20px}
+
+    .container{max-width:1100px;margin:0 auto;padding:0 30px}
+    section{padding:70px 0}
+    section:nth-child(even){background:var(--bg-light)}
+
+    .section-title{font-size:1.8em;font-weight:800;color:var(--primary);margin-bottom:10px}
+    .section-title::after{content:'';display:block;width:50px;height:3px;background:var(--accent);margin-top:10px}
+    .section-sub{color:#666;font-size:1em;margin:14px 0 40px;line-height:1.8}
+
+    /* 产品分类卡片 */
+    .product-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:50px}
+    .cat-card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);transition:.3s}
+    .cat-card:hover{transform:translateY(-6px);box-shadow:0 10px 35px rgba(0,0,0,.18)}
+    .cat-header{height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:44px;gap:12px}
+    .cat-header.c1{background:linear-gradient(135deg,#1a3a1a,#2d6a2d)}
+    .cat-header.c2{background:linear-gradient(135deg,#1a2a3a,#2d4a6a)}
+    .cat-header.c3{background:linear-gradient(135deg,#3a2a1a,#6a4a2d)}
+    .cat-header.c4{background:linear-gradient(135deg,#2a1a3a,#4a2d6a)}
+    .cat-header.c5{background:linear-gradient(135deg,#1a3a3a,#2d6a6a)}
+    .cat-header.c6{background:linear-gradient(135deg,#3a1a1a,#6a2d2d)}
+    .cat-label{color:rgba(255,255,255,.8);font-size:13px}
+    .cat-body{padding:20px}
+    .cat-body h3{color:var(--primary);font-size:16px;font-weight:800;margin-bottom:10px}
+    .cat-body ul{list-style:none;padding:0}
+    .cat-body ul li{color:#555;font-size:13px;padding:5px 0;border-bottom:1px dashed #eee;display:flex;gap:8px;align-items:center}
+    .cat-body ul li:last-child{border:none}
+    .cat-body ul li::before{content:'▸';color:var(--accent);flex-shrink:0}
+
+    /* 项目展示 */
+    .img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:50px}
+    .img-card{border-radius:10px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.1);transition:.3s}
+    .img-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.18)}
+    .img-placeholder{height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:48px;gap:10px}
+    .img-placeholder.p1{background:linear-gradient(135deg,#1a2744,#2d4080)}
+    .img-placeholder.p2{background:linear-gradient(135deg,#2d2d0a,#5a5a14)}
+    .img-placeholder.p3{background:linear-gradient(135deg,#0a2d0a,#145a14)}
+    .img-placeholder.p4{background:linear-gradient(135deg,#2d0a0a,#5a1414)}
+    .img-placeholder.p5{background:linear-gradient(135deg,#0a0a2d,#14145a)}
+    .img-placeholder.p6{background:linear-gradient(135deg,#2d0a2d,#5a145a)}
+    .img-label{color:rgba(255,255,255,.8);font-size:13px}
+    .img-card-info{padding:14px 16px;background:#fff}
+    .img-card-info h4{color:var(--primary);font-size:14px;font-weight:700;margin-bottom:5px}
+    .img-card-info p{color:#666;font-size:12px;line-height:1.6}
+
+    /* 优势对比 */
+    .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:40px}
+    .compare-card{border-radius:12px;padding:30px;box-shadow:0 3px 15px rgba(0,0,0,.08)}
+    .compare-card.us{background:linear-gradient(135deg,var(--primary),#2d4080);color:#fff}
+    .compare-card.them{background:#fff;border:2px solid #e0e0e0}
+    .compare-card h3{font-size:18px;font-weight:800;margin-bottom:20px;display:flex;align-items:center;gap:10px}
+    .compare-card ul{list-style:none}
+    .compare-card ul li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.15);font-size:14px;display:flex;align-items:flex-start;gap:10px}
+    .compare-card.them ul li{border-bottom-color:#eee;color:#555}
+    .compare-card ul li .mark{font-size:16px;flex-shrink:0;margin-top:1px}
+
+    /* 服务范围 */
+    .service-areas{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:30px}
+    .area-item{text-align:center;background:#fff;border-radius:10px;padding:24px 16px;box-shadow:0 3px 12px rgba(0,0,0,.07);transition:.3s}
+    .area-item:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+    .area-item .icon{font-size:36px;margin-bottom:12px}
+    .area-item h4{color:var(--primary);font-size:14px;font-weight:700;margin-bottom:8px}
+    .area-item p{color:#666;font-size:12px;line-height:1.6}
+
+    .cta-section{background:linear-gradient(135deg,var(--primary),#2d4080);padding:60px 30px;text-align:center;color:#fff}
+    .cta-section h2{font-size:2em;margin-bottom:14px}
+    .cta-section p{opacity:.8;margin-bottom:30px;font-size:1em}
+    .cta-btn{display:inline-block;background:var(--accent);color:var(--primary);padding:14px 40px;border-radius:6px;font-size:16px;font-weight:700;text-decoration:none;margin:0 10px;transition:.3s}
+    .cta-btn:hover{background:#e8b420;transform:translateY(-2px)}
+    .cta-btn.outline{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+    .cta-btn.outline:hover{background:rgba(212,160,32,.15)}
+
+    footer{background:#111;color:rgba(255,255,255,.6);text-align:center;padding:24px;font-size:13px}
+
+    @media(max-width:768px){
+      .product-cats{grid-template-columns:1fr 1fr}
+      .img-grid{grid-template-columns:1fr 1fr}
+      .compare-grid{grid-template-columns:1fr}
+      .service-areas{grid-template-columns:1fr 1fr}
+      header{padding:14px 20px}
+      .page-hero{padding:50px 20px 40px}
+    }
+    @media(max-width:480px){
+      .product-cats{grid-template-columns:1fr}
+      .img-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="index.html" class="logo">
+    <div class="logo-icon">振</div>
+    <div class="logo-text">广西振邦建设工程有限公司<span>Guangxi Zhenbang Construction Engineering Co., Ltd.</span></div>
+  </a>
+  <a href="index.html" class="back-btn">← 返回首页</a>
+</header>
+
+<div class="page-hero">
+  <div class="hero-badge">城市交通安全设施专业承包</div>
+  <h1>市政<span>交通设施</span>工程</h1>
+  <p>为城市道路、市政广场、住宅小区等提供全方位交通安全设施设计与安装服务，打造安全、有序的城市交通环境。</p>
+</div>
+
+<section>
+  <div class="container">
+    <div class="section-title">产品与服务分类</div>
+    <p class="section-sub">覆盖市政交通安全设施全品类，提供产品供应、设计、安装一体化服务。</p>
+    <div class="product-cats">
+      <div class="cat-card">
+        <div class="cat-header c1"><span>🚧</span><span class="cat-label">隔离防护系列</span></div>
+        <div class="cat-body">
+          <h3>隔离防护设施</h3>
+          <ul>
+            <li>城市道路中央隔离墩</li>
+            <li>人行道防撞护栏</li>
+            <li>隔离水马（注水护栏）</li>
+            <li>道路防护栏（铁马）</li>
+            <li>景观围栏隔离系统</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-header c2"><span>🚦</span><span class="cat-label">交通信号设施</span></div>
+        <div class="cat-body">
+          <h3>信号控制设施</h3>
+          <ul>
+            <li>路口信号灯安装</li>
+            <li>行人信号灯工程</li>
+            <li>可变信息标志牌</li>
+            <li>LED车道指示灯</li>
+            <li>信号灯立柱及悬臂</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-header c3"><span>💡</span><span class="cat-label">道路照明设施</span></div>
+        <div class="cat-body">
+          <h3>照明与反光设施</h3>
+          <ul>
+            <li>道路轮廓标（反光道钉）</li>
+            <li>防撞桶（反光）</li>
+            <li>警示柱（弹力柱）</li>
+            <li>反光锥形桶</li>
+            <li>发光路锥</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-header c4"><span>🅿️</span><span class="cat-label">停车管理设施</span></div>
+        <div class="cat-body">
+          <h3>停车场设施</h3>
+          <ul>
+            <li>地面停车位划线</li>
+            <li>限位器安装</li>
+            <li>停车场标志牌</li>
+            <li>地下车库导向系统</li>
+            <li>出入口减速带</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-header c5"><span>🦺</span><span class="cat-label">行人安全设施</span></div>
+        <div class="cat-body">
+          <h3>行人安全设施</h3>
+          <ul>
+            <li>人行道防撞柱</li>
+            <li>盲道铺设</li>
+            <li>路侧护栏安装</li>
+            <li>过街设施安全岛</li>
+            <li>公交站台隔离设施</li>
+          </ul>
+        </div>
+      </div>
+      <div class="cat-card">
+        <div class="cat-header c6"><span>🏘️</span><span class="cat-label">小区及园区设施</span></div>
+        <div class="cat-body">
+          <h3>小区园区交通</h3>
+          <ul>
+            <li>小区道路标志标线</li>
+            <li>速度限制标识</li>
+            <li>减速带（凸起）安装</li>
+            <li>地下车库交通组织</li>
+            <li>安全防护设施配套</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">典型工程案例</div>
+    <p class="section-sub">深耕广西市政交通设施领域多年，成功服务众多城市道路建设与改造项目。</p>
+    <div class="img-grid">
+      <div class="img-card">
+        <div class="img-placeholder p1"><span>🏙️</span><span class="img-label">城市主干道改造</span></div>
+        <div class="img-card-info"><h4>北海市城区干道改造</h4><p>承接多条城市主干道交通设施全套安装，包括标志、标线、隔离设施等综合工程</p></div>
+      </div>
+      <div class="img-card">
+        <div class="img-placeholder p2"><span>🅿️</span><span class="img-label">大型停车场项目</span></div>
+        <div class="img-card-info"><h4>商业综合体停车场</h4><p>室内外停车场标线施工、标志牌安装、出入口导流设施及消防通道设置</p></div>
+      </div>
+      <div class="img-card">
+        <div class="img-placeholder p3"><span>🏫</span><span class="img-label">学校周边交通</span></div>
+        <div class="img-card-info"><h4>学校周边交通安全</h4><p>学校门口减速振荡标线、警示柱、接送区护栏等学生安全保障设施安装</p></div>
+      </div>
+      <div class="img-card">
+        <div class="img-placeholder p4"><span>🏗️</span><span class="img-label">工业园区道路</span></div>
+        <div class="img-card-info"><h4>工业园区道路配套</h4><p>大型工业园区内部道路标志、标线及安全隔离设施全套施工</p></div>
+      </div>
+      <div class="img-card">
+        <div class="img-placeholder p5"><span>🌉</span><span class="img-label">市政桥梁防护</span></div>
+        <div class="img-card-info"><h4>城市桥梁安全设施</h4><p>城市桥梁护栏维修改造、防撞设施加装及桥面标线重新涂敷</p></div>
+      </div>
+      <div class="img-card">
+        <div class="img-placeholder p6"><span>🏨</span><span class="img-label">商业区综合整治</span></div>
+        <div class="img-card-info"><h4>商业区交通综合整治</h4><p>商业核心区路侧停车规范化，隔离设施统一安装，改善行人与车辆混行问题</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">我们的优势</div>
+    <p class="section-sub">专业的市政交通设施团队，为您提供高质量的一站式服务。</p>
+    <div class="compare-grid">
+      <div class="compare-card us">
+        <h3>✅ 振邦的优势</h3>
+        <ul>
+          <li><span class="mark">🏆</span>拥有公路交通工程专业承包一级资质，承接范围广</li>
+          <li><span class="mark">🔧</span>自有专业施工队伍，设备齐全，可快速响应</li>
+          <li><span class="mark">📋</span>提供设计+供货+施工+维护全流程服务</li>
+          <li><span class="mark">✅</span>所有产品通过质量体系认证，符合国家标准</li>
+          <li><span class="mark">📍</span>深耕广西市场近20年，本地资源丰富</li>
+          <li><span class="mark">⚡</span>紧急情况下可在24小时内完成临时防护设施安装</li>
+        </ul>
+      </div>
+      <div class="compare-card them">
+        <h3 style="color:var(--primary)">📋 服务承诺</h3>
+        <ul>
+          <li><span class="mark">📞</span>项目咨询48小时内给出初步方案</li>
+          <li><span class="mark">📐</span>提供免费现场勘测与方案设计</li>
+          <li><span class="mark">📦</span>施工材料均采用品牌供应商，可提供质量证明</li>
+          <li><span class="mark">🔍</span>施工过程全程记录，保留影像档案</li>
+          <li><span class="mark">🛡️</span>工程竣工后提供保质期内免费维修服务</li>
+          <li><span class="mark">📊</span>提供竣工报告及产品合格证书</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">主要服务区域</div>
+    <p class="section-sub">立足北海，服务广西全区，可承接周边省份市政交通设施工程。</p>
+    <div class="service-areas">
+      <div class="area-item">
+        <div class="icon">🏖️</div>
+        <h4>北海市</h4>
+        <p>公司总部所在地，核心服务区域，快速响应各类市政工程需求</p>
+      </div>
+      <div class="area-item">
+        <div class="icon">🌊</div>
+        <h4>防城港市</h4>
+        <p>港口城市道路及工业区交通设施配套，服务经验丰富</p>
+      </div>
+      <div class="area-item">
+        <div class="icon">🌴</div>
+        <h4>钦州市</h4>
+        <p>钦州临港工业园区及城区道路交通设施建设支持</p>
+      </div>
+      <div class="area-item">
+        <div class="icon">🏛️</div>
+        <h4>南宁市及广西全区</h4>
+        <p>具备承接广西全区市政交通安全设施工程项目的资质与能力</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 工程实景照片 -->
+<section style="background:#f5f6f8; padding:80px 0;">
+  <div style="max-width:1100px; margin:0 auto; padding:0 40px;">
+    <div style="margin-bottom:48px;">
+      <div style="font-size:11px;letter-spacing:4px;color:#d4a020;text-transform:uppercase;margin-bottom:12px;">Photo Gallery</div>
+      <h2 style="font-size:30px;font-weight:900;color:#1a2744;margin-bottom:12px;">工程实景</h2>
+      <div style="width:48px;height:3px;background:#d4a020;border-radius:2px;margin-bottom:20px;"></div>
+      <p style="color:#666;font-size:15px;max-width:600px;">精选城市道路及市政交通设施典型工程图片，展示信号灯、隔离护栏、标线等市政设施综合安装实景。</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:260px;">
+        <img src="images/municipal_01.jpg" alt="城市道路交叉口交通设施" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">市政工程</span>
+          城市道路交叉口交通设施综合
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:260px;">
+        <img src="images/municipal_02.jpg" alt="道路交通标线设施施工" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">综合工程</span>
+          市政道路标线及安全设施施工
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:260px;">
+        <img src="images/sign_01.jpg" alt="城市公路标志标牌工程" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">标志配套</span>
+          城市公路标志标牌配套工程
+        </div>
+      </div>
+      <div style="grid-column:span 2;border-radius:10px;overflow:hidden;position:relative;height:230px;">
+        <img src="images/marking_02.jpg" alt="新建道路标线综合工程" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">标线工程</span>
+          新建道路白色标线综合施工
+        </div>
+      </div>
+      <div style="border-radius:10px;overflow:hidden;position:relative;height:230px;">
+        <img src="images/construction_02.jpg" alt="慢行道彩色标线施工" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;">
+        <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(13,27,53,0.88),rgba(13,27,53,0.2) 70%,transparent);padding:28px 18px 14px;color:#fff;font-size:14px;">
+          <span style="background:#d4a020;color:#1a2744;font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;margin-right:8px;">彩色标线</span>
+          非机动车道彩色标线施工
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <div class="container">
+    <h2>需要市政交通设施解决方案？</h2>
+    <p>无论是新建道路配套，还是既有设施改造，我们都能提供专业的一站式服务。</p>
+    <a href="index.html#contact" class="cta-btn">立即咨询</a>
+    <a href="index.html" class="cta-btn outline">返回首页</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2024 广西振邦建设工程有限公司 版权所有 | 桂ICP备XXXXXXXX号</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>智能交通与安防系统 | 广西振邦建设工程有限公司</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "微软雅黑", "Microsoft YaHei", "PingFang SC", sans-serif;
+      color: #333;
+      background: #fff;
+      line-height: 1.6;
+    }
+    :root {
+      --primary: #1a2744;
+      --primary-light: #233467;
+      --accent: #d4a020;
+      --accent-light: #e6b830;
+      --text-dark: #1a1a2e;
+      --text-gray: #666;
+      --bg-light: #f5f6f8;
+      --border: #e0e4ea;
+    }
+
+    /* ===== 导航 ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(26, 39, 68, 0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--accent);
+    }
+    .nav-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: var(--accent);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: var(--primary);
+    }
+    .logo-text h1 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+    .logo-text p {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      gap: 4px;
+    }
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.25s;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(212, 160, 32, 0.18);
+      color: var(--accent);
+    }
+
+    /* ===== Hero ===== */
+    .page-hero {
+      padding: 120px 0 80px;
+      background: linear-gradient(135deg, #0d1b35 0%, #1a2744 50%, #1e3a6e 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(212,160,32,0.07) 0%, transparent 60%);
+    }
+    .page-hero .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 2;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 24px;
+    }
+    .breadcrumb a { color: var(--accent); text-decoration: none; }
+    .breadcrumb span { color: rgba(255,255,255,0.3); }
+    .page-hero h2 {
+      font-size: 46px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .page-hero h2 span { color: var(--accent); }
+    .page-hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+      max-width: 700px;
+      line-height: 1.9;
+      margin-bottom: 36px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hero-tag {
+      background: rgba(212,160,32,0.15);
+      border: 1px solid rgba(212,160,32,0.35);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* ===== 通用 ===== */
+    section { padding: 80px 0; }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .section-tag {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+    }
+    .section-line {
+      width: 50px;
+      height: 3px;
+      background: var(--accent);
+      margin: 0 auto;
+    }
+
+    /* ===== 主营：路口信号灯 Feature区 ===== */
+    .feature-section {
+      background: var(--bg-light);
+    }
+    .feature-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .feature-img {
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(26,39,68,0.15);
+    }
+    .feature-img img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+    .feature-img-badge {
+      position: absolute;
+      top: 20px; left: 20px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+      padding: 8px 20px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+    .feature-content .tag {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .feature-content h3 {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--text-dark);
+      line-height: 1.3;
+      margin-bottom: 18px;
+    }
+    .feature-content p {
+      font-size: 15px;
+      color: var(--text-gray);
+      line-height: 2;
+      margin-bottom: 24px;
+    }
+    .feature-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+    .feature-list li::before {
+      content: '';
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===== 9大业务卡片网格 ===== */
+    #services { background: #fff; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .srv-card {
+      background: #fff;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: all 0.35s;
+    }
+    .srv-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 56px rgba(26,39,68,0.12);
+      border-color: rgba(212,160,32,0.25);
+    }
+    .srv-img {
+      height: 190px;
+      overflow: hidden;
+      position: relative;
+    }
+    .srv-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .srv-card:hover .srv-img img { transform: scale(1.07); }
+    .srv-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,53,0.65) 0%, transparent 60%);
+    }
+    .srv-cat {
+      position: absolute;
+      bottom: 12px; left: 14px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+    .srv-body {
+      padding: 22px 22px 20px;
+    }
+    .srv-icon-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .srv-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .srv-body h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+    .srv-body p {
+      font-size: 13.5px;
+      color: var(--text-gray);
+      line-height: 1.85;
+      margin-bottom: 14px;
+    }
+    .srv-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .srv-tag {
+      background: rgba(26,39,68,0.06);
+      color: var(--primary);
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    /* ===== 解决方案流程 ===== */
+    #solution {
+      background: var(--bg-light);
+    }
+    .solution-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .solution-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 80px; right: 80px;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), rgba(212,160,32,0.2));
+    }
+    .sol-item {
+      text-align: center;
+      padding: 0 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .sol-num {
+      width: 72px; height: 72px;
+      background: #fff;
+      border: 3px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--primary);
+    }
+    .sol-item h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+    .sol-item p {
+      font-size: 13px;
+      color: var(--text-gray);
+      line-height: 1.7;
+    }
+
+    /* ===== 应用场景 ===== */
+    #scenarios { background: #fff; }
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .scenario-item {
+      background: var(--bg-light);
+      border-radius: 12px;
+      padding: 28px 22px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .scenario-item:hover {
+      background: var(--primary);
+      border-color: transparent;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(26,39,68,0.15);
+    }
+    .scenario-icon {
+      font-size: 38px;
+      margin-bottom: 14px;
+      display: block;
+    }
+    .scenario-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      transition: color 0.3s;
+    }
+    .scenario-item p {
+      font-size: 13px;
+      color: var(--text-gray);
+      line-height: 1.7;
+      transition: color 0.3s;
+    }
+    .scenario-item:hover h4 { color: var(--accent); }
+    .scenario-item:hover p { color: rgba(255,255,255,0.7); }
+
+    /* ===== 优势 ===== */
+    #advantages {
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+    #advantages::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      background: rgba(212,160,32,0.04);
+    }
+    #advantages .section-title { color: #fff; }
+    .adv-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .adv-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 32px 26px;
+      transition: all 0.3s;
+    }
+    .adv-card:hover {
+      background: rgba(212,160,32,0.1);
+      border-color: rgba(212,160,32,0.3);
+      transform: translateY(-4px);
+    }
+    .adv-num {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .adv-num span { font-size: 20px; }
+    .adv-card h5 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .adv-card p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.75;
+    }
+
+    /* ===== 联系 CTA ===== */
+    .cta-section {
+      background: var(--bg-light);
+      padding: 80px 0;
+    }
+    .cta-box {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      border-radius: 16px;
+      padding: 56px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-box::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      border-radius: 50%;
+      background: rgba(212,160,32,0.08);
+    }
+    .cta-box h3 {
+      font-size: 32px;
+      font-weight: 900;
+      color: #fff;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-box p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 36px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+      position: relative;
+    }
+    .cta-btns {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .btn-gold {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 14px 40px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.25s;
+      letter-spacing: 1px;
+    }
+    .btn-gold:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212,160,32,0.4);
+    }
+    .btn-white {
+      border: 2px solid rgba(255,255,255,0.4);
+      color: #fff;
+      padding: 14px 40px;
+      border-radius: 6px;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .btn-white:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      background: #0d1520;
+      color: rgba(255,255,255,0.6);
+      padding: 40px 0 28px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-inner p { font-size: 13px; }
+    .footer-inner a { color: var(--accent); text-decoration: none; font-size: 13px; }
+
+    /* ===== 响应式 ===== */
+    @media (max-width: 900px) {
+      nav { display: none; }
+      .page-hero h2 { font-size: 32px; }
+      .feature-wrap { grid-template-columns: 1fr; gap: 40px; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .solution-grid { grid-template-columns: 1fr 1fr; }
+      .solution-grid::before { display: none; }
+      .scenario-grid { grid-template-columns: 1fr 1fr; }
+      .adv-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .scenario-grid { grid-template-columns: 1fr 1fr; }
+      .adv-grid { grid-template-columns: 1fr; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .cta-box { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 导航 -->
+<header>
+  <div class="nav-wrap">
+    <a href="index.html" class="logo-area">
+      <div class="logo-icon">振邦</div>
+      <div class="logo-text">
+        <h1>广西振邦建设工程有限公司</h1>
+        <p>ZHENBANG CONSTRUCTION</p>
+      </div>
+    </a>
+    <nav>
+      <a href="index.html#about">公司简介</a>
+      <a href="index.html#business">核心业务</a>
+      <a href="index.html#intelligent" class="active">智能系统</a>
+      <a href="qualifications.html">资质荣誉</a>
+      <a href="index.html#cases">工程案例</a>
+      <a href="index.html#contact">联系我们</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">首页</a>
+      <span>›</span>
+      <span>业务板块</span>
+      <span>›</span>
+      <span style="color:rgba(255,255,255,0.75)">智能交通与安防系统</span>
+    </div>
+    <h2>智能交通<span>与安防</span>系统</h2>
+    <p>振邦公司近年积极布局智能化领域，依托丰富的交通设施工程经验，
+      深耕路口信号灯控制、视频监控、电子警察、人脸识别及园区智能管理，
+      为城市交通智慧化与安全防护提供一体化解决方案。</p>
+    <div class="hero-tags">
+      <span class="hero-tag">路口信号灯</span>
+      <span class="hero-tag">道路视频监控</span>
+      <span class="hero-tag">电子警察</span>
+      <span class="hero-tag">人脸识别</span>
+      <span class="hero-tag">机房服务器</span>
+      <span class="hero-tag">道闸系统</span>
+      <span class="hero-tag">园区车辆管理</span>
+      <span class="hero-tag">楼宇管理</span>
+      <span class="hero-tag">门禁系统</span>
+    </div>
+  </div>
+</div>
+
+<!-- 主营：路口信号灯控制系统 -->
+<section class="feature-section" id="signal">
+  <div class="container">
+    <div class="feature-wrap">
+      <div class="feature-img">
+        <img src="images/intelligent_signal.jpg" alt="路口交通信号灯控制系统">
+        <div class="feature-img-badge">核心主营业务</div>
+      </div>
+      <div class="feature-content">
+        <div class="tag">CORE BUSINESS</div>
+        <h3>路口交通信号灯<br>控制系统</h3>
+        <p>公司主要业务板块。深耕城市路口交通信号灯工程，承接从单路口信号机安装到区域协调控制系统的全套建设，
+          融合绿波带设计、自适应控制算法及远程运维管理，全面提升城市交通通行效率，减少路口拥堵。</p>
+        <p>覆盖北海市及广西多地城市路口改造项目，完整提供设计方案、设备采购、安装调试及后期维护，
+          是本公司持续投入和重点发展的核心业务方向。</p>
+        <ul class="feature-list">
+          <li>单路口信号控制器</li>
+          <li>区域协调绿波控制</li>
+          <li>行人过街信号系统</li>
+          <li>倒计时显示屏</li>
+          <li>远程集中监控平台</li>
+          <li>自适应信号优化</li>
+          <li>机房及服务器集成</li>
+          <li>设备运维保障服务</li>
+        </ul>
+        <a href="index.html#contact" style="display:inline-block;background:var(--accent);color:var(--primary);padding:13px 36px;border-radius:6px;font-weight:800;font-size:15px;text-decoration:none;letter-spacing:1px;">咨询信号灯工程 →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9大智能系统业务 -->
+<section id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Smart Services</div>
+      <h2 class="section-title">智能系统业务全覆盖</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="services-grid">
+
+      <!-- 1. 道路视频监控 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_monitor.jpg" alt="道路视频监控">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">安防监控</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">📹</div>
+            <h4>道路视频监控系统</h4>
+          </div>
+          <p>承接城市道路、路口及公共区域高清视频监控系统建设，涵盖高清摄像机选型、补光灯、立杆基础及视频存储分析平台集成，
+            实现全天候实时监控与事件自动预警。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">高清摄像</span>
+            <span class="srv-tag">夜视补光</span>
+            <span class="srv-tag">智能分析</span>
+            <span class="srv-tag">云端存储</span>
+            <span class="srv-tag">事件告警</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 电子警察 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_epol.jpg" alt="电子警察系统">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">执法设备</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🚔</div>
+            <h4>电子警察系统</h4>
+          </div>
+          <p>承建路口闯红灯抓拍、违章停车识别、车速检测及车牌自动识别系统，
+            与公安交管部门平台无缝对接，自动完成违法取证、传输及后台处理，有效震慑交通违章行为。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">闯红灯抓拍</span>
+            <span class="srv-tag">车牌识别</span>
+            <span class="srv-tag">超速检测</span>
+            <span class="srv-tag">违停识别</span>
+            <span class="srv-tag">数据联网</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 人脸识别 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_face.jpg" alt="人脸识别系统">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">AI识别</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">👤</div>
+            <h4>人脸识别系统</h4>
+          </div>
+          <p>部署高精度AI人脸识别终端，应用于出入口门禁、员工考勤、安检核验等多种场景，
+            支持大规模人员库实时比对、陌生人自动告警及访客预约管理，全面提升安全管控水平。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">门禁管控</span>
+            <span class="srv-tag">考勤管理</span>
+            <span class="srv-tag">访客预约</span>
+            <span class="srv-tag">陌生人告警</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 机房服务器 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_server.jpg" alt="机房服务器存储">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">机房建设</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🖥️</div>
+            <h4>机房信号灯服务器与存储系统</h4>
+          </div>
+          <p>专业承建信号灯控制中心机房，提供服务器机柜、核心交换机、视频存储阵列（NVR/SAN）、
+            UPS不间断电源及精密空调的设计采购与集成部署，确保交通控制系统7×24小时稳定运行。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">信号灯服务器</span>
+            <span class="srv-tag">视频存储</span>
+            <span class="srv-tag">机房集成</span>
+            <span class="srv-tag">UPS保障</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 道闸系统 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_barrier.jpg" alt="道闸系统">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">出入管控</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🚧</div>
+            <h4>道闸系统</h4>
+          </div>
+          <p>承建停车场入口及园区出入口道闸控制系统，集成车牌自动识别、ETC无感支付、
+            月租车管理、访客临时通行及远程抬杆功能，实现完全无人值守的智能化车辆出入管控。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">车牌识别</span>
+            <span class="srv-tag">无感支付</span>
+            <span class="srv-tag">远程控制</span>
+            <span class="srv-tag">访客管理</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. 园区车辆管理 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_parking.jpg" alt="园区车辆管理">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">园区管理</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🚗</div>
+            <h4>园区车辆管理系统</h4>
+          </div>
+          <p>为政府机关、工业园区及大型企业提供完整车辆管理解决方案，
+            包含车位引导屏、地磁车位检测、数字化管理后台及移动APP，实现停车全流程智能化管理。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">停车诱导</span>
+            <span class="srv-tag">车位检测</span>
+            <span class="srv-tag">管理后台</span>
+            <span class="srv-tag">移动APP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. 楼宇管理 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_building.jpg" alt="楼宇智能管理">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">楼宇智能</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🏢</div>
+            <h4>楼宇智能管理系统</h4>
+          </div>
+          <p>承建办公楼宇及综合体的自动化管理系统，集成视频监控、门禁系统、
+            访客管理、消防报警联动及能耗监控，构建安全、节能的智能化楼宇环境。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">楼控系统</span>
+            <span class="srv-tag">访客管理</span>
+            <span class="srv-tag">能耗监测</span>
+            <span class="srv-tag">消防联动</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. 门禁系统 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_access.jpg" alt="智能门禁系统">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">安全防护</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🔐</div>
+            <h4>智能门禁系统</h4>
+          </div>
+          <p>提供多模式身份验证门禁控制系统，支持IC卡、指纹、人脸、
+            二维码及手机蓝牙开门，可与考勤系统无缝联动，支持多级权限设置，
+            满足不同安全级别的出入管控需求。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">多模验证</span>
+            <span class="srv-tag">考勤联动</span>
+            <span class="srv-tag">权限分级</span>
+            <span class="srv-tag">报警联动</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. 智慧城市综合 -->
+      <div class="srv-card">
+        <div class="srv-img">
+          <img src="images/intelligent_city.jpg" alt="智慧城市综合方案">
+          <div class="srv-img-overlay"></div>
+          <span class="srv-cat">综合方案</span>
+        </div>
+        <div class="srv-body">
+          <div class="srv-icon-row">
+            <div class="srv-icon">🌆</div>
+            <h4>智慧城市综合解决方案</h4>
+          </div>
+          <p>依托公司在交通安全设施与智能系统双领域的综合能力，
+            为政府、园区及企业提供涵盖交通控制、安防监控、人员管理的全链路智慧化整体解决方案，
+            一站式交付，降低建设成本，提升管理效率。</p>
+          <div class="srv-tags">
+            <span class="srv-tag">一站式交付</span>
+            <span class="srv-tag">系统集成</span>
+            <span class="srv-tag">运维服务</span>
+            <span class="srv-tag">定制开发</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 服务实施流程 -->
+<section id="solution">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Implementation Process</div>
+      <h2 class="section-title">智能系统实施流程</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="solution-grid">
+      <div class="sol-item">
+        <div class="sol-num">01</div>
+        <h4>需求调研</h4>
+        <p>深入了解客户场景需求、现场环境及预算范围</p>
+      </div>
+      <div class="sol-item">
+        <div class="sol-num">02</div>
+        <h4>方案设计</h4>
+        <p>出具专业技术方案，包含设备选型、系统架构及施工图纸</p>
+      </div>
+      <div class="sol-item">
+        <div class="sol-num">03</div>
+        <h4>设备采购</h4>
+        <p>严格选用品牌设备，确保产品质量与兼容性</p>
+      </div>
+      <div class="sol-item">
+        <div class="sol-num">04</div>
+        <h4>施工安装</h4>
+        <p>专业团队现场施工，全程质量管控，严格执行规范</p>
+      </div>
+      <div class="sol-item">
+        <div class="sol-num">05</div>
+        <h4>调试运维</h4>
+        <p>系统联调测试，交付培训，提供长期运维保障服务</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 应用场景 -->
+<section id="scenarios">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Application Scenarios</div>
+      <h2 class="section-title">典型应用场景</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="scenario-grid">
+      <div class="scenario-item">
+        <span class="scenario-icon">🚦</span>
+        <h4>城市交叉路口</h4>
+        <p>信号灯控制、电子警察抓拍、视频监控一体化部署</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🏛️</span>
+        <h4>政府机关单位</h4>
+        <p>门禁管控、人脸识别、楼宇安防综合管理</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🏭</span>
+        <h4>工业园区</h4>
+        <p>车辆管理、道闸控制、园区视频监控全覆盖</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🏫</span>
+        <h4>学校及医院</h4>
+        <p>人脸识别门禁、校园安防、访客管理系统</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🛣️</span>
+        <h4>公路干道</h4>
+        <p>视频监控系统、超速测速、事件检测设备</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🏢</span>
+        <h4>商业综合体</h4>
+        <p>停车场管理、楼宇门禁、安防监控集成</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🚉</span>
+        <h4>交通枢纽</h4>
+        <p>人流量监控、人脸识别、异常行为检测预警</p>
+      </div>
+      <div class="scenario-item">
+        <span class="scenario-icon">🌆</span>
+        <h4>智慧新城</h4>
+        <p>交通、安防、管理系统统一平台集成</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 核心优势 -->
+<section id="advantages">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Core Advantages</div>
+      <h2 class="section-title">振邦智能系统核心优势</h2>
+      <div class="section-line" style="background:var(--accent);"></div>
+    </div>
+    <div class="adv-grid">
+      <div class="adv-card">
+        <div class="adv-num">18<span>+</span></div>
+        <h5>年交通设施工程经验</h5>
+        <p>深厚的交通工程背景，深刻理解路口信号灯、标志标牌与智能系统的协同关系，方案更贴合实际需求。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-num">一<span>站式</span></div>
+        <h5>从传统到智能全覆盖</h5>
+        <p>同时具备传统交通安全设施施工与智能系统集成能力，可为客户提供交通安全+智能化的一体化建设方案。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-num">7×24</div>
+        <h5>运维保障服务</h5>
+        <p>提供系统部署后的长期运维保障，专业技术团队响应迅速，确保信号灯、监控等关键系统持续稳定运行。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-num">A<span>级</span></div>
+        <h5>纳税信用企业</h5>
+        <p>2024年度A级纳税信用评定，诚信经营，资质齐全，是政府采购及企业合作的可信赖优质服务商。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-num">多<span>品牌</span></div>
+        <h5>优质设备供应渠道</h5>
+        <p>与国内外主流安防及智能交通设备品牌建立稳固合作关系，确保设备质量，保障供货及时。</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-num">本<span>地化</span></div>
+        <h5>广西本地专业团队</h5>
+        <p>立足北海，辐射广西全区，本地团队快速响应，熟悉地方政策法规，项目推进更高效顺畅。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="container">
+    <div class="cta-box">
+      <h3>有智能系统建设需求？</h3>
+      <p>无论是路口信号灯控制、视频监控、门禁道闸还是园区综合智能管理，
+        振邦专业团队随时为您提供免费方案评估与报价咨询。</p>
+      <div class="cta-btns">
+        <a href="index.html#contact" class="btn-gold">立即联系我们</a>
+        <a href="index.html" class="btn-white">返回首页</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <p>© 2024 广西振邦建设工程有限公司 版权所有 · 智能交通与安防系统业务</p>
+    <a href="index.html">← 返回首页</a>
+  </div>
+</footer>
+
+</body>
+</html>
