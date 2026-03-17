@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据清除工具 · 振邦20周年</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: linear-gradient(135deg, #0a1428 0%, #1a3a52 100%);
+    color: #f0f4f8;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .container {
+    max-width: 500px;
+    background: rgba(20, 40, 70, 0.8);
+    border: 2px solid rgba(200, 162, 0, 0.3);
+    border-radius: 16px;
+    padding: 40px;
+    backdrop-filter: blur(10px);
+  }
+  
+  h1 {
+    text-align: center;
+    color: #c8a200;
+    margin-bottom: 10px;
+    font-size: 24px;
+  }
+  
+  .subtitle {
+    text-align: center;
+    color: #8a9aaa;
+    font-size: 14px;
+    margin-bottom: 30px;
+  }
+  
+  .data-item {
+    background: rgba(200, 162, 0, 0.08);
+    border: 1px solid rgba(200, 162, 0, 0.2);
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .data-info {
+    flex: 1;
+  }
+  
+  .data-name {
+    color: #c8a200;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  
+  .data-desc {
+    color: #8a9aaa;
+    font-size: 12px;
+  }
+  
+  .data-size {
+    color: #c8a200;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  .btn-group {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+  }
+  
+  button {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-danger {
+    background: #c8a200;
+    color: #0a1428;
+  }
+  
+  .btn-danger:hover {
+    background: #e0c02e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200, 162, 0, 0.3);
+  }
+  
+  .btn-cancel {
+    background: rgba(200, 162, 0, 0.2);
+    color: #c8a200;
+    border: 1px solid rgba(200, 162, 0, 0.4);
+  }
+  
+  .btn-cancel:hover {
+    background: rgba(200, 162, 0, 0.3);
+  }
+  
+  .status {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    display: none;
+  }
+  
+  .status.success {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid rgba(76, 175, 80, 0.4);
+    color: #4caf50;
+    display: block;
+  }
+  
+  .status.error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 1px solid rgba(244, 67, 54, 0.4);
+    color: #f44336;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🧹 数据清除工具</h1>
+  <p class="subtitle">清除投票和抽奖的本地存储记录</p>
+  
+  <div id="data-list">
+    <div class="data-item">
+      <div class="data-info">
+        <div class="data-name">📋 投票记录</div>
+        <div class="data-desc">anniversary_votes</div>
+      </div>
+      <div class="data-size" id="vote-size">-</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-info">
+        <div class="data-name">👤 已投票用户</div>
+        <div class="data-desc">anniversary_voted_users</div>
+      </div>
+      <div class="data-size" id="voter-size">-</div>
+    </div>
+    
+    <div class="data-item">
+      <div class="data-info">
+        <div class="data-name">🎰 抽奖记录</div>
+        <div class="data-desc">lotteryData</div>
+      </div>
+      <div class="data-size" id="lottery-size">-</div>
+    </div>
+  </div>
+  
+  <div id="status" class="status"></div>
+  
+  <div class="btn-group">
+    <button class="btn-cancel" onclick="goBack()">返回</button>
+    <button class="btn-danger" onclick="clearAllData()">清除所有数据</button>
+  </div>
+</div>
+
+<script>
+function getDataSize(key) {
+  const data = localStorage.getItem(key);
+  if (!data) return '空';
+  return Math.round(new Blob([data]).size / 1024) + ' KB';
+}
+
+function updateDataDisplay() {
+  document.getElementById('vote-size').textContent = getDataSize('anniversary_votes');
+  document.getElementById('voter-size').textContent = getDataSize('anniversary_voted_users');
+  document.getElementById('lottery-size').textContent = getDataSize('lotteryData');
+}
+
+function showStatus(message, isSuccess) {
+  const status = document.getElementById('status');
+  status.textContent = message;
+  status.className = 'status ' + (isSuccess ? 'success' : 'error');
+  setTimeout(() => {
+    status.className = 'status';
+  }, 3000);
+}
+
+function clearAllData() {
+  if (!confirm('确定要清除所有投票和抽奖记录吗？\n\n此操作无法撤销！')) {
+    return;
+  }
+  
+  try {
+    // 清除投票记录
+    localStorage.removeItem('anniversary_votes');
+    localStorage.removeItem('anniversary_voted_users');
+    
+    // 清除抽奖记录
+    localStorage.removeItem('lotteryData');
+    
+    showStatus('✅ 所有数据已清除', true);
+    updateDataDisplay();
+  } catch (error) {
+    showStatus('❌ 清除失败: ' + error.message, false);
+  }
+}
+
+function goBack() {
+  history.back();
+}
+
+// 页面加载时显示数据大小
+document.addEventListener('DOMContentLoaded', updateDataDisplay);
+</script>
+
+</body>
+</html>

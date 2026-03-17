@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>幸运抽奖 · 振邦20周年</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── 抽人转盘滚动动画 ─────────────────── */
+.name-roller {
+  height: 64px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.name-roller-inner {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--gold);
+  transition: none;
+  text-align: center;
+  letter-spacing: 4px;
+}
+.prize-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.quota-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 6px 0;
+  font-size: 14px;
+}
+.quota-bar-fill {
+  height: 8px;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+  min-width: 4px;
+}
+.pool-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+.pool-tag {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  background: rgba(200,162,0,0.1);
+  border: 1px solid rgba(200,162,0,0.25);
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+.pool-tag.drawn {
+  background: rgba(200,162,0,0.08);
+  border-color: transparent;
+  color: rgba(255,255,255,0.15);
+  text-decoration: line-through;
+}
+.pool-tag.prize-special { background:rgba(200,162,0,0.25); border-color:#c8a200; color:#f0c800; }
+.pool-tag.prize-first   { background:rgba(180,180,180,0.18); border-color:#aaa; color:#ddd; }
+.pool-tag.prize-second  { background:rgba(200,122,42,0.2); border-color:#c87a2a; color:#e8962a; }
+.pool-tag.prize-third   { background:rgba(42,154,74,0.18); border-color:#2a9a4a; color:#2ecc71; }
+.pool-tag.prize-memorial{ background:rgba(45,106,160,0.18); border-color:#2d6aa0; color:#5dade2; }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-logo">振邦</span>
+    <span class="brand-text">20周年庆典</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">首页</a></li>
+    <li><a href="history.html">发展历程</a></li>
+    <li><a href="vote_standalone.html">评选投票</a></li>
+    <li><a href="lucky.html" class="active">幸运抽奖</a></li>
+    <li><a href="message.html">员工寄语</a></li>
+  </ul>
+  <div class="nav-toggle" onclick="toggleNav()">☰</div>
+</nav>
+
+<div class="page-hero">
+  <div class="section-tag">🎰 幸运大转盘</div>
+  <h1>振邦20周年幸运抽奖</h1>
+  <p>选择你的名字，转盘为你揭晓命运！</p>
+</div>
+
+<section class="lucky-section">
+  <div class="container">
+
+    <!-- 抽奖主区 -->
+    <div class="lottery-box">
+      <h3 style="font-size:18px;margin-bottom:8px;color:var(--gold)">🎯 选择你的名字</h3>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;text-align:center">
+        选定后点击抽奖，转盘为你转动！
+      </p>
+      <!-- 姓名选择下拉框 -->
+      <div style="margin-bottom:20px;text-align:center">
+        <select id="player-name" style="padding:10px 16px;font-size:15px;border-radius:6px;border:1px solid rgba(200,162,0,0.3);background:#050e1a;color:var(--gold);cursor:pointer;min-width:200px;text-align:center">
+          <option value="" selected disabled>— 请选择你的名字 —</option>
+        </select>
+      </div>
+
+      <!-- 转盘 -->
+      <div class="lottery-wheel">
+        <div class="wheel-pointer">▼</div>
+        <canvas id="wheelCanvas" class="wheel-canvas" width="300" height="300"></canvas>
+      </div>
+
+      <!-- 结果显示 -->
+      <div class="lottery-result" id="lottery-result">
+        <span style="color:var(--text-muted);font-size:15px">转盘转动，命运降临！</span>
+      </div>
+
+      <!-- 抽奖按钮 -->
+      <button class="btn-spin" id="spin-btn" onclick="spinWheel()">🎊 开始抽奖！</button>
+      
+      <!-- 隐藏的重置按钮（Ctrl+R显示） -->
+      <button id="reset-btn" style="display:none;margin-top:16px;padding:8px 16px;background:#c83d35;border:none;border-radius:6px;color:white;cursor:pointer;font-size:13px" onclick="resetLottery()">⚠️ 清除所有记录</button>
+    </div>
+
+    <!-- 奖项名额说明 -->
+    <div class="prize-list" style="max-width:600px;margin:48px auto 0">
+      <h3 style="text-align:center;margin-bottom:24px">🎁 奖品设置与中奖概率</h3>
+      <div class="prize-grid">
+
+        <div class="prize-item">
+          <div class="prize-rank" style="background:linear-gradient(135deg,#b8960a,#f0c800)">🥇</div>
+          <div style="flex:1">
+            <div class="prize-name">特等奖</div>
+            <div class="prize-num">价值 ¥2000 大礼包</div>
+          </div>
+          <div style="font-size:13px;color:#f0c800;font-weight:bold;white-space:nowrap">2/62 = 3.2%</div>
+        </div>
+
+        <div class="prize-item">
+          <div class="prize-rank" style="background:linear-gradient(135deg,#888,#ccc)">🥈</div>
+          <div style="flex:1">
+            <div class="prize-name">一等奖</div>
+            <div class="prize-num">价值 ¥1000 礼品卡</div>
+          </div>
+          <div style="font-size:13px;color:#cccccc;font-weight:bold;white-space:nowrap">5/62 = 8.1%</div>
+        </div>
+
+        <div class="prize-item">
+          <div class="prize-rank" style="background:linear-gradient(135deg,#7a4a1a,#c87a2a)">🥉</div>
+          <div style="flex:1">
+            <div class="prize-name">二等奖</div>
+            <div class="prize-num">价值 ¥500 购物卡</div>
+          </div>
+          <div style="font-size:13px;color:#c87a2a;font-weight:bold;white-space:nowrap">10/62 = 16.1%</div>
+        </div>
+
+        <div class="prize-item">
+          <div class="prize-rank" style="background:linear-gradient(135deg,#1a5a2a,#2a9a4a)">🎁</div>
+          <div style="flex:1">
+            <div class="prize-name">三等奖</div>
+            <div class="prize-num">振邦定制纪念礼品</div>
+          </div>
+          <div style="font-size:13px;color:#2a9a4a;font-weight:bold;white-space:nowrap">20/62 = 32.3%</div>
+        </div>
+
+        <div class="prize-item" style="grid-column:1/-1">
+          <div class="prize-rank" style="background:linear-gradient(135deg,#1a3a5c,#2d6aa0)">🎉</div>
+          <div style="flex:1">
+            <div class="prize-name">纪念奖</div>
+            <div class="prize-num">参与即得 · 振邦20周年纪念品</div>
+          </div>
+          <div style="font-size:13px;color:#2d6aa0;font-weight:bold;white-space:nowrap">25/62 = 40.3%</div>
+        </div>
+      </div>
+
+      <!-- 抽奖说明 -->
+      <div style="margin-top:20px;padding:14px 18px;border-radius:10px;background:rgba(200,162,0,0.06);border:1px solid rgba(200,162,0,0.2);font-size:13px;color:var(--text-muted);line-height:1.9;">
+        <strong style="color:var(--gold)">抽奖规则：</strong>在上方下拉框选择自己的名字，点击"开始抽奖"，转盘随机决定奖项。每人可抽一次，转盘停下即为最终结果。
+      </div>
+    </div>
+
+    <!-- 中奖记录 -->
+    <div class="winner-history" style="max-width:600px;margin:48px auto 80px;padding:24px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(200,162,0,0.15)">
+      <h3>🏆 中奖记录</h3>
+      <div class="winner-list" id="winner-list">
+        <p style="text-align:center;color:var(--text-muted);font-size:14px;padding:20px">暂无中奖记录</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 中奖弹窗 -->
+<div class="modal-overlay" id="win-modal">
+  <div class="modal">
+    <div style="font-size:64px;margin-bottom:8px" id="win-emoji">🎊</div>
+    <h3 id="win-title">恭喜中奖！</h3>
+    <div class="modal-prize" id="win-prize"></div>
+    <div class="modal-winner" id="win-name"></div>
+    <button class="btn-modal" onclick="closeModal('win-modal')">太棒了！</button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 广西振邦建设工程有限公司 · 成立二十周年庆典</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+// ── 员工数据（直接内嵌，无需fetch）────────────────────
+const ALL_EMPLOYEES = [
+  "郭嗣龙","牛勇建","刘兴国","卢光辉","张阳鹏","庞郁","范华","王江","李强","李其胜",
+  "陈密集","莫羡革","姚源超","苏积汉","廖伯长","黄泽华","张鉴庆","张鉴业","詹德波","韦朗",
+  "韦淦","房中南","李志和","李佰星","林满兴","张销柱","谭鑫","刘祖豪","曹凯勋","刘佳",
+  "张海洋","杜应明","韦艳妹","刘南锋","覃结平","韦相涛","韦海平","韦克根","韩秀娟","林萍",
+  "李夏龙","庞可珺","劳连娜","陆壮","莫文红","韦伦","韦飞鸽","覃惠喜","韦丽艳","苏贤",
+  "谢丹","裴晓昌","卓全爱","潘华华","韦克团","何向成","陆初兰","林广为","黄培","韦凤寒",
+  "蓝天任","陆华金"
+];
+
+// ── 奖项配置（名额限制）──────────────────────────────
+const PRIZES = [
+  {name:'特等奖', emoji:'🥇', color:'#c8a200', quota:2,  desc:'价值 ¥2000 大礼包'},
+  {name:'一等奖', emoji:'🥈', color:'#aaaaaa', quota:5,  desc:'价值 ¥1000 礼品卡'},
+  {name:'二等奖', emoji:'🥉', color:'#c87a2a', quota:10, desc:'价值 ¥500 购物卡'},
+  {name:'三等奖', emoji:'🎁', color:'#2a9a4a', quota:20, desc:'振邦定制纪念礼品'},
+  {name:'纪念奖', emoji:'🎉', color:'#2d6aa0', quota:25, desc:'振邦20周年纪念品'},
+];
+
+// ── 抽奖状态 ────────────────────────────────────────
+let drawn = new Set();    // 已抽的人名集合
+let prizeQuota = {};      // 剩余名额 {特等奖:2, 一等奖:5, ...}
+let prizeRecords = {};    // 中奖记录 {name: {prize, time}}
+
+// ── LocalStorage 初始化 ────────────────────────────
+function loadFromStorage() {
+  const saved = localStorage.getItem('lotteryData');
+  if (saved) {
+    const data = JSON.parse(saved);
+    drawn = new Set(data.drawn || []);
+    prizeQuota = data.prizeQuota || {};
+    prizeRecords = data.prizeRecords || {};
+  } else {
+    PRIZES.forEach(p => {
+      prizeQuota[p.name] = p.quota;
+    });
+  }
+}
+
+function saveToStorage() {
+  const data = {
+    drawn: Array.from(drawn),
+    prizeQuota: prizeQuota,
+    prizeRecords: prizeRecords
+  };
+  localStorage.setItem('lotteryData', JSON.stringify(data));
+}
+
+loadFromStorage();
+
+// ── 转盘绘制 ────────────────────────────────────────
+const canvas  = document.getElementById('wheelCanvas');
+const ctx     = canvas.getContext('2d');
+const cx = 150, cy = 150, r = 140;
+let currentAngle = 0;
+let spinning = false;
+
+function drawWheel(angle) {
+  ctx.clearRect(0, 0, 300, 300);
+  const activePrizes = PRIZES.filter(p => prizeQuota[p.name] > 0);
+  if (activePrizes.length === 0) return;
+  
+  const total = activePrizes.reduce((s, p) => s + prizeQuota[p.name], 0);
+  let start = angle;
+  activePrizes.forEach(p => {
+    const slice = (prizeQuota[p.name] / total) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start + slice);
+    ctx.closePath();
+    ctx.fillStyle = p.color;
+    ctx.fill();
+    ctx.strokeStyle = '#050e1a';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(start + slice / 2);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 11px Microsoft YaHei';
+    ctx.fillText(p.emoji + ' ' + p.name, r - 10, 5);
+    ctx.restore();
+    start += slice;
+  });
+  // 中心圆
+  ctx.beginPath();
+  ctx.arc(cx, cy, 24, 0, Math.PI * 2);
+  ctx.fillStyle = '#050e1a';
+  ctx.fill();
+  ctx.strokeStyle = '#c8a200';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.fillStyle = '#c8a200';
+  ctx.font = 'bold 10px Microsoft YaHei';
+  ctx.textAlign = 'center';
+  ctx.fillText('振邦', cx, cy + 4);
+}
+
+// ── 加权随机选奖（按剩余名额）──────────────────────
+function randomPrize() {
+  const activePrizes = PRIZES.filter(p => prizeQuota[p.name] > 0);
+  if (activePrizes.length === 0) return -1;
+  const total = activePrizes.reduce((s, p) => s + prizeQuota[p.name], 0);
+  let r = Math.random() * total;
+  for (let p of activePrizes) {
+    r -= prizeQuota[p.name];
+    if (r <= 0) return PRIZES.indexOf(p);
+  }
+  return PRIZES.indexOf(activePrizes[activePrizes.length - 1]);
+}
+
+// ── 计算奖项在转盘上的中心角度 ──────────────────────
+function prizeAngleCenter(prizeIdx) {
+  const activePrizes = PRIZES.filter(p => prizeQuota[p.name] > 0);
+  const total = activePrizes.reduce((s, p) => s + prizeQuota[p.name], 0);
+  let acc = 0;
+  for (let p of activePrizes) {
+    if (PRIZES.indexOf(p) === prizeIdx) {
+      acc += prizeQuota[p.name] / 2;
+      return (acc / total) * Math.PI * 2;
+    }
+    acc += prizeQuota[p.name];
+  }
+  return 0;
+}
+
+// ── 主抽奖逻辑 ────────────────────────────────────────
+function spinWheel() {
+  if (spinning) return;
+  const sel = document.getElementById('player-name');
+  const name = sel.value;
+  if (!name) {
+    alert('请先选择你的名字！');
+    return;
+  }
+  
+  if (drawn.has(name)) {
+    alert('你已经抽过奖了，每人只能抽一次！');
+    return;
+  }
+
+  spinning = true;
+  document.getElementById('spin-btn').disabled = true;
+  document.getElementById('lottery-result').innerHTML =
+    '<span style="color:var(--text-muted)">抽奖中…</span>';
+
+  let prizeIdx = randomPrize();
+  if (prizeIdx === -1) {
+    alert('所有高级奖项已抽完！');
+    spinning = false;
+    document.getElementById('spin-btn').disabled = false;
+    return;
+  }
+
+  const prize = PRIZES[prizeIdx];
+
+  // 让指针停在该奖项扇区中心
+  const targetCenter = prizeAngleCenter(prizeIdx);
+  const extraRotations = Math.PI * 2 * (5 + Math.floor(Math.random() * 3));
+  const finalAngle = extraRotations - targetCenter - Math.PI / 2;
+
+  const duration = 4000;
+  const startTime = performance.now();
+  const startAngle = currentAngle;
+
+  function animate(now) {
+    const t = Math.min((now - startTime) / duration, 1);
+    const ease = 1 - Math.pow(1 - t, 4);
+    currentAngle = startAngle + (finalAngle - startAngle) * ease;
+    drawWheel(currentAngle);
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      currentAngle = finalAngle;
+      drawWheel(currentAngle);
+      spinning = false;
+      document.getElementById('spin-btn').disabled = false;
+      finishDraw(name, prize);
+    }
+  }
+  requestAnimationFrame(animate);
+}
+
+// ── 完成抽奖 ─────────────────────────────────────────
+function finishDraw(name, prize) {
+  // 更新状态
+  drawn.add(name);
+  prizeQuota[prize.name]--;
+  prizeRecords[name] = {
+    prize: prize.name,
+    emoji: prize.emoji,
+    color: prize.color,
+    desc: prize.desc,
+    time: new Date().toLocaleTimeString('zh-CN', {hour12: false})
+  };
+  
+  // 保存到 LocalStorage
+  saveToStorage();
+  
+  // 从下拉框中移除该人
+  const sel = document.getElementById('player-name');
+  for (let opt of sel.options) {
+    if (opt.value === name) opt.remove();
+  }
+  sel.value = '';
+  
+  // 重绘转盘（名额变化）
+  drawWheel(currentAngle);
+  
+  // 展示结果
+  showResult(name, prize);
+}
+
+// ── 展示结果 ─────────────────────────────────────────
+function showResult(name, prize) {
+  document.getElementById('lottery-result').innerHTML =
+    '<div class="result-box">' + prize.emoji +
+    ' <strong>' + name + '</strong> 获得 <strong style="color:' + prize.color + '">' +
+    prize.name + '</strong>！</div>';
+
+  document.getElementById('win-emoji').textContent = prize.emoji;
+  document.getElementById('win-title').textContent = '恭喜 ' + name + '！';
+  document.getElementById('win-prize').textContent = prize.name + ' · ' + prize.desc;
+  document.getElementById('win-name').textContent = '还剩 ' + prizeQuota[prize.name] + ' 份 ' + prize.name;
+  document.getElementById('win-modal').classList.add('show');
+
+  addWinnerRecord(name, prize);
+}
+
+// ── 中奖记录 ─────────────────────────────────────────
+function addWinnerRecord(name, prize) {
+  const list = document.getElementById('winner-list');
+  const noData = list.querySelector('p');
+  if (noData) noData.remove();
+
+  const now = new Date();
+  const timeStr = now.getHours().toString().padStart(2,'0') + ':' +
+                  now.getMinutes().toString().padStart(2,'0') + ':' +
+                  now.getSeconds().toString().padStart(2,'0');
+
+  const item = document.createElement('div');
+  item.className = 'winner-item';
+  item.innerHTML =
+    '<div class="winner-name" style="font-weight:bold">' + name + '</div>' +
+    '<div class="winner-prize" style="color:' + prize.color + '">' + prize.emoji + ' ' + prize.name + '</div>' +
+    '<div class="winner-time">' + timeStr + '</div>';
+  list.insertBefore(item, list.firstChild);
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+
+// ── 重置所有数据 ──────────────────────────────────────
+function resetLottery() {
+  if (!confirm('确定要清除所有抽奖记录吗？这个操作无法撤销！')) {
+    return;
+  }
+  localStorage.removeItem('lotteryData');
+  location.reload();
+}
+
+// ── 初始化下拉框 ──────────────────────────────────────
+(function() {
+  const sel = document.getElementById('player-name');
+  ALL_EMPLOYEES.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+  
+  // 移除已抽过的人
+  drawn.forEach(name => {
+    for (let opt of sel.options) {
+      if (opt.value === name) opt.remove();
+    }
+  });
+  
+  // 恢复中奖记录显示
+  const list = document.getElementById('winner-list');
+  if (Object.keys(prizeRecords).length > 0) {
+    list.innerHTML = '';
+    for (const [name, record] of Object.entries(prizeRecords)) {
+      const item = document.createElement('div');
+      item.className = 'winner-item';
+      item.innerHTML =
+        '<div class="winner-name" style="font-weight:bold">' + name + '</div>' +
+        '<div class="winner-prize" style="color:' + record.color + '">' + record.emoji + ' ' + record.prize + '</div>' +
+        '<div class="winner-time">' + record.time + '</div>';
+      list.appendChild(item);
+    }
+  }
+  
+  drawWheel(0);
+  
+  // 快捷键 Ctrl+R 显示重置按钮
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.key === 'r') {
+      e.preventDefault();
+      const btn = document.getElementById('reset-btn');
+      if (btn) btn.style.display = btn.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+})();
+</script>
+</body>
+</html>

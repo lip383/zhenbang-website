@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>振邦建设 20周年庆典</title>
+<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<body>
+
+<!-- 导航栏 -->
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="brand-logo">振邦</span>
+    <span class="brand-text">20周年庆典</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">首页</a></li>
+    <li><a href="history.html">发展历程</a></li>
+    <li><a href="vote_standalone.html">评选投票</a></li>
+    <li><a href="lucky.html">幸运抽奖</a></li>
+    <li><a href="message.html">员工寄语</a></li>
+  </ul>
+  <div class="nav-toggle" onclick="toggleNav()">☰</div>
+</nav>
+
+<!-- 英雄区域 -->
+<section class="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">2006 — 2026</div>
+    <h1 class="hero-title">
+      <span class="title-line1">广西振邦建设工程有限公司</span>
+      <span class="title-line2">二十周年庆典</span>
+    </h1>
+    <p class="hero-subtitle">二十年风雨兼程，二十年砥砺前行<br>护栏·标志·标线·智能系统 | 一体化安全解决方案，护航广西路网未来</p>
+    <div class="countdown-box">
+      <div class="countdown-label">距离庆典还有</div>
+      <div class="countdown-timer">
+        <div class="time-unit">
+          <span class="time-num" id="days">--</span>
+          <span class="time-label">天</span>
+        </div>
+        <span class="time-sep">:</span>
+        <div class="time-unit">
+          <span class="time-num" id="hours">--</span>
+          <span class="time-label">时</span>
+        </div>
+        <span class="time-sep">:</span>
+        <div class="time-unit">
+          <span class="time-num" id="minutes">--</span>
+          <span class="time-label">分</span>
+        </div>
+        <span class="time-sep">:</span>
+        <div class="time-unit">
+          <span class="time-num" id="seconds">--</span>
+          <span class="time-label">秒</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-btns">
+      <a href="vote_standalone.html" class="btn-primary">参与评选</a>
+      <a href="lucky.html" class="btn-secondary">幸运抽奖</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>向下探索</span>
+    <div class="scroll-arrow">↓</div>
+  </div>
+</section>
+
+<!-- 数字统计 -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card" data-target="20">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-num"><span class="counter">0</span>年</div>
+        <div class="stat-label">深耕行业</div>
+      </div>
+      <div class="stat-card" data-target="1520">
+        <div class="stat-icon">💰</div>
+        <div class="stat-num"><span class="counter">0</span>万</div>
+        <div class="stat-label">注册资本</div>
+      </div>
+      <div class="stat-card" data-target="100">
+        <div class="stat-icon">🛣️</div>
+        <div class="stat-num"><span class="counter">0</span>+</div>
+        <div class="stat-label">承接项目</div>
+      </div>
+      <div class="stat-card" data-target="1">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-num">一级资质</div>
+        <div class="stat-label">专业承包</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20年历程简版 -->
+<section class="timeline-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">历史长河</div>
+      <h2 class="section-title">二十年奋斗历程</h2>
+      <p class="section-desc">从一个小小的想法，到广西公路安全设施领域的知名企业</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2006</div>
+          <h3>公司创立</h3>
+          <p>在广西北海市，以北海兴邦交通附属设施有限公司为名，迈出创业第一步</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2010</div>
+          <h3>业务拓展</h3>
+          <p>深耕公路交通安全设施领域，承接多个重点公路护栏、标志标牌项目</p>
+        </div>
+      </div>
+      <div class="timeline-item left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2015</div>
+          <h3>品牌升级</h3>
+          <p>公司更名为广西振邦建设工程有限公司，品牌形象全面升级</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2017</div>
+          <h3>资质突破</h3>
+          <p>荣获公路交通工程（公路安全设施分项）专业承包<strong>一级资质</strong>，跻身行业前列</p>
+        </div>
+      </div>
+      <div class="timeline-item left">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2020</div>
+          <h3>智能转型</h3>
+          <p>积极布局智能交通领域，拓展电子警察、人脸识别、智能信号控制等新业务</p>
+        </div>
+      </div>
+      <div class="timeline-item right">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-year">2024</div>
+          <h3>资本增强</h3>
+          <p>注册资本增至1520万元，荣获A级纳税信用企业称号，综合实力大幅提升</p>
+        </div>
+      </div>
+      <div class="timeline-item left highlight">
+        <div class="timeline-dot gold"></div>
+        <div class="timeline-card gold-card">
+          <div class="timeline-year">2026</div>
+          <h3>二十周年 🎉</h3>
+          <p>成立二十周年，振邦全体员工满怀豪情，续写新篇章！</p>
+        </div>
+      </div>
+    </div>
+    <div class="timeline-more">
+      <a href="history.html" class="btn-outline">查看完整历程 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 活动介绍 -->
+<section class="activities-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">庆典活动</div>
+      <h2 class="section-title">精彩活动，等你参与</h2>
+    </div>
+    <div class="activities-grid">
+      <a href="vote_standalone.html" class="activity-card">
+        <div class="activity-icon">🏅</div>
+        <h3>员工评选</h3>
+        <p>评选最佳员工、最美项目、优秀团队，致敬二十年共同奋斗的伙伴</p>
+        <div class="activity-btn">立即参与 →</div>
+      </a>
+      <a href="lucky.html" class="activity-card featured">
+        <div class="activity-badge">热门</div>
+        <div class="activity-icon">🎰</div>
+        <h3>幸运抽奖</h3>
+        <p>庆典现场大抽奖！一等奖、二等奖、三等奖、纪念奖，惊喜连连</p>
+        <div class="activity-btn">参与抽奖 →</div>
+      </a>
+      <a href="message.html" class="activity-card">
+        <div class="activity-icon">💌</div>
+        <h3>员工寄语</h3>
+        <p>写下你对公司的祝福与期望，留下属于你的振邦故事</p>
+        <div class="activity-btn">写下寄语 →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 公司简介 -->
+<section class="about-section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <div class="section-tag">关于振邦</div>
+        <h2>一体化交通安全解决方案<br>二十年匠心品质 + 智能赋能</h2>
+        <p>广西振邦建设工程有限公司成立于2006年，总部位于广西北海市，是广西地区交通安全设施领域的综合服务商。</p>
+        <p><strong>传统主业：</strong>拥有公路交通工程（公路安全设施分项）专业承包一级资质，业务涵盖护栏安装、标志标牌制作与安装、交通标线施工、市政交通设施建设等。</p>
+        <p><strong>新兴业务：</strong>积极布局智能交通领域，提供电子警察系统、人脸识别系统、智能信号控制、道路视频监控、交通数据分析平台等智能化解决方案。</p>
+        <p>二十年来，振邦人从传统施工到智能赋能，用汗水和技术守护万里公路，护航广西交通事业发展。</p>
+        <div class="about-tags">
+          <span class="tag">🛡️ 公路护栏</span>
+          <span class="tag">📍 标志标牌</span>
+          <span class="tag">🎨 交通标线</span>
+          <span class="tag">🏗️ 市政工程</span>
+          <span class="tag">🤖 智能交通系统</span>
+          <span class="tag">📊 数据分析平台</span>
+        </div>
+      </div>
+      <div class="about-image">
+        <div class="image-stack">
+          <div class="img-frame img-frame-1">
+            <img src="https://lip383.github.io/zhenbang-website/images/guardrail_01.jpg" alt="护栏工程" onerror="this.style.background='linear-gradient(135deg,#1a3a5c,#2d6aa0)';this.alt='振邦工程'">
+          </div>
+          <div class="img-frame img-frame-2">
+            <img src="https://lip383.github.io/zhenbang-website/images/construction_01.jpg" alt="施工现场" onerror="this.style.background='linear-gradient(135deg,#c8a200,#e8c000)';this.alt='振邦施工'">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 页脚 -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">振邦建设</div>
+        <p>广西振邦建设工程有限公司</p>
+        <p>成立于 2006 年 · 专注公路安全设施二十年</p>
+      </div>
+      <div class="footer-links">
+        <h4>庆典活动</h4>
+        <ul>
+          <li><a href="history.html">发展历程</a></li>
+          <li><a href="vote_standalone.html">员工评选</a></li>
+          <li><a href="lucky.html">幸运抽奖</a></li>
+          <li><a href="message.html">员工寄语</a></li>
+        </ul>
+      </div>
+      <div class="footer-contact">
+        <h4>联系我们</h4>
+        <p>📍 广西北海市海城区北部湾东路花园村小区16栋</p>
+        <p>🏭 广西北海市银海区北铁公路海陆村（工厂）</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 广西振邦建设工程有限公司 · 成立二十周年</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
