@@ -1749,6 +1749,7 @@ function selectFacility(id) {
 
 function openDetailPanel(f) {
   var panel = document.getElementById('detailPanel');
+  if (!panel) { console.error('detailPanel not found'); return; }
   panel.classList.add('open');
   // 手机端：让地图容器底部留出空间，避免点位被面板遮挡
   if (window.innerWidth <= 768) {
@@ -1858,7 +1859,8 @@ function openDetailPanel(f) {
 function closeDetail() {
   var prevId = selectedFacilityId;
   selectedFacilityId = null;
-  document.getElementById('detailPanel').classList.remove('open');
+  var dp = document.getElementById('detailPanel');
+  if (dp) dp.classList.remove('open');
   document.body.classList.remove('panel-open');
   map.invalidateSize();
   if (prevId) resetLayerHighlight(prevId);
@@ -2532,7 +2534,8 @@ function clearAllData() {
   updateStats();
 
   // 关闭右侧面板
-  document.getElementById('detailPanel').classList.remove('show');
+  var dp2 = document.getElementById('detailPanel');
+  if (dp2) dp2.classList.remove('show');
 
   showToast('已清空所有数据', 'success');
 }
@@ -2590,7 +2593,8 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     if (clipboardFacility) { cancelPaste(); return; }
     if (drawMode) cancelDraw();
-    if (document.getElementById('detailPanel').classList.contains('open')) closeDetail();
+    var dp3 = document.getElementById('detailPanel');
+    if (dp3 && dp3.classList.contains('open')) closeDetail();
   }
   // 回车键也能完成线段绘制
   if (e.key === 'Enter' && drawMode === 'line' && drawPoints.length >= 2) {
