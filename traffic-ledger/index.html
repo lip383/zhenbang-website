@@ -1556,7 +1556,8 @@ function renderFacilityList(customList) {
   var container = document.getElementById('facilityList');
   if (list.length === 0) {
     container.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">暂无设施数据<br><small>点击下方按钮添加</small></div>';
-    document.getElementById('batchActions').style.display = 'none';
+    var ba = document.getElementById('batchActions');
+    if (ba) ba.style.display = 'none';
     return;
   }
 
@@ -2381,8 +2382,8 @@ function cancelDraw() {
   }
 
   document.getElementById('drawHint').classList.remove('show');
-  document.getElementById('drawFinishBtn').style.display = 'none';
-  document.getElementById('drawFinishBtn').textContent = '完成绘制';
+  var dfb = document.getElementById('drawFinishBtn');
+  if (dfb) { dfb.style.display = 'none'; dfb.textContent = '完成绘制'; }
 
   if (map) {
     map.getContainer().style.cursor = '';
