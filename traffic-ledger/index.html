@@ -1059,12 +1059,12 @@ function syncPush() {
       });
       var dataStr = JSON.stringify(syncData, null, 2);
 
-      // 先获取 sha
+      // 先获取 sha（用于 GitHub API 更新文件）
+      var sha = null;
       var apiUrl = 'https://api.github.com/repos/' + cfg.repo + '/contents/' + encodeURIComponent(cfg.path);
       fetch(apiUrl, {
         headers: { 'Authorization': 'token ' + (cfg.token || ''), 'Accept': 'application/vnd.github.v3+json' }
       }).then(function(r) {
-        var sha = null;
         if (r.ok) return r.json().then(function(d) { sha = d.sha; return true; });
         return false;
       }).then(function() {
