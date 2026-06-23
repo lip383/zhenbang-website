@@ -1730,14 +1730,17 @@ function selectFacility(id) {
       }
       if (panelH < 80) panelH = Math.round(window.innerHeight * 0.55);
 
-      // 方案：瞬间定位到点位，再 panBy 偏移，只有一次平滑动画
-      // panBy([0, +N]) → 地图往下移 N 像素 → 点位在屏幕上往上走 N 像素
-      // 如果方向还是反的，把 + 改成 -
-      map.setView([centerLat, centerLng], currentZoom, { animate: false });
-      setTimeout(function() {
-        console.log('panBy offsetY=' + (panelH / 2));
-        map.panBy([0, panelH / 2], { animate: true, duration: 0.5 });
-      }, 100);
+      // 直接计算偏移量，一步 panBy 到位，无两次动画
+      var mapSize = map.getSize();
+      var pointPixel = map.latLngToContainerPoint([centerLat, centerLng]);
+      // 期望点位停在可见区域中心：y = (mapSize.y - panelH) / 2
+      var desiredY = (mapSize.y - panelH) / 2;
+      // panBy 正值 = 地图往下移 = 点位在屏幕上往上走
+      // 需要偏移的量 = pointPixel.y - desiredY
+      var panY = pointPixel.y - desiredY;
+      if (Math.abs(panY) > 3) {
+        map.panBy([0, panY], { animate: true, duration: 0.5 });
+      }
     };
     // 等 CSS transition（300ms）完成后再开始
     setTimeout(doCenter, 400);
