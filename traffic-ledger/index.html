@@ -1558,7 +1558,8 @@ function renderFacilityList(customList) {
   var container = document.getElementById('facilityList');
   if (list.length === 0) {
     container.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">暂无设施数据<br><small>点击下方按钮添加</small></div>';
-    document.getElementById('batchActions').style.display = 'none';
+    var batchActionsEl = document.getElementById('batchActions');
+    if (batchActionsEl) batchActionsEl.style.display = 'none';
     return;
   }
 
