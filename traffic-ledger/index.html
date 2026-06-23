@@ -1712,7 +1712,7 @@ function selectFacility(id) {
   // 电脑端：直接居中，不偏移
   // 手机端：让点位显示在可见地图区域中心（不被底部面板遮挡）
   if (window.innerWidth <= 768) {
-    // 先打开面板（CSS 动画展开），再一次性定位到正确位置
+    // 先打开面板（CSS 动画展开）
     openDetailPanel(f);
 
     // 重试检测面板高度，面板展开后(300ms CSS transition)才能取到正确高度
@@ -1730,17 +1730,20 @@ function selectFacility(id) {
       }
       if (panelH < 80) panelH = Math.round(window.innerHeight * 0.55);
 
-      // 直接计算偏移量，一步 panBy 到位，无两次动画
+      // 方案：直接计算目标地图中心，只调用一次 flyTo，无两次动画
+      var Z = currentZoom;
+      var P_world = map.project([centerLat, centerLng], Z);
       var mapSize = map.getSize();
-      var pointPixel = map.latLngToContainerPoint([centerLat, centerLng]);
-      // 期望点位停在可见区域中心：y = (mapSize.y - panelH) / 2
       var desiredY = (mapSize.y - panelH) / 2;
-      // panBy 正值 = 地图往下移 = 点位在屏幕上往上走
-      // 需要偏移的量 = pointPixel.y - desiredY
-      var panY = pointPixel.y - desiredY;
-      if (Math.abs(panY) > 3) {
-        map.panBy([0, panY], { animate: true, duration: 0.5 });
-      }
+      // 目标：让点位的屏幕Y = desiredY
+      // 推导：newCenter_world.y = P_world.y - (desiredY - mapSize.y/2)
+      var newCenter_world = L.point(
+        P_world.x,
+        P_world.y - (desiredY - mapSize.y / 2)
+      );
+      var newCenter = map.unproject(newCenter_world, Z);
+      // 只有一次动画
+      map.flyTo(newCenter, Z, { animate: true, duration: 0.5 });
     };
     // 等 CSS transition（300ms）完成后再开始
     setTimeout(doCenter, 400);
