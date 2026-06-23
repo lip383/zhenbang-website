@@ -330,8 +330,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
     box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
   }
   .detail-panel.open { transform: translateY(0); display: flex !important; }
-  /* 面板打开时让地图容器底部留出空间，地图就能正确计算可见区域 */
-  body.panel-open #map { bottom: 55vh !important; }
 
   /* 移动端详情面板内容紧凑化 */
   .detail-header { padding: 10px 14px !important; }
@@ -1558,8 +1556,7 @@ function renderFacilityList(customList) {
   var container = document.getElementById('facilityList');
   if (list.length === 0) {
     container.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">暂无设施数据<br><small>点击下方按钮添加</small></div>';
-    var batchActionsEl = document.getElementById('batchActions');
-    if (batchActionsEl) batchActionsEl.style.display = 'none';
+    document.getElementById('batchActions').style.display = 'none';
     return;
   }
 
@@ -1732,10 +1729,6 @@ function selectFacility(id) {
       }
       if (panelH < 80) panelH = Math.round(window.innerHeight * 0.55);
 
-      // CSS 已让地图容器底部留出空间（body.panel-open #map { bottom: 55vh }）
-      // 直接 flyTo 到点位，地图会自动把它定位到可见区域的中心
-      // 只有一次平滑动画
-      map.invalidateSize();
       map.flyTo([centerLat, centerLng], currentZoom, { animate: true, duration: 0.5 });
     };
     // 等 CSS transition（300ms）完成后再开始
@@ -1749,12 +1742,7 @@ function selectFacility(id) {
 
 function openDetailPanel(f) {
   var panel = document.getElementById('detailPanel');
-  if (!panel) { console.error('detailPanel not found'); return; }
   panel.classList.add('open');
-  // 手机端：让地图容器底部留出空间，避免点位被面板遮挡
-  if (window.innerWidth <= 768) {
-    document.body.classList.add('panel-open');
-  }
 
   var cfg = TYPE_CONFIG[f.type] || {};
   var isLine = cfg.geometry === 'line';
@@ -1859,9 +1847,7 @@ function openDetailPanel(f) {
 function closeDetail() {
   var prevId = selectedFacilityId;
   selectedFacilityId = null;
-  var dp = document.getElementById('detailPanel');
-  if (dp) dp.classList.remove('open');
-  document.body.classList.remove('panel-open');
+  document.getElementById('detailPanel').classList.remove('open');
   map.invalidateSize();
   if (prevId) resetLayerHighlight(prevId);
   renderFacilityList();
@@ -2263,7 +2249,7 @@ function startDrawLine() {
   hint.classList.add('show');
 
   var btn = document.getElementById('drawFinishBtn');
-  if (btn) btn.style.display = 'block';
+  btn.style.display = 'block';
 
   map.getContainer().style.cursor = 'crosshair';
   map.doubleClickZoom.disable();
@@ -2327,8 +2313,7 @@ function addDrawLinePoint(latlng) {
   var hint = document.getElementById('drawHint');
   hint.textContent = '已添加 ' + drawPoints.length + ' 个节点 | 点击绿色节点完成绘制';
   if (drawPoints.length >= 2) {
-    var dfb = document.getElementById('drawFinishBtn');
-    if (dfb) dfb.textContent = '完成绘制 (' + drawPoints.length + '点)';
+    document.getElementById('drawFinishBtn').textContent = '完成绘制 (' + drawPoints.length + '点)';
   }
 }
 
@@ -2396,9 +2381,8 @@ function cancelDraw() {
   }
 
   document.getElementById('drawHint').classList.remove('show');
-  var dfb = document.getElementById('drawFinishBtn');
-  if (dfb) dfb.style.display = 'none';
-  if (dfb) dfb.textContent = '完成绘制';
+  document.getElementById('drawFinishBtn').style.display = 'none';
+  document.getElementById('drawFinishBtn').textContent = '完成绘制';
 
   if (map) {
     map.getContainer().style.cursor = '';
@@ -2534,8 +2518,7 @@ function clearAllData() {
   updateStats();
 
   // 关闭右侧面板
-  var dp2 = document.getElementById('detailPanel');
-  if (dp2) dp2.classList.remove('show');
+  document.getElementById('detailPanel').classList.remove('show');
 
   showToast('已清空所有数据', 'success');
 }
@@ -2593,8 +2576,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     if (clipboardFacility) { cancelPaste(); return; }
     if (drawMode) cancelDraw();
-    var dp3 = document.getElementById('detailPanel');
-    if (dp3 && dp3.classList.contains('open')) closeDetail();
+    if (document.getElementById('detailPanel').classList.contains('open')) closeDetail();
   }
   // 回车键也能完成线段绘制
   if (e.key === 'Enter' && drawMode === 'line' && drawPoints.length >= 2) {
