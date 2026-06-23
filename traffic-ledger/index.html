@@ -1730,15 +1730,14 @@ function selectFacility(id) {
       }
       if (panelH < 80) panelH = Math.round(window.innerHeight * 0.55);
 
-      // 方案：瞬间定位到点位，再 panBy 往上偏移，只有一次平滑动画
-      // 1. setView(animate:false) → 点位瞬间到屏幕中心（用户看不到）
-      // 2. panBy([0, +N]) → 地图往下移 N 像素，点位在屏幕上往上走 N 像素
-      //    最终点位停在：屏幕中心往上 panelH/2 像素 = 可见区域中心
+      // 方案：瞬间定位到点位，再 panBy 偏移，只有一次平滑动画
+      // panBy([0, +N]) → 地图往下移 N 像素 → 点位在屏幕上往上走 N 像素
+      // 如果方向还是反的，把 + 改成 -
       map.setView([centerLat, centerLng], currentZoom, { animate: false });
-      // 用 rAF 确保 setView 已生效，再执行 panBy（只有一次动画）
-      requestAnimationFrame(function() {
+      setTimeout(function() {
+        console.log('panBy offsetY=' + (panelH / 2));
         map.panBy([0, panelH / 2], { animate: true, duration: 0.5 });
-      });
+      }, 100);
     };
     // 等 CSS transition（300ms）完成后再开始
     setTimeout(doCenter, 400);
