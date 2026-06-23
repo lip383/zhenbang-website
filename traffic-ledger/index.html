@@ -2250,7 +2250,7 @@ function startDrawLine() {
   hint.classList.add('show');
 
   var btn = document.getElementById('drawFinishBtn');
-  btn.style.display = 'block';
+  if (btn) btn.style.display = 'block';
 
   map.getContainer().style.cursor = 'crosshair';
   map.doubleClickZoom.disable();
@@ -2314,7 +2314,8 @@ function addDrawLinePoint(latlng) {
   var hint = document.getElementById('drawHint');
   hint.textContent = '已添加 ' + drawPoints.length + ' 个节点 | 点击绿色节点完成绘制';
   if (drawPoints.length >= 2) {
-    document.getElementById('drawFinishBtn').textContent = '完成绘制 (' + drawPoints.length + '点)';
+    var dfb2 = document.getElementById('drawFinishBtn');
+    if (dfb2) dfb2.textContent = '完成绘制 (' + drawPoints.length + '点)';
   }
 }
 
