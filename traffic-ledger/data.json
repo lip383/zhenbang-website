@@ -1,0 +1,1417 @@
+[
+  {
+    "id": "f_1782096547791_1izrfo",
+    "type": "guardrail",
+    "name": "上海路海南路口南侧进口道机非隔离护栏",
+    "road": "上海路",
+    "coordinates": [
+      {
+        "lat": 21.48910190121646,
+        "lng": 109.14012283086778
+      },
+      {
+        "lat": 21.488976424930403,
+        "lng": 109.14017606119505
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "15m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782097244565_mmr6j9",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "lat": 21.48910439697776,
+    "lng": 109.1400906443596,
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782098680532_zwljbd",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489136841870796,
+    "lng": 109.14013624191286
+  },
+  {
+    "id": "f_1782098688634_6c40g0",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489189252836578,
+    "lng": 109.1400906443596
+  },
+  {
+    "id": "f_1782098690226_wjn5kg",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489211714673267,
+    "lng": 109.14003700017932
+  },
+  {
+    "id": "f_1782098692721_72s3ih",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489139337631492,
+    "lng": 109.13985460996629
+  },
+  {
+    "id": "f_1782098694650_5i74xm",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489009558018193,
+    "lng": 109.13987606763841
+  },
+  {
+    "id": "f_1782098696010_styzlo",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.488969625806188,
+    "lng": 109.13992166519166
+  },
+  {
+    "id": "f_1782098721593_9etm8m",
+    "type": "sign_single",
+    "name": "禁停+严管路段标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80+80*20cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489286587437228,
+    "lng": 109.14001822471619
+  },
+  {
+    "id": "f_1782099018148_4webim",
+    "type": "guardrail",
+    "name": "上海路（海南路-东海街）中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.489383921972795,
+        "lng": 109.13985729217531
+      },
+      {
+        "lat": 21.490500811083802,
+        "lng": 109.13934574839033
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "135m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782099548021_l44xhb",
+    "type": "sign_single",
+    "name": "前方100米允许掉头标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*100cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.49032232338656,
+    "lng": 109.13942813873292
+  },
+  {
+    "id": "f_1782099734901_f7py4l",
+    "type": "sign_cantilever",
+    "name": "指路标志牌",
+    "road": "上海路海南路口北往南方向",
+    "lat": 21.49027989579368,
+    "lng": 109.13932889699939,
+    "status": "active",
+    "attributes": {
+      "material": "5*3m",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782100095686_labowk",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.490339793568268,
+        "lng": 109.13952469825746
+      },
+      {
+        "lat": 21.48984513526028,
+        "lng": 109.13975638237548
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "60m",
+      "material": "海鸥图案110cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782100326502_nn9i8s",
+    "type": "sign_single",
+    "name": "前方100米允许掉头标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*100cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.490062766154086,
+    "lng": 109.13942813873292
+  },
+  {
+    "id": "f_1782100328948_o02fju",
+    "type": "sign_single",
+    "name": "夜间停车带终点标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*240cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.490062766154086,
+    "lng": 109.13942813873292
+  },
+  {
+    "id": "f_1782100463128_c738v6",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.490352272268208,
+        "lng": 109.13951665163043
+      },
+      {
+        "lat": 21.490402372222626,
+        "lng": 109.13949511437542
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "6m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782100606960_38fh1b",
+    "type": "sign_single",
+    "name": "靠右侧行驶标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*100cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.489363955919526,
+    "lng": 109.13986533880235
+  },
+  {
+    "id": "f_1782100654590_3aql67",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.49075907730016,
+        "lng": 109.1393342614174
+      },
+      {
+        "lat": 21.490510496501877,
+        "lng": 109.13944696705369
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "30m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782100875305_guuewd",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.490826462072977,
+    "lng": 109.13930475711824
+  },
+  {
+    "id": "f_1782101345202_676oq6",
+    "type": "signal",
+    "name": "双面黄闪灯+爆闪警示灯",
+    "road": "",
+    "lat": 21.490544444112146,
+    "lng": 109.13932621479036,
+    "status": "active",
+    "attributes": {
+      "material": "",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_bfj3pd",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.4905818801561,
+    "lng": 109.13930743932727,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_os56hl",
+    "type": "column",
+    "name": "交通隔离立柱 #02",
+    "road": "",
+    "lat": 21.49059851838716,
+    "lng": 109.13929998874667,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_kbn4hy",
+    "type": "column",
+    "name": "交通隔离立柱 #03",
+    "road": "",
+    "lat": 21.49061515661822,
+    "lng": 109.13929253816607,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_ut7ere",
+    "type": "column",
+    "name": "交通隔离立柱 #04",
+    "road": "",
+    "lat": 21.49063179484928,
+    "lng": 109.13928508758548,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_ivw1mr",
+    "type": "column",
+    "name": "交通隔离立柱 #05",
+    "road": "",
+    "lat": 21.490648433080338,
+    "lng": 109.13927763700488,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_3bu5ah",
+    "type": "column",
+    "name": "交通隔离立柱 #06",
+    "road": "",
+    "lat": 21.490665071311398,
+    "lng": 109.13927018642427,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_fw8i2t",
+    "type": "column",
+    "name": "交通隔离立柱 #07",
+    "road": "",
+    "lat": 21.490681709542457,
+    "lng": 109.13926273584367,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_h57qtp",
+    "type": "column",
+    "name": "交通隔离立柱 #08",
+    "road": "",
+    "lat": 21.490698347773517,
+    "lng": 109.13925528526308,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_jaid32",
+    "type": "column",
+    "name": "交通隔离立柱 #09",
+    "road": "",
+    "lat": 21.490714986004576,
+    "lng": 109.13924783468248,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782116875972_d70cea",
+    "type": "column",
+    "name": "交通隔离立柱 #10",
+    "road": "",
+    "lat": 21.490731624235636,
+    "lng": 109.13924038410188,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117209444_946ehi",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.490896342545145,
+        "lng": 109.13927793502809
+      },
+      {
+        "lat": 21.491516978831005,
+        "lng": 109.13899410078052
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "75m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782117277438_ycq1du",
+    "type": "guardrail",
+    "name": "中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.490761573033048,
+        "lng": 109.13922429084779
+      },
+      {
+        "lat": 21.490935520769586,
+        "lng": 109.13914524710526
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "21m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782117345768_7ef7qi",
+    "type": "sign_single",
+    "name": "允许掉头标志牌+背面禁止掉头标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*100cm+φ60cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.49094126568811,
+    "lng": 109.13914382457733
+  },
+  {
+    "id": "f_1782117451813_u5vf07",
+    "type": "guardrail",
+    "name": "中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.491971998436576,
+        "lng": 109.13869321346284
+      },
+      {
+        "lat": 21.49104777384856,
+        "lng": 109.13909863636843
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "111m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782117588638_4lpp2o",
+    "type": "sign_single",
+    "name": "注意掉头车辆标志牌",
+    "road": "",
+    "lat": 21.49104109484505,
+    "lng": 109.13910090923311,
+    "status": "active",
+    "attributes": {
+      "material": "△900mm+800*300mm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782117644471_4mschb",
+    "type": "sign_cantilever",
+    "name": "指路标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "5*3m",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.491465367997993,
+    "lng": 109.13905531167985
+  },
+  {
+    "id": "f_1782117718110_3nhdf6",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492001946978718,
+        "lng": 109.13877099752428
+      },
+      {
+        "lat": 21.4915304962452,
+        "lng": 109.13898729950951
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "57m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782117768353_z1flh0",
+    "type": "sign_single",
+    "name": "靠右侧行驶标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "φ800mm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.49197698986069,
+    "lng": 109.13868784904481
+  },
+  {
+    "id": "f_1782117840459_ujw34y",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.491887144200376,
+        "lng": 109.13861274719238
+      },
+      {
+        "lat": 21.491559725780444,
+        "lng": 109.13874789154477
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "39m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782117905639_at7wx1",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.49190211848093,
+    "lng": 109.13860738277437,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117924150_cvs7fn",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.491552718199454,
+    "lng": 109.13875222206117,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117924151_uw1b9e",
+    "type": "column",
+    "name": "交通隔离立柱 #02",
+    "road": "",
+    "lat": 21.491552718199454,
+    "lng": 109.13875168561937,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117924151_nd6mva",
+    "type": "column",
+    "name": "交通隔离立柱 #03",
+    "road": "",
+    "lat": 21.491552718199454,
+    "lng": 109.13875114917757,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117924151_6abmwe",
+    "type": "column",
+    "name": "交通隔离立柱 #04",
+    "road": "",
+    "lat": 21.491552718199454,
+    "lng": 109.13875061273576,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117924151_bu86e0",
+    "type": "column",
+    "name": "交通隔离立柱 #05",
+    "road": "",
+    "lat": 21.491552718199454,
+    "lng": 109.13875007629396,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782117924151_6i8fzt",
+    "type": "column",
+    "name": "交通隔离立柱 #06",
+    "road": "",
+    "lat": 21.491552718199454,
+    "lng": 109.13874953985216,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782118003511_cgslbd",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.492008186257543,
+    "lng": 109.13876965641975,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782118084904_h5u0rm",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.490729128502238,
+    "lng": 109.13908481597902
+  },
+  {
+    "id": "f_1782118165570_mzpwlp",
+    "type": "guardrail",
+    "name": "人行道隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492054356912625,
+        "lng": 109.13889706134798
+      },
+      {
+        "lat": 21.491763724698565,
+        "lng": 109.1389616253781
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "33m",
+      "material": "人行道隔离护栏",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782118353875_2sjnmt",
+    "type": "guardrail",
+    "name": "人行道隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.491889639913914,
+        "lng": 109.13854300975801
+      },
+      {
+        "lat": 21.491635433702132,
+        "lng": 109.13864014818928
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "30m",
+      "material": "人行道隔离护栏",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782118533536_ot2vhw",
+    "type": "sign_single",
+    "name": "禁停+严管路段标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80+80*20cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.49192208418598,
+    "lng": 109.13859665393831
+  },
+  {
+    "id": "f_1782118551680_62n9pn",
+    "type": "sign_single",
+    "name": "人行横道+残疾人 标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80*80+80*80cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.4919520327384,
+    "lng": 109.13858324289323
+  },
+  {
+    "id": "f_1782118711863_kv4x8d",
+    "type": "guardrail",
+    "name": "上海路海南路口北侧进口道机非隔离护栏",
+    "road": "上海路",
+    "coordinates": [
+      {
+        "lat": 21.489418862559408,
+        "lng": 109.13970977067949
+      },
+      {
+        "lat": 21.489293967349504,
+        "lng": 109.13976455676024
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "15m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119067257_ocht5r",
+    "type": "sign_single",
+    "name": "禁停+违停拖移+严管路段标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "80+80*30+80*20cm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.492054356912625,
+    "lng": 109.13898020982744
+  },
+  {
+    "id": "f_1782119099890_adgbbp",
+    "type": "sign_single",
+    "name": "限速40标志牌",
+    "road": "",
+    "lat": 21.492081809727615,
+    "lng": 109.1390445828438,
+    "status": "active",
+    "attributes": {
+      "material": "直径800mm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119170328_uo8c4i",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.4921442024697,
+        "lng": 109.13900434970857
+      },
+      {
+        "lat": 21.492328884829465,
+        "lng": 109.13942545652391
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "0.05",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119376278_m7kh0i",
+    "type": "guardrail",
+    "name": "人行道隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.49210926253743,
+        "lng": 109.13901239633562
+      },
+      {
+        "lat": 21.49222483642594,
+        "lng": 109.13927440272118
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "30m",
+      "material": "人行道隔离护栏",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119416634_q5wpvv",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.492336371947218,
+    "lng": 109.13943350315095,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119416634_jpn58q",
+    "type": "column",
+    "name": "交通隔离立柱 #02",
+    "road": "",
+    "lat": 21.492343359922764,
+    "lng": 109.13945227861406,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119416634_ruxz8w",
+    "type": "column",
+    "name": "交通隔离立柱 #03",
+    "road": "",
+    "lat": 21.49235034789831,
+    "lng": 109.13947105407716,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119416634_wkrvr9",
+    "type": "column",
+    "name": "交通隔离立柱 #04",
+    "road": "",
+    "lat": 21.49235733587386,
+    "lng": 109.13948982954028,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119416634_psn64b",
+    "type": "column",
+    "name": "交通隔离立柱 #05",
+    "road": "",
+    "lat": 21.492364323849404,
+    "lng": 109.13950860500339,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119416634_azs3mi",
+    "type": "column",
+    "name": "交通隔离立柱 #06",
+    "road": "",
+    "lat": 21.49237131182495,
+    "lng": 109.13952738046649,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119517024_7usbu2",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492381294645618,
+        "lng": 109.13955152034761
+      },
+      {
+        "lat": 21.492585913731823,
+        "lng": 109.14002485484865
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "54m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119583754_qes4ic",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.492593429422932,
+    "lng": 109.1400396823883,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119583754_4mb7l2",
+    "type": "column",
+    "name": "交通隔离立柱 #02",
+    "road": "",
+    "lat": 21.49261089933199,
+    "lng": 109.1400906443596,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782119607535_eslbi1",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492623377837177,
+        "lng": 109.14012819528581
+      },
+      {
+        "lat": 21.49268996970851,
+        "lng": 109.140286768244
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "18m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119636220_twvgm2",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.49271571874228,
+        "lng": 109.140342772007
+      },
+      {
+        "lat": 21.492748591176504,
+        "lng": 109.14042226238104
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "9m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119651623_pu294s",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.49277811121255,
+        "lng": 109.14049297571184
+      },
+      {
+        "lat": 21.492836796302008,
+        "lng": 109.1406235175023
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "15m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119697891_6c145c",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.49289291328793,
+        "lng": 109.14074778556825
+      },
+      {
+        "lat": 21.492948395467092,
+        "lng": 109.14087993529756
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "15m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119782259_mc77dn",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492249022216175,
+        "lng": 109.1387924551964
+      },
+      {
+        "lat": 21.492329009063194,
+        "lng": 109.13897632273058
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "21m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782119835554_940hok",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492353841887127,
+        "lng": 109.1390284895897
+      },
+      {
+        "lat": 21.49269810003681,
+        "lng": 109.13981576040027
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "90m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120069794_miug1e",
+    "type": "guardrail",
+    "name": "中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492171655267732,
+        "lng": 109.13884073495868
+      },
+      {
+        "lat": 21.49222701281542,
+        "lng": 109.13897294438989
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "15m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120304948_r057ha",
+    "type": "guardrail",
+    "name": "中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492231552263668,
+        "lng": 109.13898020982744
+      },
+      {
+        "lat": 21.49259429849326,
+        "lng": 109.13982220192763
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "96m",
+      "material": "海鸥图案110cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120364812_pg5nz5",
+    "type": "guardrail",
+    "name": "中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.49259592512436,
+        "lng": 109.13983047008514
+      },
+      {
+        "lat": 21.492618900831754,
+        "lng": 109.13988294211686
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "6m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120549663_uf2hhe",
+    "type": "guardrail",
+    "name": "中心隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.492930348727725,
+        "lng": 109.14058685302736
+      },
+      {
+        "lat": 21.492764862247515,
+        "lng": 109.14022194518489
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "42m",
+      "material": "海鸥图案110cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_220oz3",
+    "type": "column",
+    "name": "交通隔离立柱 #01",
+    "road": "",
+    "lat": 21.492940331510038,
+    "lng": 109.14060026407243,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_wv72g7",
+    "type": "column",
+    "name": "交通隔离立柱 #02",
+    "road": "",
+    "lat": 21.492945322900425,
+    "lng": 109.14061405829023,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_4mvesz",
+    "type": "column",
+    "name": "交通隔离立柱 #03",
+    "road": "",
+    "lat": 21.492950314290812,
+    "lng": 109.14062785250802,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_1dzkye",
+    "type": "column",
+    "name": "交通隔离立柱 #04",
+    "road": "",
+    "lat": 21.4929553056812,
+    "lng": 109.14064164672581,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_q7c4ys",
+    "type": "column",
+    "name": "交通隔离立柱 #05",
+    "road": "",
+    "lat": 21.492960297071587,
+    "lng": 109.14065544094359,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_6og362",
+    "type": "column",
+    "name": "交通隔离立柱 #06",
+    "road": "",
+    "lat": 21.492965288461974,
+    "lng": 109.14066923516138,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_xnmnz7",
+    "type": "column",
+    "name": "交通隔离立柱 #07",
+    "road": "",
+    "lat": 21.49297027985236,
+    "lng": 109.14068302937918,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120581717_o2g1hz",
+    "type": "column",
+    "name": "交通隔离立柱 #08",
+    "road": "",
+    "lat": 21.49297527124275,
+    "lng": 109.14069682359697,
+    "status": "active",
+    "attributes": {},
+    "notes": ""
+  },
+  {
+    "id": "f_1782120617219_nc67hj",
+    "type": "guardrail",
+    "name": "机非隔离护栏",
+    "road": "",
+    "coordinates": [
+      {
+        "lat": 21.493020193743916,
+        "lng": 109.14054930210114
+      },
+      {
+        "lat": 21.492838091380378,
+        "lng": 109.14012866833085
+      }
+    ],
+    "status": "active",
+    "attributes": {
+      "length": "48m",
+      "material": "上圆弧图案85cm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120803765_dhnh5u",
+    "type": "signal",
+    "name": "双面黄闪警示灯+双面人行横道标志牌",
+    "road": "",
+    "lat": 21.492623377837177,
+    "lng": 109.13989216089251,
+    "status": "active",
+    "attributes": {
+      "material": "600mm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120869439_uzafkn",
+    "type": "sign_cantilever",
+    "name": "网状线内禁止停车告示标志牌",
+    "road": "",
+    "lat": 21.49290289607282,
+    "lng": 109.14016574621202,
+    "status": "active",
+    "attributes": {
+      "material": "4*1m",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782120923630_7tohsc",
+    "type": "signal",
+    "name": "双面黄闪警示灯",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "300mm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.492977766937624,
+    "lng": 109.14071828126909
+  },
+  {
+    "id": "f_1782120989134_s0wz1u",
+    "type": "sign_cantilever",
+    "name": "悬臂式黄闪指示灯",
+    "road": "",
+    "lat": 21.49246614859366,
+    "lng": 109.13989484310152,
+    "status": "active",
+    "attributes": {
+      "material": "300mm",
+      "installDate": ""
+    },
+    "notes": ""
+  },
+  {
+    "id": "f_1782121014942_lottln",
+    "type": "sign_cantilever",
+    "name": "悬臂式黄闪指示灯",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "300mm",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.493032672214,
+    "lng": 109.14049029350282
+  },
+  {
+    "id": "f_1782121232143_ctkny3",
+    "type": "sign_cantilever",
+    "name": "指路标志牌",
+    "road": "",
+    "status": "active",
+    "attributes": {
+      "material": "5*3m",
+      "installDate": ""
+    },
+    "notes": "",
+    "lat": 21.492521054063076,
+    "lng": 109.1393154859543
+  }
+]
