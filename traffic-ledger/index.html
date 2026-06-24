@@ -27,16 +27,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
 .filter-tag { padding: 4px 10px; border-radius: 12px; font-size: 12px; cursor: pointer; border: 1.5px solid #d9d9d9; background: #fff; color: #666; transition: all 0.2s; user-select: none; }
 .filter-tag:hover { border-color: #2c5f8a; color: #2c5f8a; }
 .filter-tag.active { background: #2c5f8a; color: #fff; border-color: #2c5f8a; }
-.filter-tag.guardrail { border-color: #2980b9; color: #2980b9; }
-.filter-tag.guardrail.active { background: #2980b9; color: #fff; border-color: #2980b9; }
-.filter-tag.sign_single { border-color: #555; color: #555; }
-.filter-tag.sign_single.active { background: #555; color: #fff; border-color: #555; }
-.filter-tag.sign_cantilever { border-color: #333; color: #333; }
-.filter-tag.sign_cantilever.active { background: #333; color: #fff; border-color: #333; }
-.filter-tag.signal { border-color: #ccff00; color: #ccff00; }
-.filter-tag.signal.active { background: #ccff00; color: #333; border-color: #ccff00; }
-.filter-tag.column { border-color: #e74c3c; color: #e74c3c; }
-.filter-tag.column.active { background: #e74c3c; color: #fff; border-color: #e74c3c; }
 
 .search-box { width: 100%; padding: 8px 12px; border: 1.5px solid #d9d9d9; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; }
 .search-box:focus { border-color: #2c5f8a; }
@@ -476,11 +466,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
     <div class="sidebar-header">
       <h3>设施列表 <button class="mobile-sidebar-close" onclick="toggleMobileSidebar()">✕</button></h3>
       <div class="filter-tags" id="filterTags">
-        <span class="filter-tag active" data-type="all" onclick="applyFilter('all')">全部</span>
-        <span class="filter-tag guardrail" data-type="guardrail" onclick="applyFilter('guardrail')">护栏</span>
-        <span class="filter-tag sign_single" data-type="sign_single" onclick="applyFilter('sign_single')">单柱标志</span>
-        <span class="filter-tag sign_cantilever" data-type="sign_cantilever" onclick="applyFilter('sign_cantilever')">悬臂标志</span>
-        <span class="filter-tag signal" data-type="signal" onclick="applyFilter('signal')">交通警示灯</span>
       </div>
       <input type="text" class="search-box" id="searchBox" placeholder="搜索设施名称或道路...">
     </div>
@@ -641,6 +626,8 @@ function showApp() {
 
   // 根据权限显示/隐藏操作按钮
   applyPermissions();
+  // 动态生成筛选标签（TYPE_CONFIG 新增类型时自动出现）
+  renderFilterTags();
 
   // 初始化地图和数据
   if (!map) {
@@ -711,35 +698,40 @@ const TYPE_CONFIG = {
     icon: 'HL',
     geometry: 'line',
     weight: 5,
-    dashArray: null
+    dashArray: null,
+    activeTextColor: '#fff'
   },
   sign_single: {
     name: '单柱式标志牌',
     color: '#555',
     icon: 'DB',
     geometry: 'point',
-    radius: 6
+    radius: 6,
+    activeTextColor: '#fff'
   },
   sign_cantilever: {
     name: '悬臂式标志牌',
     color: '#333',
     icon: 'XB',
     geometry: 'point',
-    radius: 10
+    radius: 10,
+    activeTextColor: '#fff'
   },
   signal: {
     name: '交通警示灯',
     color: '#ccff00',
     icon: 'XH',
     geometry: 'point',
-    radius: 9
+    radius: 9,
+    activeTextColor: '#333'
   },
   column: {
     name: '交通隔离立柱',
     color: '#e74c3c',
     icon: 'ZL',
     geometry: 'point',
-    radius: 2
+    radius: 2,
+    activeTextColor: '#fff'
   }
 };
 
@@ -748,6 +740,31 @@ const STATUS_CONFIG = {
   removed: { name: '已拆除', cls: 'status-removed' },
   planned: { name: '规划中', cls: 'status-planned' }
 };
+
+// 动态生成筛选标签（TYPE_CONFIG 新增类型时自动出现）
+function renderFilterTags() {
+  var container = document.getElementById('filterTags');
+  if (!container) return;
+  // 生成动态 CSS（每种类型的普通态和选中态颜色）
+  var css = '';
+  Object.keys(TYPE_CONFIG).forEach(function(k) {
+    var v = TYPE_CONFIG[k];
+    var tc = v.activeTextColor || '#fff';
+    css += '.filter-tag.' + k + ' { border-color:' + v.color + ';color:' + v.color + '; }\n';
+    css += '.filter-tag.' + k + '.active { background:' + v.color + ';color:' + tc + ';border-color:' + v.color + '; }\n';
+  });
+  var sid = 'dynamicFilterCSS';
+  var se = document.getElementById(sid);
+  if (!se) { se = document.createElement('style'); se.id = sid; document.head.appendChild(se); }
+  se.textContent = css;
+  // 生成 HTML（全部 + 各类型）
+  var html = '<span class="filter-tag active" data-type="all" onclick="applyFilter(\'all\')">全部</span>';
+  Object.keys(TYPE_CONFIG).forEach(function(k) {
+    var v = TYPE_CONFIG[k];
+    html += '<span class="filter-tag ' + k + '" data-type="' + k + '" onclick="applyFilter(\'' + k + '\')">' + v.name + '</span>';
+  });
+  container.innerHTML = html;
+}
 
 // ============================================================
 // 工具函数
