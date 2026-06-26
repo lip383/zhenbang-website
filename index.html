@@ -1012,11 +1012,11 @@ function getSyncConfig() {
   } catch(e) { return {}; }
 }
 
-// 默认云端地址（优先使用同步设置中的路径）
+// 默认云端地址（优先使用同步设置中的路径，新设备默认traffic-ledger/data.json）
 function getCloudUrl() {
   var cfg = getSyncConfig();
   if (cfg.path) return cfg.path;
-  return './data.json';
+  return 'traffic-ledger/data.json';
 }
 
 function openSyncModal() {
