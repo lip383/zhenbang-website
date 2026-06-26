@@ -1083,6 +1083,11 @@ function syncPush() {
       });
       var dataStr = JSON.stringify(syncData, null, 2);
 
+      // 把同步配置（含token）也存入云端，实现跨设备自动恢复
+      var cloudData = { _meta: { version: 1 }, facilities: syncData };
+      if (cfg.token) cloudData._sync = { token: cfg.token };
+      var uploadStr = JSON.stringify(cloudData, null, 2);
+
       // 先获取 sha（用于 GitHub API 更新文件）
       var sha = null;
       var apiUrl = 'https://api.github.com/repos/' + cfg.repo + '/contents/' + encodeURIComponent(cfg.path);
@@ -1094,7 +1099,7 @@ function syncPush() {
       }).then(function() {
         var body = {
           message: 'Sync: 更新交通设施台账数据（共 ' + localData.length + ' 条）',
-          content: btoa(unescape(encodeURIComponent(dataStr))),
+          content: btoa(unescape(encodeURIComponent(uploadStr))),
           branch: 'main'
         };
         if (sha) body.sha = sha;
@@ -1176,11 +1181,26 @@ function syncPull(callback) {
     })
     .then(function(remoteData) {
       if (!remoteData) return;
-      if (!Array.isArray(remoteData)) throw new Error('数据格式错误');
-      facilities = remoteData;
+      // 兼容新旧格式：新格式为对象 { facilities, _sync }，旧格式为数组
+      if (Array.isArray(remoteData)) {
+        facilities = remoteData;
+      } else if (remoteData.facilities && Array.isArray(remoteData.facilities)) {
+        facilities = remoteData.facilities;
+        // 从云端恢复 Token 到本地（跨设备自动填充）
+        if (remoteData._sync && remoteData._sync.token) {
+          var savedCfg = getSyncConfig();
+          savedCfg.token = remoteData._sync.token;
+          localStorage.setItem('trafficLedgerSync', JSON.stringify(savedCfg));
+          // 填充到输入框
+          var tokenEl = document.getElementById('syncToken');
+          if (tokenEl) tokenEl.value = remoteData._sync.token;
+        }
+      } else {
+        throw new Error('数据格式错误');
+      }
       saveData();
       setSyncStatus('已从云端拉取 ✓');
-      showToast('已同步 ' + remoteData.length + ' 条数据', 'success');
+      showToast('已同步 ' + facilities.length + ' 条数据' + (remoteData._sync ? ' (含Token)' : ''), 'success');
       if (callback) callback();
     })
     .catch(function(err) {
