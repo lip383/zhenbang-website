@@ -117,9 +117,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
 }
 .draggable-marker-selected div { animation: markerPulse 1.5s ease-in-out infinite; }
 /* 选中标记也要透明背景无边框，去掉方形外框 */
-.draggable-marker-selected {
+.draggable-marker-selected,
+.leaflet-marker-icon.draggable-marker-selected {
   background: transparent !important;
   border: none !important;
+  box-shadow: none !important;
 }
 
 /* 可拖动标记：确保点击穿透 */
@@ -1647,13 +1649,12 @@ function highlightLayer(id) {
       var origSize = Math.max((cfg.radius || 8) * 2, 6);
       var newSize = Math.round(origSize * 1.8);
       var newBorder = Math.round(newSize / 5);
-      var newHitArea = newSize + 24;
-      // 高亮图标：放大+红色边框+发光+保留 onclick 点击功能
+      // 高亮图标：放大+红色边框+发光，外层容器和圆圈等大，无方形外框
       var newIcon = L.divIcon({
         className: 'draggable-marker draggable-marker-selected',
-        html: '<div style="position:relative;width:' + newHitArea + 'px;height:' + newHitArea + 'px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;" onclick="window.selectFacilityGlobal && window.selectFacilityGlobal(\'' + id + '\')"><div style="background:' + baseColor + ';width:' + newSize + 'px;height:' + newSize + 'px;border-radius:50%;border:' + newBorder + 'px solid #e74c3c;box-shadow:0 0 8px rgba(231,76,60,0.7),0 2px 6px rgba(0,0,0,0.3);"></div></div>',
-        iconSize: [newHitArea, newHitArea],
-        iconAnchor: [newHitArea / 2, newHitArea / 2]
+        html: '<div style="background:' + baseColor + ';width:' + newSize + 'px;height:' + newSize + 'px;border-radius:50%;border:' + newBorder + 'px solid #e74c3c;box-shadow:0 0 10px rgba(231,76,60,0.9),0 2px 6px rgba(0,0,0,0.3);"></div>',
+        iconSize: [newSize, newSize],
+        iconAnchor: [newSize / 2, newSize / 2]
       });
       layer.setIcon(newIcon);
     }
