@@ -116,6 +116,11 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
   100% { box-shadow: 0 0 8px rgba(231,76,60,0.7), 0 2px 6px rgba(0,0,0,0.3); }
 }
 .draggable-marker-selected div { animation: markerPulse 1.5s ease-in-out infinite; }
+/* 选中标记也要透明背景无边框，去掉方形外框 */
+.draggable-marker-selected {
+  background: transparent !important;
+  border: none !important;
+}
 
 /* 可拖动标记：确保点击穿透 */
 .draggable-marker {
