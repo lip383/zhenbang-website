@@ -50,6 +50,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
 .btn-primary:hover { background: #1a3a5c; }
 .btn-success { background: #27ae60; color: #fff; }
 .btn-success:hover { background: #1e8449; }
+.btn-info { background: #5b9bd5; color: #fff; }
+.btn-info:hover { background: #4a8bc2; }
 .btn-warning { background: #e67e22; color: #fff; }
 .btn-warning:hover { background: #d35400; }
 .btn-outline { background: #fff; color: #2c5f8a; border: 1.5px solid #2c5f8a; }
@@ -436,6 +438,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
     <div class="btn-row">
       <button class="btn btn-outline" onclick="closeSyncModal()">关闭</button>
       <button class="btn btn-primary" onclick="saveSyncSettings()">保存设置</button>
+      <button class="btn btn-info" onclick="genShareLink()" title="生成含Token的分享链接，在新设备打开可自动填入Token">🔗 生成分享链接</button>
       <button class="btn btn-success" onclick="syncPush()">☁️ 上传到云端</button>
     </div>
   </div>
@@ -1041,6 +1044,46 @@ function saveSyncSettings() {
   showToast('同步设置已保存', 'success');
 }
 
+// 生成含Token的分享链接（用于跨设备传递Token，避免GitHub安全扫描拦截）
+function genShareLink() {
+  var token = document.getElementById('syncToken').value.trim();
+  if (!token) {
+    document.getElementById('syncStatusMsg').textContent = '请先填写 Token';
+    document.getElementById('syncStatusMsg').className = 'status-msg err';
+    return;
+  }
+  // 将Token编码到URL hash中（hash不会发送到服务器，安全）
+  var shareUrl = location.origin + location.pathname + '#token=' + token;
+  // 复制到剪贴板
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(shareUrl).then(function() {
+      document.getElementById('syncStatusMsg').textContent = '✓ 分享链接已复制！在新设备浏览器打开即可自动填入Token';
+      document.getElementById('syncStatusMsg').className = 'status-msg ok';
+      showToast('分享链接已复制到剪贴板', 'success');
+    });
+  } else {
+    // fallback: prompt让用户手动复制
+    prompt('请复制以下链接，在新设备浏览器打开：', shareUrl);
+  }
+}
+
+// 页面加载时检查URL hash中的Token并自动填入
+(function checkHashToken() {
+  var hash = location.hash || '';
+  if (hash.indexOf('#token=') === 0) {
+    var token = hash.substring(7);
+    if (token) {
+      document.getElementById('syncToken').value = token;
+      var savedCfg = getSyncConfig();
+      savedCfg.token = token;
+      localStorage.setItem('trafficLedgerSync', JSON.stringify(savedCfg));
+      showToast('已从链接自动填入Token，请点「保存设置」', 'success');
+      // 清除hash（避免Token留在地址栏）
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+})();
+
 function setSyncStatus(msg, isErr) {
   var el = document.getElementById('syncStatus');
   if (!msg) { el.textContent = ''; el.className = 'sync-status'; return; }
@@ -1095,9 +1138,12 @@ function syncPush() {
       });
       var dataStr = JSON.stringify(syncData, null, 2);
 
-      // 把同步配置（含token）也存入云端，实现跨设备自动恢复
+      // 云端数据格式（不含Token——GitHub安全扫描会阻止含Token的文件）
       var cloudData = { _meta: { version: 1 }, facilities: syncData };
-      if (cfg.token) cloudData._sync = { token: cfg.token };
+      // 仅保存Token尾号（4位），用于确认身份，不泄露完整Token
+      if (cfg.token && cfg.token.length > 8) {
+        cloudData._sync = { tokenHint: '***' + cfg.token.slice(-4) };
+      }
       var uploadStr = JSON.stringify(cloudData, null, 2);
 
       // 先获取 sha（用于 GitHub API 更新文件）
@@ -1198,14 +1244,9 @@ function syncPull(callback) {
         facilities = remoteData;
       } else if (remoteData.facilities && Array.isArray(remoteData.facilities)) {
         facilities = remoteData.facilities;
-        // 从云端恢复 Token 到本地（跨设备自动填充）
-        if (remoteData._sync && remoteData._sync.token) {
-          var savedCfg = getSyncConfig();
-          savedCfg.token = remoteData._sync.token;
-          localStorage.setItem('trafficLedgerSync', JSON.stringify(savedCfg));
-          // 填充到输入框
-          var tokenEl = document.getElementById('syncToken');
-          if (tokenEl) tokenEl.value = remoteData._sync.token;
+        // 显示Token尾号提示（仅用于确认，不自动填充完整Token）
+        if (remoteData._sync && remoteData._sync.tokenHint) {
+          console.log('[云端同步] Token尾号: ' + remoteData._sync.tokenHint);
         }
       } else {
         throw new Error('数据格式错误');
