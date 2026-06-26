@@ -467,7 +467,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
       <h3>设施列表 <button class="mobile-sidebar-close" onclick="toggleMobileSidebar()">✕</button></h3>
       <div class="filter-tags" id="filterTags">
       </div>
-      <input type="text" class="search-box" id="searchBox" placeholder="搜索设施名称或道路...">
+      <input type="text" class="search-box" id="searchBox" placeholder="搜索设施名称或道路..." oninput="searchFacilities(this.value)" onkeydown="if(event.keyCode===13){event.preventDefault();searchFacilities(this.value);}">
     </div>
     <div class="facility-list" id="facilityList"></div>
     <div class="sidebar-footer">
