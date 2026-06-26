@@ -27,16 +27,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
 .filter-tag { padding: 4px 10px; border-radius: 12px; font-size: 12px; cursor: pointer; border: 1.5px solid #d9d9d9; background: #fff; color: #666; transition: all 0.2s; user-select: none; }
 .filter-tag:hover { border-color: #2c5f8a; color: #2c5f8a; }
 .filter-tag.active { background: #2c5f8a; color: #fff; border-color: #2c5f8a; }
-.filter-tag.guardrail { border-color: #2980b9; color: #2980b9; }
-.filter-tag.guardrail.active { background: #2980b9; color: #fff; border-color: #2980b9; }
-.filter-tag.sign_single { border-color: #555; color: #555; }
-.filter-tag.sign_single.active { background: #555; color: #fff; border-color: #555; }
-.filter-tag.sign_cantilever { border-color: #333; color: #333; }
-.filter-tag.sign_cantilever.active { background: #333; color: #fff; border-color: #333; }
-.filter-tag.signal { border-color: #ccff00; color: #ccff00; }
-.filter-tag.signal.active { background: #ccff00; color: #333; border-color: #ccff00; }
-.filter-tag.column { border-color: #e74c3c; color: #e74c3c; }
-.filter-tag.column.active { background: #e74c3c; color: #fff; border-color: #e74c3c; }
 
 .search-box { width: 100%; padding: 8px 12px; border: 1.5px solid #d9d9d9; border-radius: 6px; font-size: 13px; outline: none; transition: border 0.2s; }
 .search-box:focus { border-color: #2c5f8a; }
@@ -126,6 +116,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
   100% { box-shadow: 0 0 8px rgba(231,76,60,0.7), 0 2px 6px rgba(0,0,0,0.3); }
 }
 .draggable-marker-selected div { animation: markerPulse 1.5s ease-in-out infinite; }
+/* 选中标记也要透明背景无边框，去掉方形外框 */
+.draggable-marker-selected,
+.leaflet-marker-icon.draggable-marker-selected {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
 
 /* 可拖动标记：确保点击穿透 */
 .draggable-marker {
@@ -330,8 +327,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
     box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
   }
   .detail-panel.open { transform: translateY(0); display: flex !important; }
-  /* 面板打开时让地图容器底部留出空间，地图就能正确计算可见区域 */
-  body.panel-open #map { bottom: 55vh !important; }
 
   /* 移动端详情面板内容紧凑化 */
   .detail-header { padding: 10px 14px !important; }
@@ -478,13 +473,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
     <div class="sidebar-header">
       <h3>设施列表 <button class="mobile-sidebar-close" onclick="toggleMobileSidebar()">✕</button></h3>
       <div class="filter-tags" id="filterTags">
-        <span class="filter-tag active" data-type="all">全部</span>
-        <span class="filter-tag guardrail" data-type="guardrail">护栏</span>
-        <span class="filter-tag sign_single" data-type="sign_single">单柱标志</span>
-        <span class="filter-tag sign_cantilever" data-type="sign_cantilever">悬臂标志</span>
-        <span class="filter-tag signal" data-type="signal">信号灯</span>
       </div>
-      <input type="text" class="search-box" id="searchBox" placeholder="搜索设施名称或道路...">
+      <input type="text" class="search-box" id="searchBox" placeholder="搜索设施名称或道路..." oninput="searchFacilities(this.value)" onkeydown="if(event.keyCode===13){event.preventDefault();searchFacilities(this.value);}">
     </div>
     <div class="facility-list" id="facilityList"></div>
     <div class="sidebar-footer">
@@ -643,6 +633,8 @@ function showApp() {
 
   // 根据权限显示/隐藏操作按钮
   applyPermissions();
+  // 动态生成筛选标签（TYPE_CONFIG 新增类型时自动出现）
+  renderFilterTags();
 
   // 初始化地图和数据
   if (!map) {
@@ -713,35 +705,40 @@ const TYPE_CONFIG = {
     icon: 'HL',
     geometry: 'line',
     weight: 5,
-    dashArray: null
+    dashArray: null,
+    activeTextColor: '#fff'
   },
   sign_single: {
     name: '单柱式标志牌',
     color: '#555',
     icon: 'DB',
     geometry: 'point',
-    radius: 6
+    radius: 6,
+    activeTextColor: '#fff'
   },
   sign_cantilever: {
     name: '悬臂式标志牌',
     color: '#333',
     icon: 'XB',
     geometry: 'point',
-    radius: 10
+    radius: 10,
+    activeTextColor: '#fff'
   },
   signal: {
     name: '交通警示灯',
     color: '#ccff00',
     icon: 'XH',
     geometry: 'point',
-    radius: 9
+    radius: 9,
+    activeTextColor: '#333'
   },
   column: {
     name: '交通隔离立柱',
     color: '#e74c3c',
     icon: 'ZL',
     geometry: 'point',
-    radius: 2
+    radius: 2,
+    activeTextColor: '#fff'
   }
 };
 
@@ -750,6 +747,31 @@ const STATUS_CONFIG = {
   removed: { name: '已拆除', cls: 'status-removed' },
   planned: { name: '规划中', cls: 'status-planned' }
 };
+
+// 动态生成筛选标签（TYPE_CONFIG 新增类型时自动出现）
+function renderFilterTags() {
+  var container = document.getElementById('filterTags');
+  if (!container) return;
+  // 生成动态 CSS（每种类型的普通态和选中态颜色）
+  var css = '';
+  Object.keys(TYPE_CONFIG).forEach(function(k) {
+    var v = TYPE_CONFIG[k];
+    var tc = v.activeTextColor || '#fff';
+    css += '.filter-tag.' + k + ' { border-color:' + v.color + ';color:' + v.color + '; }\n';
+    css += '.filter-tag.' + k + '.active { background:' + v.color + ';color:' + tc + ';border-color:' + v.color + '; }\n';
+  });
+  var sid = 'dynamicFilterCSS';
+  var se = document.getElementById(sid);
+  if (!se) { se = document.createElement('style'); se.id = sid; document.head.appendChild(se); }
+  se.textContent = css;
+  // 生成 HTML（全部 + 各类型）
+  var html = '<span class="filter-tag active" data-type="all" onclick="applyFilter(\'all\')">全部</span>';
+  Object.keys(TYPE_CONFIG).forEach(function(k) {
+    var v = TYPE_CONFIG[k];
+    html += '<span class="filter-tag ' + k + '" data-type="' + k + '" onclick="applyFilter(\'' + k + '\')">' + v.name + '</span>';
+  });
+  container.innerHTML = html;
+}
 
 // ============================================================
 // 工具函数
@@ -1033,6 +1055,18 @@ function syncPush() {
     showToast('请先填写同步设置（仓库和数据路径）', 'error');
     return;
   }
+
+  // 优先从输入框读取最新Token（避免缓存问题）
+  var inputToken = '';
+  var tokenEl = document.getElementById('syncToken');
+  if (tokenEl && tokenEl.value.trim()) {
+    inputToken = tokenEl.value.trim();
+  }
+  // 如果输入框有值但缓存没有，用输入框的
+  if (inputToken && !cfg.token) cfg.token = inputToken;
+  // 如果输入框有值且和缓存不同，用输入框的（总是以输入框为准）
+  if (inputToken && inputToken !== (cfg.token || '')) cfg.token = inputToken;
+
   setSyncStatus('上传中...', false);
   document.getElementById('btnSyncPush').disabled = true;
 
@@ -1061,18 +1095,23 @@ function syncPush() {
       });
       var dataStr = JSON.stringify(syncData, null, 2);
 
-      // 先获取 sha
+      // 把同步配置（含token）也存入云端，实现跨设备自动恢复
+      var cloudData = { _meta: { version: 1 }, facilities: syncData };
+      if (cfg.token) cloudData._sync = { token: cfg.token };
+      var uploadStr = JSON.stringify(cloudData, null, 2);
+
+      // 先获取 sha（用于 GitHub API 更新文件）
+      var sha = null;
       var apiUrl = 'https://api.github.com/repos/' + cfg.repo + '/contents/' + encodeURIComponent(cfg.path);
       fetch(apiUrl, {
         headers: { 'Authorization': 'token ' + (cfg.token || ''), 'Accept': 'application/vnd.github.v3+json' }
       }).then(function(r) {
-        var sha = null;
         if (r.ok) return r.json().then(function(d) { sha = d.sha; return true; });
         return false;
       }).then(function() {
         var body = {
           message: 'Sync: 更新交通设施台账数据（共 ' + localData.length + ' 条）',
-          content: btoa(unescape(encodeURIComponent(dataStr))),
+          content: btoa(unescape(encodeURIComponent(uploadStr))),
           branch: 'main'
         };
         if (sha) body.sha = sha;
@@ -1154,11 +1193,26 @@ function syncPull(callback) {
     })
     .then(function(remoteData) {
       if (!remoteData) return;
-      if (!Array.isArray(remoteData)) throw new Error('数据格式错误');
-      facilities = remoteData;
+      // 兼容新旧格式：新格式为对象 { facilities, _sync }，旧格式为数组
+      if (Array.isArray(remoteData)) {
+        facilities = remoteData;
+      } else if (remoteData.facilities && Array.isArray(remoteData.facilities)) {
+        facilities = remoteData.facilities;
+        // 从云端恢复 Token 到本地（跨设备自动填充）
+        if (remoteData._sync && remoteData._sync.token) {
+          var savedCfg = getSyncConfig();
+          savedCfg.token = remoteData._sync.token;
+          localStorage.setItem('trafficLedgerSync', JSON.stringify(savedCfg));
+          // 填充到输入框
+          var tokenEl = document.getElementById('syncToken');
+          if (tokenEl) tokenEl.value = remoteData._sync.token;
+        }
+      } else {
+        throw new Error('数据格式错误');
+      }
       saveData();
       setSyncStatus('已从云端拉取 ✓');
-      showToast('已同步 ' + remoteData.length + ' 条数据', 'success');
+      showToast('已同步 ' + facilities.length + ' 条数据' + (remoteData._sync ? ' (含Token)' : ''), 'success');
       if (callback) callback();
     })
     .catch(function(err) {
@@ -1558,7 +1612,8 @@ function renderFacilityList(customList) {
   var container = document.getElementById('facilityList');
   if (list.length === 0) {
     container.innerHTML = '<div style="text-align:center;padding:40px;color:#999;">暂无设施数据<br><small>点击下方按钮添加</small></div>';
-    document.getElementById('batchActions').style.display = 'none';
+    var ba = document.getElementById('batchActions');
+    if (ba) ba.style.display = 'none';
     return;
   }
 
@@ -1626,13 +1681,12 @@ function highlightLayer(id) {
       var origSize = Math.max((cfg.radius || 8) * 2, 6);
       var newSize = Math.round(origSize * 1.8);
       var newBorder = Math.round(newSize / 5);
-      var newHitArea = newSize + 24;
-      // 高亮图标：放大+红色边框+发光+保留 onclick 点击功能
+      // 高亮图标：放大+红色边框+发光，外层容器和圆圈等大，无方形外框
       var newIcon = L.divIcon({
         className: 'draggable-marker draggable-marker-selected',
-        html: '<div style="position:relative;width:' + newHitArea + 'px;height:' + newHitArea + 'px;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;" onclick="window.selectFacilityGlobal && window.selectFacilityGlobal(\'' + id + '\')"><div style="background:' + baseColor + ';width:' + newSize + 'px;height:' + newSize + 'px;border-radius:50%;border:' + newBorder + 'px solid #e74c3c;box-shadow:0 0 8px rgba(231,76,60,0.7),0 2px 6px rgba(0,0,0,0.3);"></div></div>',
-        iconSize: [newHitArea, newHitArea],
-        iconAnchor: [newHitArea / 2, newHitArea / 2]
+        html: '<div style="background:' + baseColor + ';width:' + newSize + 'px;height:' + newSize + 'px;border-radius:50%;border:' + newBorder + 'px solid #e74c3c;box-shadow:0 0 10px rgba(231,76,60,0.9),0 2px 6px rgba(0,0,0,0.3);"></div>',
+        iconSize: [newSize, newSize],
+        iconAnchor: [newSize / 2, newSize / 2]
       });
       layer.setIcon(newIcon);
     }
@@ -1713,7 +1767,7 @@ function selectFacility(id) {
   // 电脑端：直接居中，不偏移
   // 手机端：让点位显示在可见地图区域中心（不被底部面板遮挡）
   if (window.innerWidth <= 768) {
-    // 先打开面板（CSS 动画展开），再一次性定位到正确位置
+    // 先打开面板（CSS 动画展开）
     openDetailPanel(f);
 
     // 重试检测面板高度，面板展开后(300ms CSS transition)才能取到正确高度
@@ -1731,11 +1785,20 @@ function selectFacility(id) {
       }
       if (panelH < 80) panelH = Math.round(window.innerHeight * 0.55);
 
-      // CSS 已让地图容器底部留出空间（body.panel-open #map { bottom: 55vh }）
-      // 直接 flyTo 到点位，地图会自动把它定位到可见区域的中心
-      // 只有一次平滑动画
-      map.invalidateSize();
-      map.flyTo([centerLat, centerLng], currentZoom, { animate: true, duration: 0.5 });
+      // 方案：直接计算目标地图中心，只调用一次 flyTo，无两次动画
+      var Z = currentZoom;
+      var P_world = map.project([centerLat, centerLng], Z);
+      var mapSize = map.getSize();
+      var desiredY = (mapSize.y - panelH) / 2;
+      // 目标：让点位的屏幕Y = desiredY
+      // 推导：newCenter_world.y = P_world.y - (desiredY - mapSize.y/2)
+      var newCenter_world = L.point(
+        P_world.x,
+        P_world.y - (desiredY - mapSize.y / 2)
+      );
+      var newCenter = map.unproject(newCenter_world, Z);
+      // 只有一次动画
+      map.flyTo(newCenter, Z, { animate: true, duration: 0.5 });
     };
     // 等 CSS transition（300ms）完成后再开始
     setTimeout(doCenter, 400);
@@ -1749,10 +1812,6 @@ function selectFacility(id) {
 function openDetailPanel(f) {
   var panel = document.getElementById('detailPanel');
   panel.classList.add('open');
-  // 手机端：让地图容器底部留出空间，避免点位被面板遮挡
-  if (window.innerWidth <= 768) {
-    document.body.classList.add('panel-open');
-  }
 
   var cfg = TYPE_CONFIG[f.type] || {};
   var isLine = cfg.geometry === 'line';
@@ -1858,7 +1917,6 @@ function closeDetail() {
   var prevId = selectedFacilityId;
   selectedFacilityId = null;
   document.getElementById('detailPanel').classList.remove('open');
-  document.body.classList.remove('panel-open');
   map.invalidateSize();
   if (prevId) resetLayerHighlight(prevId);
   renderFacilityList();
@@ -2260,7 +2318,7 @@ function startDrawLine() {
   hint.classList.add('show');
 
   var btn = document.getElementById('drawFinishBtn');
-  btn.style.display = 'block';
+  if (btn) btn.style.display = 'block';
 
   map.getContainer().style.cursor = 'crosshair';
   map.doubleClickZoom.disable();
@@ -2324,7 +2382,8 @@ function addDrawLinePoint(latlng) {
   var hint = document.getElementById('drawHint');
   hint.textContent = '已添加 ' + drawPoints.length + ' 个节点 | 点击绿色节点完成绘制';
   if (drawPoints.length >= 2) {
-    document.getElementById('drawFinishBtn').textContent = '完成绘制 (' + drawPoints.length + '点)';
+    var dfb2 = document.getElementById('drawFinishBtn');
+    if (dfb2) dfb2.textContent = '完成绘制 (' + drawPoints.length + '点)';
   }
 }
 
@@ -2392,8 +2451,8 @@ function cancelDraw() {
   }
 
   document.getElementById('drawHint').classList.remove('show');
-  document.getElementById('drawFinishBtn').style.display = 'none';
-  document.getElementById('drawFinishBtn').textContent = '完成绘制';
+  var dfb = document.getElementById('drawFinishBtn');
+  if (dfb) { dfb.style.display = 'none'; dfb.textContent = '完成绘制'; }
 
   if (map) {
     map.getContainer().style.cursor = '';
