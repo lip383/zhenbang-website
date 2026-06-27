@@ -644,16 +644,23 @@ function showApp() {
   // 初始化地图和数据
   if (!map) {
     initMap();
-    // 加载本地数据，不再自动从云端拉取（避免覆盖本地未同步的照片）
+    // 先加载本地数据，再自动从云端拉取最新数据
     loadData(function() {
       renderAllFacilities();
       renderFacilityList();
       updateStats();
       setTimeout(function() { if (map) map.invalidateSize(); }, 200);
-      // 提示用户：如果有Token配置，可以手动拉取云端数据
+
+      // 自动从云端拉取最新数据
       var cfg = getSyncConfig();
       if (cfg.token && cfg.repo && cfg.path) {
-        showToast('提示：可打开同步设置手动拉取云端数据', 'info');
+        showToast('正在从云端同步数据...', 'info');
+        syncPull(function() {
+          renderAllFacilities();
+          renderFacilityList();
+          updateStats();
+          showToast('云端数据同步完成', 'success');
+        });
       }
     });
   }
@@ -1095,6 +1102,29 @@ function genShareLink() {
   }
 })();
 
+// 刷新/关闭页面前警告（如果有未同步的数据）
+window._isSyncing = false;
+window.addEventListener('beforeunload', function(e) {
+  if (window._isSyncing) {
+    e.preventDefault();
+    e.returnValue = '正在同步数据到云端，确定要离开吗？';
+    return '正在同步数据到云端，确定要离开吗？';
+  }
+  // 检查是否有未保存的表单更改
+  if (window._formDirty) {
+    e.preventDefault();
+    e.returnValue = '有未保存的更改，确定要离开吗？';
+    return '有未保存的更改，确定要离开吗？';
+  }
+});
+// 监听详情面板表单变化，标记脏状态
+document.addEventListener('input', function(e) {
+  if (e.target.closest('#detailPanel')) window._formDirty = true;
+});
+document.addEventListener('change', function(e) {
+  if (e.target.closest('#detailPanel')) window._formDirty = true;
+});
+
 function setSyncStatus(msg, isErr) {
   var el = document.getElementById('syncStatus');
   if (!msg) { el.textContent = ''; el.className = 'sync-status'; return; }
@@ -1102,8 +1132,10 @@ function setSyncStatus(msg, isErr) {
   el.className = 'sync-status ' + (isErr ? 'err' : 'ok');
 }
 function syncPush(silent) {
+  window._isSyncing = true;
   var cfg = getSyncConfig();
   if (!cfg.repo || !cfg.path) {
+    window._isSyncing = false;
     if (!silent) {
       openSyncModal();
       showToast('请先填写同步设置（仓库和数据路径）', 'error');
@@ -1181,6 +1213,7 @@ function syncPush(silent) {
       throw new Error('NO_TOKEN');
     }
   }).then(function(r) {
+    window._isSyncing = false;
     if (!silent) {
       document.getElementById('btnSyncPush').disabled = false;
     }
@@ -1195,6 +1228,7 @@ function syncPush(silent) {
       return r.json().then(function(d) { throw new Error(d.message || '上传失败'); });
     }
   }).catch(function(err) {
+    window._isSyncing = false;
     if (!silent) {
       document.getElementById('btnSyncPush').disabled = false;
     }
@@ -1228,6 +1262,7 @@ function exportDataFile(data) {
 }
 
 function syncPull(callback) {
+  window._isSyncing = true;
   setSyncStatus('拉取中...', false);
 
   var url = getCloudUrl() + '?t=' + Date.now();
@@ -1262,11 +1297,13 @@ function syncPull(callback) {
         throw new Error('数据格式错误');
       }
       saveData();
+      window._isSyncing = false;
       setSyncStatus('已从云端拉取 ✓');
       showToast('已同步 ' + facilities.length + ' 条数据' + (remoteData._sync ? ' (含Token)' : ''), 'success');
       if (callback) callback();
     })
     .catch(function(err) {
+      window._isSyncing = false;
       clearTimeout(timer);
       if (err.name === 'AbortError') {
         setSyncStatus('拉取超时（请检查网络）', true);
@@ -1775,6 +1812,7 @@ function resetLayerHighlight(id) {
 }
 
 function selectFacility(id) {
+  window._formDirty = false;
   // 先取消之前的高亮
   if (selectedFacilityId && facilityLayers[selectedFacilityId]) {
     resetLayerHighlight(selectedFacilityId);
@@ -1971,6 +2009,7 @@ function closeDetail() {
   map.invalidateSize();
   if (prevId) resetLayerHighlight(prevId);
   renderFacilityList();
+  window._formDirty = false;
 }
 
 function saveFormToData(f) {
