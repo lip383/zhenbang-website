@@ -963,15 +963,18 @@ function openDB(callback) {
   request.onerror = function() { console.error('IndexedDB 打开失败'); callback(null); };
 }
 
-function saveData() {
+function saveData(callback) {
   openDB(function(db) {
-    if (!db) return;
+    if (!db) { if (callback) callback(false); return; }
     try {
       var tx = db.transaction([DB_STORE], 'readwrite');
-      tx.objectStore(DB_STORE).put(JSON.stringify(facilities), 'data');
+      var putReq = tx.objectStore(DB_STORE).put(JSON.stringify(facilities), 'data');
+      tx.oncomplete = function() { if (callback) callback(true); };
+      tx.onerror = function() { if (callback) callback(false); };
     } catch(e) {
       // IndexedDB 失败时降级到 localStorage（无照片时可能够用）
       try { localStorage.setItem('bh_traffic_facilities_v2', JSON.stringify(facilities)); } catch(ex) {}
+      if (callback) callback(false);
     }
   });
 }
@@ -2112,7 +2115,6 @@ function pasteFacility(latLng, template) {
 // ============================================================
 function uploadPhoto(id) {
   if (requirePerm('edit', '上传照片')) return;
-  // 上传前先保存当前表单内容，防止刷新后面板丢失
   var f = facilities.find(function(x) { return x.id === id; });
   if (!f) return;
   saveFormToData(f);
@@ -2127,9 +2129,17 @@ function uploadPhoto(id) {
     if (!f2) return;
     if (!f2.photos) f2.photos = [];
     f2.photos.push(e.target.result);
-    saveData();
-    selectFacility(f2.id);
-    showToast('照片已上传', 'success');
+    saveData(function(success) {
+      selectFacility(f2.id);
+      showToast('照片已上传', 'success');
+
+      // 如果有 Token 配置，自动上传到云端
+      var cfg = getSyncConfig();
+      if (cfg.token) {
+        showToast('正在同步到云端...', 'info');
+        syncPush(true);
+      }
+    });
   };
   reader.readAsDataURL(file);
   input.value = '';
@@ -2137,23 +2147,23 @@ function uploadPhoto(id) {
 
 function deletePhoto(id, idx) {
   if (requirePerm('edit', '删除照片')) return;
-  // 删除前先保存当前表单内容
   var f = facilities.find(function(x) { return x.id === id; });
   if (!f) return;
   saveFormToData(f);
 
   if (!f.photos) return;
   f.photos.splice(idx, 1);
-  saveData();
-  selectFacility(f.id);
-  showToast('照片已删除', 'info');
+  saveData(function(success) {
+    selectFacility(f.id);
+    showToast('照片已删除', 'info');
 
-  // 如果有 Token 配置，自动上传到云端（确保删除同步）
-  var cfg = getSyncConfig();
-  if (cfg.token) {
-    showToast('正在同步到云端...', 'info');
-    setTimeout(function() { syncPush(true); }, 500); // 延迟500ms确保 saveData 完成
-  }
+    // 如果有 Token 配置，自动上传到云端（确保删除同步）
+    var cfg = getSyncConfig();
+    if (cfg.token) {
+      showToast('正在同步到云端...', 'info');
+      syncPush(true);
+    }
+  });
 }
 
 // ============================================================
