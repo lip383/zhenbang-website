@@ -1094,11 +1094,13 @@ function setSyncStatus(msg, isErr) {
   el.textContent = msg;
   el.className = 'sync-status ' + (isErr ? 'err' : 'ok');
 }
-function syncPush() {
+function syncPush(silent) {
   var cfg = getSyncConfig();
   if (!cfg.repo || !cfg.path) {
-    openSyncModal();
-    showToast('请先填写同步设置（仓库和数据路径）', 'error');
+    if (!silent) {
+      openSyncModal();
+      showToast('请先填写同步设置（仓库和数据路径）', 'error');
+    }
     return;
   }
 
@@ -1111,8 +1113,10 @@ function syncPush() {
   if (inputToken && !cfg.token) cfg.token = inputToken;
   if (inputToken && inputToken !== (cfg.token || '')) cfg.token = inputToken;
 
-  setSyncStatus('上传中...', false);
-  document.getElementById('btnSyncPush').disabled = true;
+  if (!silent) {
+    setSyncStatus('上传中...', false);
+    document.getElementById('btnSyncPush').disabled = true;
+  }
 
   // 直接使用内存中的最新数据（已含照片，无需再读 IndexedDB）
   var syncData = facilities;
@@ -1128,11 +1132,15 @@ function syncPush() {
   var uploadSize = new TextEncoder().encode(uploadStr).length;
   if (uploadSize > 800 * 1024) {
     var sizeMB = (uploadSize / 1024 / 1024).toFixed(1);
-    showToast('⚠️ 数据文件较大（' + sizeMB + 'MB），建议删除部分照片后重试。', 'error');
-    if (!confirm('数据文件大小 ' + sizeMB + 'MB，超过建议值。是否继续上传？')) {
-      document.getElementById('btnSyncPush').disabled = false;
-      setSyncStatus('已取消（文件过大）', true);
-      return;
+    if (!silent) {
+      showToast('⚠️ 数据文件较大（' + sizeMB + 'MB），建议删除部分照片后重试。', 'error');
+      if (!confirm('数据文件大小 ' + sizeMB + 'MB，超过建议值。是否继续上传？')) {
+        document.getElementById('btnSyncPush').disabled = false;
+        setSyncStatus('已取消（文件过大）', true);
+        return;
+      }
+    } else {
+      showToast('数据文件较大（' + sizeMB + 'MB），上传可能较慢', 'info');
     }
   }
 
@@ -1166,22 +1174,36 @@ function syncPush() {
       throw new Error('NO_TOKEN');
     }
   }).then(function(r) {
-    document.getElementById('btnSyncPush').disabled = false;
+    if (!silent) {
+      document.getElementById('btnSyncPush').disabled = false;
+    }
     if (r && r.ok) {
-      setSyncStatus('云端同步成功 ✓');
-      showToast('已上传 ' + facilities.length + ' 条数据到云端', 'success');
+      if (!silent) {
+        setSyncStatus('云端同步成功 ✓');
+        showToast('已上传 ' + facilities.length + ' 条数据到云端', 'success');
+      } else {
+        showToast('已同步到云端', 'success');
+      }
     } else if (r) {
       return r.json().then(function(d) { throw new Error(d.message || '上传失败'); });
     }
   }).catch(function(err) {
-    document.getElementById('btnSyncPush').disabled = false;
+    if (!silent) {
+      document.getElementById('btnSyncPush').disabled = false;
+    }
     if (err.message === 'NO_TOKEN') {
-      exportDataFile(facilities);
-      setSyncStatus('无 Token，已导出文件', false);
-      showToast('请手动将下载的 JSON 文件上传到 GitHub', 'info');
+      if (!silent) {
+        exportDataFile(facilities);
+        setSyncStatus('无 Token，已导出文件', false);
+        showToast('请手动将下载的 JSON 文件上传到 GitHub', 'info');
+      }
     } else {
-      setSyncStatus('上传失败: ' + err.message, true);
-      showToast('上传失败: ' + err.message, 'error');
+      if (!silent) {
+        setSyncStatus('上传失败: ' + err.message, true);
+        showToast('上传失败: ' + err.message, 'error');
+      } else {
+        console.error('静默同步失败:', err.message);
+      }
     }
   });
 }
@@ -2121,6 +2143,13 @@ function deletePhoto(id, idx) {
   saveData();
   selectFacility(f.id);
   showToast('照片已删除', 'info');
+
+  // 如果有 Token 配置，自动上传到云端（确保删除同步）
+  var cfg = getSyncConfig();
+  if (cfg.token) {
+    showToast('正在同步到云端...', 'info');
+    setTimeout(function() { syncPush(true); }, 500); // 延迟500ms确保 saveData 完成
+  }
 }
 
 // ============================================================
