@@ -434,6 +434,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Microsoft YaHei', sans-s
     <div class="form-group">
       <label>数据文件路径</label>
       <input type="text" id="syncPath" value="traffic-ledger/data.json" placeholder="traffic-ledger/data.json">
+      <div class="hint">⚠️ 照片已开启云同步，JSON文件可能较大（建议定期清理无用照片）</div>
     </div>
     <div class="status-msg" id="syncStatusMsg"></div>
     <div class="btn-row">
@@ -1128,18 +1129,8 @@ function syncPush() {
     req.onsuccess = function() {
       var localData = req.result ? JSON.parse(req.result) : facilities;
       
-      // 上传到云端时移除照片（照片只存本地，避免文件过大）
-      var syncData = localData.map(function(item) {
-        var copy = Object.assign({}, item);
-        delete copy.photos;
-        if (copy.attributes) {
-          var attr = Object.assign({}, copy.attributes);
-          delete attr.photos;
-          copy.attributes = attr;
-        }
-        return copy;
-      });
-      var dataStr = JSON.stringify(syncData, null, 2);
+      // 上传到云端时保留照片（方案B：照片云同步）
+      var syncData = localData;
 
       // 云端数据格式（不含Token——GitHub安全扫描会阻止含Token的文件）
       var cloudData = { _meta: { version: 1 }, facilities: syncData };
@@ -1148,6 +1139,18 @@ function syncPush() {
         cloudData._sync = { tokenHint: '***' + cfg.token.slice(-4) };
       }
       var uploadStr = JSON.stringify(cloudData, null, 2);
+
+      // 检查文件大小（GitHub API 限制 1MB，警告阈值 800KB）
+      var uploadSize = new TextEncoder().encode(uploadStr).length;
+      if (uploadSize > 800 * 1024) {
+        var sizeMB = (uploadSize / 1024 / 1024).toFixed(1);
+        showToast('⚠️ 数据文件较大（' + sizeMB + 'MB），上传可能失败。建议删除部分照片后重试。', 'error');
+        if (!confirm('数据文件大小 ' + sizeMB + 'MB，超过建议值。是否继续上传？')) {
+          document.getElementById('btnSyncPush').disabled = false;
+          setSyncStatus('已取消（文件过大）', true);
+          return;
+        }
+      }
 
       // 先获取 sha（用于 GitHub API 更新文件）
       var sha = null;
