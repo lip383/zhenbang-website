@@ -644,13 +644,17 @@ function showApp() {
   // 初始化地图和数据
   if (!map) {
     initMap();
-    // 先尝试从云端拉取最新数据，再渲染
-    syncPull(function() {
+    // 加载本地数据，不再自动从云端拉取（避免覆盖本地未同步的照片）
+    loadData(function() {
       renderAllFacilities();
       renderFacilityList();
       updateStats();
-      // 数据加载完成后刷新地图
       setTimeout(function() { if (map) map.invalidateSize(); }, 200);
+      // 提示用户：如果有Token配置，可以手动拉取云端数据
+      var cfg = getSyncConfig();
+      if (cfg.token && cfg.repo && cfg.path) {
+        showToast('提示：可打开同步设置手动拉取云端数据', 'info');
+      }
     });
   }
 }
