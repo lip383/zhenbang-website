@@ -644,24 +644,21 @@ function showApp() {
   // 初始化地图和数据
   if (!map) {
     initMap();
-    // 先加载本地数据，再自动从云端拉取最新数据
+    // 先加载本地数据，再自动从云端拉取最新数据（公开读取，无需Token）
     loadData(function() {
       renderAllFacilities();
       renderFacilityList();
       updateStats();
       setTimeout(function() { if (map) map.invalidateSize(); }, 200);
 
-      // 自动从云端拉取最新数据
-      var cfg = getSyncConfig();
-      if (cfg.token && cfg.repo && cfg.path) {
-        showToast('正在从云端同步数据...', 'info');
-        syncPull(function() {
-          renderAllFacilities();
-          renderFacilityList();
-          updateStats();
-          showToast('云端数据同步完成', 'success');
-        });
-      }
+      // 始终尝试从云端拉取（GitHub Raw 是公开的，无需Token）
+      showToast('正在从云端同步数据...', 'info');
+      syncPull(function() {
+        renderAllFacilities();
+        renderFacilityList();
+        updateStats();
+        showToast('云端数据同步完成', 'success');
+      });
     });
   }
 }
@@ -1027,11 +1024,18 @@ function getSyncConfig() {
   } catch(e) { return {}; }
 }
 
-// 默认云端地址（优先使用同步设置中的路径，新设备默认traffic-ledger/data.json）
+// 默认云端地址（优先使用同步设置中的路径，新设备默认GitHub Raw）
 function getCloudUrl() {
   var cfg = getSyncConfig();
-  if (cfg.path) return cfg.path;
-  return 'traffic-ledger/data.json';
+  if (cfg.path) {
+    // 如果path是相对路径，转为完整GitHub Raw URL
+    if (cfg.path.indexOf('http') === 0) return cfg.path;
+    if (cfg.repo && cfg.path) {
+      return 'https://raw.githubusercontent.com/' + cfg.repo + '/main/' + cfg.path;
+    }
+  }
+  // 默认：直接指向GitHub Raw（公开读取，无需Token）
+  return 'https://raw.githubusercontent.com/lip383/zhenbang-website/main/traffic-ledger/data.json';
 }
 
 function openSyncModal() {
