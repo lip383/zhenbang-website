@@ -1094,7 +1094,6 @@ function setSyncStatus(msg, isErr) {
   el.textContent = msg;
   el.className = 'sync-status ' + (isErr ? 'err' : 'ok');
 }
-
 function syncPush() {
   var cfg = getSyncConfig();
   if (!cfg.repo || !cfg.path) {
@@ -1109,105 +1108,81 @@ function syncPush() {
   if (tokenEl && tokenEl.value.trim()) {
     inputToken = tokenEl.value.trim();
   }
-  // 如果输入框有值但缓存没有，用输入框的
   if (inputToken && !cfg.token) cfg.token = inputToken;
-  // 如果输入框有值且和缓存不同，用输入框的（总是以输入框为准）
   if (inputToken && inputToken !== (cfg.token || '')) cfg.token = inputToken;
 
   setSyncStatus('上传中...', false);
   document.getElementById('btnSyncPush').disabled = true;
 
-  // 读取本地 IndexedDB 数据
-  openDB(function(db) {
-    if (!db) {
+  // 直接使用内存中的最新数据（已含照片，无需再读 IndexedDB）
+  var syncData = facilities;
+
+  // 云端数据格式（不含完整Token，仅存尾号提示）
+  var cloudData = { _meta: { version: 1 }, facilities: syncData };
+  if (cfg.token && cfg.token.length > 8) {
+    cloudData._sync = { tokenHint: '***' + cfg.token.slice(-4) };
+  }
+  var uploadStr = JSON.stringify(cloudData, null, 2);
+
+  // 检查文件大小（GitHub API 单文件限制 1MB）
+  var uploadSize = new TextEncoder().encode(uploadStr).length;
+  if (uploadSize > 800 * 1024) {
+    var sizeMB = (uploadSize / 1024 / 1024).toFixed(1);
+    showToast('⚠️ 数据文件较大（' + sizeMB + 'MB），建议删除部分照片后重试。', 'error');
+    if (!confirm('数据文件大小 ' + sizeMB + 'MB，超过建议值。是否继续上传？')) {
       document.getElementById('btnSyncPush').disabled = false;
-      setSyncStatus('本地数据库未就绪', true);
+      setSyncStatus('已取消（文件过大）', true);
       return;
     }
-    var tx = db.transaction([DB_STORE], 'readonly');
-    var req = tx.objectStore(DB_STORE).get('data');
-    req.onsuccess = function() {
-      var localData = req.result ? JSON.parse(req.result) : facilities;
-      
-      // 上传到云端时保留照片（方案B：照片云同步）
-      var syncData = localData;
+  }
 
-      // 云端数据格式（不含Token——GitHub安全扫描会阻止含Token的文件）
-      var cloudData = { _meta: { version: 1 }, facilities: syncData };
-      // 仅保存Token尾号（4位），用于确认身份，不泄露完整Token
-      if (cfg.token && cfg.token.length > 8) {
-        cloudData._sync = { tokenHint: '***' + cfg.token.slice(-4) };
-      }
-      var uploadStr = JSON.stringify(cloudData, null, 2);
+  // 先获取 sha（用于 GitHub API 更新文件）
+  var sha = null;
+  var apiUrl = 'https://api.github.com/repos/' + cfg.repo + '/contents/' + encodeURIComponent(cfg.path);
+  fetch(apiUrl, {
+    headers: { 'Authorization': 'token ' + (cfg.token || ''), 'Accept': 'application/vnd.github.v3+json' }
+  }).then(function(r) {
+    if (r.ok) return r.json().then(function(d) { sha = d.sha; return true; });
+    return false;
+  }).then(function() {
+    var body = {
+      message: 'Sync: 更新交通设施台账数据（共 ' + facilities.length + ' 条）',
+      content: btoa(unescape(encodeURIComponent(uploadStr))),
+      branch: 'main'
+    };
+    if (sha) body.sha = sha;
 
-      // 检查文件大小（GitHub API 限制 1MB，警告阈值 800KB）
-      var uploadSize = new TextEncoder().encode(uploadStr).length;
-      if (uploadSize > 800 * 1024) {
-        var sizeMB = (uploadSize / 1024 / 1024).toFixed(1);
-        showToast('⚠️ 数据文件较大（' + sizeMB + 'MB），上传可能失败。建议删除部分照片后重试。', 'error');
-        if (!confirm('数据文件大小 ' + sizeMB + 'MB，超过建议值。是否继续上传？')) {
-          document.getElementById('btnSyncPush').disabled = false;
-          setSyncStatus('已取消（文件过大）', true);
-          return;
-        }
-      }
-
-      // 先获取 sha（用于 GitHub API 更新文件）
-      var sha = null;
-      var apiUrl = 'https://api.github.com/repos/' + cfg.repo + '/contents/' + encodeURIComponent(cfg.path);
-      fetch(apiUrl, {
-        headers: { 'Authorization': 'token ' + (cfg.token || ''), 'Accept': 'application/vnd.github.v3+json' }
-      }).then(function(r) {
-        if (r.ok) return r.json().then(function(d) { sha = d.sha; return true; });
-        return false;
-      }).then(function() {
-        var body = {
-          message: 'Sync: 更新交通设施台账数据（共 ' + localData.length + ' 条）',
-          content: btoa(unescape(encodeURIComponent(uploadStr))),
-          branch: 'main'
-        };
-        if (sha) body.sha = sha;
-
-        // 如果有 token 用 API 上传，否则提示手动上传
-        if (cfg.token) {
-          return fetch(apiUrl, {
-            method: 'PUT',
-            headers: {
-              'Authorization': 'token ' + cfg.token,
-              'Accept': 'application/vnd.github.v3+json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-          });
-        } else {
-          // 无 token：导出文件让用户手动上传到 GitHub
-          throw new Error('NO_TOKEN');
-        }
-      }).then(function(r) {
-        document.getElementById('btnSyncPush').disabled = false;
-        if (r && r.ok) {
-          setSyncStatus('云端同步成功 ✓');
-          showToast('已上传 ' + localData.length + ' 条数据到云端', 'success');
-        } else if (r) {
-          return r.json().then(function(d) { throw new Error(d.message || '上传失败'); });
-        }
-      }).catch(function(err) {
-        document.getElementById('btnSyncPush').disabled = false;
-        if (err.message === 'NO_TOKEN') {
-          // 无 token：导出 JSON 并提示用户手动上传
-          exportDataFile(localData);
-          setSyncStatus('无 Token，已导出文件', false);
-          showToast('请手动将下载的 JSON 文件上传到 GitHub', 'info');
-        } else {
-          setSyncStatus('上传失败: ' + err.message, true);
-          showToast('上传失败: ' + err.message, 'error');
-        }
+    if (cfg.token) {
+      return fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': 'token ' + cfg.token,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
       });
-    };
-    req.onerror = function() {
-      document.getElementById('btnSyncPush').disabled = false;
-      setSyncStatus('读取本地数据失败', true);
-    };
+    } else {
+      throw new Error('NO_TOKEN');
+    }
+  }).then(function(r) {
+    document.getElementById('btnSyncPush').disabled = false;
+    if (r && r.ok) {
+      setSyncStatus('云端同步成功 ✓');
+      showToast('已上传 ' + facilities.length + ' 条数据到云端', 'success');
+    } else if (r) {
+      return r.json().then(function(d) { throw new Error(d.message || '上传失败'); });
+    }
+  }).catch(function(err) {
+    document.getElementById('btnSyncPush').disabled = false;
+    if (err.message === 'NO_TOKEN') {
+      exportDataFile(facilities);
+      setSyncStatus('无 Token，已导出文件', false);
+      showToast('请手动将下载的 JSON 文件上传到 GitHub', 'info');
+    } else {
+      setSyncStatus('上传失败: ' + err.message, true);
+      showToast('上传失败: ' + err.message, 'error');
+    }
   });
 }
 
