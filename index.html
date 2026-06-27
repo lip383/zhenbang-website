@@ -1269,53 +1269,102 @@ function syncPull(callback) {
   window._isSyncing = true;
   setSyncStatus('拉取中...', false);
 
-  var url = getCloudUrl() + '?t=' + Date.now();
+  var cfg = getSyncConfig();
+  var useApi = cfg.token && cfg.repo && cfg.path;
+  var apiUrl = useApi ? 'https://api.github.com/repos/' + cfg.repo + '/contents/' + encodeURIComponent(cfg.path) : null;
 
   // 设置超时（10秒）
   var controller = new AbortController();
   var timer = setTimeout(function() { controller.abort(); }, 10000);
 
-  fetch(url, { signal: controller.signal })
-    .then(function(r) {
+  function parseAndApply(text, cb) {
+    var remoteData;
+    try { remoteData = JSON.parse(text); } catch(e) { cb(new Error('数据解析失败')); return; }
+    if (!remoteData) { cb(null); return; }
+    if (Array.isArray(remoteData)) {
+      facilities = remoteData;
+    } else if (remoteData.facilities && Array.isArray(remoteData.facilities)) {
+      facilities = remoteData.facilities;
+      if (remoteData._sync && remoteData._sync.tokenHint) {
+        console.log('[云端同步] Token尾号: ' + remoteData._sync.tokenHint);
+      }
+    } else {
+      cb(new Error('数据格式错误')); return;
+    }
+    saveData(function() {
+      window._isSyncing = false;
+      setSyncStatus('已从云端拉取 ✓');
+      showToast('已同步 ' + facilities.length + ' 条数据', 'success');
+      if (cb) cb(null);
+    });
+  }
+
+  if (useApi) {
+    // 使用 GitHub API（实时数据，无CDN缓存）
+    fetch(apiUrl, {
+      signal: controller.signal,
+      headers: {
+        'Authorization': 'token ' + cfg.token,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    }).then(function(r) {
       clearTimeout(timer);
       if (r.status === 404) {
+        window._isSyncing = false;
         setSyncStatus('云端暂无数据（本地模式）', false);
         if (callback) callback();
         return null;
       }
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
-    })
-    .then(function(remoteData) {
-      if (!remoteData) return;
-      // 兼容新旧格式：新格式为对象 { facilities, _sync }，旧格式为数组
-      if (Array.isArray(remoteData)) {
-        facilities = remoteData;
-      } else if (remoteData.facilities && Array.isArray(remoteData.facilities)) {
-        facilities = remoteData.facilities;
-        // 显示Token尾号提示（仅用于确认，不自动填充完整Token）
-        if (remoteData._sync && remoteData._sync.tokenHint) {
-          console.log('[云端同步] Token尾号: ' + remoteData._sync.tokenHint);
-        }
-      } else {
-        throw new Error('数据格式错误');
-      }
-      saveData();
-      window._isSyncing = false;
-      setSyncStatus('已从云端拉取 ✓');
-      showToast('已同步 ' + facilities.length + ' 条数据' + (remoteData._sync ? ' (含Token)' : ''), 'success');
-      if (callback) callback();
-    })
-    .catch(function(err) {
-      window._isSyncing = false;
+    }).then(function(data) {
+      if (!data) return;
+      // GitHub API 返回 base64 编码的内容
+      var content = data.content.replace(/\s/g, '');
+      var text = decodeURIComponent(escape(atob(content)));
+      parseAndApply(text, function(err) {
+        if (err) { setSyncStatus('拉取失败: ' + err.message, true); } else { if (callback) callback(); }
+      });
+    }).catch(function(err) {
       clearTimeout(timer);
+      window._isSyncing = false;
       if (err.name === 'AbortError') {
         setSyncStatus('拉取超时（请检查网络）', true);
       } else {
-        setSyncStatus('拉取失败：' + err.message, true);
+        setSyncStatus('拉取失败: ' + err.message, true);
       }
       if (callback) callback();
     });
+  } else {
+    // 无Token时降级到 Raw URL（加随机参数破CDN缓存）
+    var url = getCloudUrl() + '?t=' + Date.now() + '&r=' + Math.random().toString(36).slice(2, 8);
+    fetch(url, { signal: controller.signal })
+      .then(function(r) {
+        clearTimeout(timer);
+        if (r.status === 404) {
+          window._isSyncing = false;
+          setSyncStatus('云端暂无数据（本地模式）', false);
+          if (callback) callback();
+          return null;
+        }
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      }).then(function(text) {
+        if (!text) return;
+        parseAndApply(text, function(err) {
+          if (err) { setSyncStatus('拉取失败: ' + err.message, true); } else { if (callback) callback(); }
+        });
+      }).catch(function(err) {
+        clearTimeout(timer);
+        window._isSyncing = false;
+        if (err.name === 'AbortError') {
+          setSyncStatus('拉取超时（请检查网络）', true);
+        } else {
+          setSyncStatus('拉取失败: ' + err.message, true);
+        }
+        if (callback) callback();
+      });
+  }
 }
 
 // ============================================================
