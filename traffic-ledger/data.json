@@ -1447,7 +1447,10 @@
       "lat": 21.49183606509389,
       "lng": 109.13658784440584,
       "status": "active",
-      "attributes": {},
+      "attributes": {
+        "material": "",
+        "installDate": ""
+      },
       "notes": ""
     }
   ],
